@@ -1,0 +1,1 @@
+Desenvolva um site para a copa do mundo de 2026, este site deve conter uma relação dos jogos ser responsivo e ser desenvolvido em html, css e js

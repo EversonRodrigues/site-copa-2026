@@ -1,0 +1,326 @@
+/* ===================================================
+   COPA 2026 — ANIMAÇÕES E ENERGIA VISUAL
+   =================================================== */
+
+/* ===== KEYFRAMES ===== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(-5deg); }
+  50%       { transform: translateY(-18px) rotate(5deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(232, 17, 45, 0.5); }
+  50%       { box-shadow: 0 0 20px 6px rgba(232, 17, 45, 0.25); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.5); opacity: 0.6; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes hero-gradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes bounce-in {
+  0%   { transform: scale(0.3); opacity: 0; }
+  50%  { transform: scale(1.05); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes count-flip {
+  0%   { transform: translateY(-10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes ripple-out {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+/* Delay stagger para listas de cards */
+.reveal:nth-child(1) { transition-delay: 0s; }
+.reveal:nth-child(2) { transition-delay: 0.07s; }
+.reveal:nth-child(3) { transition-delay: 0.14s; }
+.reveal:nth-child(4) { transition-delay: 0.21s; }
+.reveal:nth-child(5) { transition-delay: 0.28s; }
+.reveal:nth-child(6) { transition-delay: 0.35s; }
+
+/* ===== HERO DINÂMICO ===== */
+.hero {
+  background: linear-gradient(
+    135deg,
+    #07111F 0%,
+    #0d1f38 30%,
+    #12102a 60%,
+    #07111F 100%
+  );
+  background-size: 300% 300%;
+  animation: hero-gradient 8s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Linhas decorativas de campo de futebol */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(232,17,45,0.06) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(255,215,0,0.04) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Bola flutuante decorativa */
+.hero-ball {
+  position: absolute;
+  right: 8%;
+  top: 15%;
+  font-size: clamp(4rem, 8vw, 7rem);
+  animation: float 4s ease-in-out infinite;
+  opacity: 0.18;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
+}
+
+/* ===== TÍTULO COM SHIMMER ===== */
+.hero-titulo {
+  animation: fadeInUp 0.8s ease both;
+}
+.hero-titulo span {
+  background: linear-gradient(
+    90deg,
+    #E8112D 0%,
+    #FFD700 40%,
+    #E8112D 80%,
+    #FFD700 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.hero-sub { animation: fadeInUp 0.8s ease 0.2s both; }
+.hero-acoes { animation: fadeInUp 0.8s ease 0.4s both; }
+.countdown-container { animation: fadeInUp 0.8s ease 0.5s both; }
+.hero-stats { animation: fadeInUp 0.8s ease 0.6s both; }
+
+/* ===== STATS CONTADOR ===== */
+.hero-stat-valor {
+  display: block;
+  animation: bounce-in 0.8s ease both;
+}
+.hero-stat:nth-child(1) .hero-stat-valor { animation-delay: 0.6s; }
+.hero-stat:nth-child(2) .hero-stat-valor { animation-delay: 0.75s; }
+.hero-stat:nth-child(3) .hero-stat-valor { animation-delay: 0.9s; }
+.hero-stat:nth-child(4) .hero-stat-valor { animation-delay: 1.05s; }
+
+/* ===== CARDS ENERGÉTICOS ===== */
+.card-jogo {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+}
+.card-jogo:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,17,45,0.3) !important;
+  border-color: rgba(232,17,45,0.4) !important;
+}
+
+.card-selecao-rico {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+.card-selecao-rico:hover {
+  transform: translateX(6px) !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.4) !important;
+}
+
+.card-noticia {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+.card-noticia:hover {
+  transform: translateX(4px) translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.4) !important;
+}
+
+/* ===== BOTÕES MAIS VIVOS ===== */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease !important;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:active {
+  transform: translateY(0) scale(0.97);
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(232,17,45,0.45) !important;
+}
+
+/* Ripple no clique */
+.btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  transform: scale(0);
+  animation: ripple-out 0.5s ease-out forwards;
+  pointer-events: none;
+}
+
+/* ===== BADGE AO VIVO PULSANTE ===== */
+.badge-ao-vivo,
+.jogo-status.ao_vivo {
+  animation: pulse-glow 1.8s ease-in-out infinite;
+}
+.badge-ao-vivo::before {
+  animation: pulse-dot 1.2s ease-in-out infinite !important;
+}
+
+/* ===== COUNTDOWN ENERGÉTICO ===== */
+.countdown-grid {
+  border-color: rgba(232,17,45,0.3) !important;
+  box-shadow: 0 0 30px rgba(232,17,45,0.08), inset 0 0 20px rgba(7,17,31,0.5);
+}
+.countdown-valor {
+  animation: count-flip 0.25s ease;
+  display: block;
+}
+.countdown-valor.flip {
+  animation: count-flip 0.25s ease;
+}
+
+/* ===== NAVBAR BRAND ANIMADA ===== */
+.navbar-brand span {
+  background: linear-gradient(90deg, #E8112D, #FFD700, #E8112D);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ===== TICKER DE NOTÍCIAS (rodapé hero) ===== */
+.ticker-wrap {
+  overflow: hidden;
+  background: rgba(232,17,45,0.08);
+  border-top: 1px solid rgba(232,17,45,0.2);
+  border-bottom: 1px solid rgba(232,17,45,0.2);
+  padding: var(--espaco-2) 0;
+  margin-top: var(--espaco-8);
+  position: relative;
+}
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker-scroll 40s linear infinite;
+  width: max-content;
+}
+.ticker-item {
+  font-size: 0.8rem;
+  color: var(--texto-secundario);
+  padding: 0 var(--espaco-8);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+.ticker-item::before {
+  content: '⚽';
+  font-size: 0.75rem;
+}
+
+/* ===== SEÇÃO DESTAQUE DE JOGO ===== */
+.destaque-ao-vivo {
+  border-color: rgba(232,17,45,0.5) !important;
+  box-shadow: 0 0 24px rgba(232,17,45,0.15), 0 4px 16px rgba(0,0,0,0.4) !important;
+}
+
+/* ===== RANKING ANIMADO ===== */
+.ranking-pos-1 .ranking-nome { color: var(--cor-accent); }
+.ranking-row:hover {
+  background: rgba(255,215,0,0.05) !important;
+  transform: translateX(4px);
+  transition: all 0.2s ease;
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title { position: relative; }
+
+/* ===== GRUPOS — TIMES COM HOVER ===== */
+.grupo-time:hover {
+  background: rgba(255,215,0,0.08) !important;
+  border-color: rgba(255,215,0,0.3) !important;
+  transform: translateX(3px);
+  transition: all 0.2s ease;
+}
+
+/* ===== PAGE LOAD ===== */
+.main-content {
+  animation: fadeIn 0.4s ease both;
+}

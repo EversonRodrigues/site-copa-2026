@@ -6,6 +6,9 @@ html { scroll-behavior: smooth; }
 
 body {
   background-color: var(--bg-principal);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(232,17,45,0.04) 0%, transparent 35%),
+    radial-gradient(circle at 85% 80%, rgba(255,215,0,0.03) 0%, transparent 35%);
   color: var(--texto-primario);
   font-family: var(--fonte-corpo);
   font-size: 16px;
@@ -52,8 +55,9 @@ h1, h2, h3, h4 { font-family: var(--fonte-titulo); letter-spacing: 1.5px; line-h
 .section-title::after {
   content: '';
   flex: 1;
-  height: 1px;
-  background: var(--borda);
+  height: 2px;
+  background: linear-gradient(90deg, rgba(232,17,45,0.5) 0%, rgba(255,215,0,0.2) 40%, transparent 100%);
+  border-radius: 2px;
 }
 .text-muted { color: var(--texto-secundario); }
 .text-accent { color: var(--cor-accent); }
@@ -78,24 +82,33 @@ h1, h2, h3, h4 { font-family: var(--fonte-titulo); letter-spacing: 1.5px; line-h
 .btn:active { transform: translateY(0); }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-dark));
+  background: linear-gradient(135deg, #E8112D 0%, #c0001f 100%);
   color: var(--cor-branca);
+  box-shadow: 0 4px 14px rgba(232,17,45,0.3);
 }
-.btn-primary:hover { background: linear-gradient(135deg, #f01535, var(--cor-primaria)); color: var(--cor-branca); }
+.btn-primary:hover {
+  background: linear-gradient(135deg, #ff2040, #E8112D);
+  color: var(--cor-branca);
+  box-shadow: 0 6px 20px rgba(232,17,45,0.5);
+}
 
 .btn-outline {
   background: transparent;
-  border: 2px solid var(--cor-primaria);
-  color: var(--cor-primaria);
+  border: 2px solid var(--cor-accent);
+  color: var(--cor-accent);
 }
-.btn-outline:hover { background: var(--cor-primaria); color: var(--cor-branca); }
+.btn-outline:hover {
+  background: var(--cor-accent);
+  color: #07111F;
+  box-shadow: 0 6px 20px rgba(255,215,0,0.35);
+}
 
 .btn-ghost {
   background: rgba(255,255,255,0.07);
   color: var(--texto-primario);
   border: 1px solid var(--borda);
 }
-.btn-ghost:hover { background: rgba(255,255,255,0.12); border-color: var(--borda-hover); }
+.btn-ghost:hover { background: rgba(255,255,255,0.13); border-color: var(--borda-hover); }
 
 .btn-small { padding: 0.35rem 0.85rem; font-size: 0.82rem; min-height: 36px; }
 

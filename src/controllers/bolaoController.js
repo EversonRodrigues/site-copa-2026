@@ -77,13 +77,25 @@ async function paginaMeusPalpites(req, res) {
     };
   });
 
-  // Marca jogos que o usuário já palpitou
+  // Separa palpites em: editáveis (jogo futuro) e histórico (jogo passado/encerrado)
+  const jogosFuturosMap = {};
+  jogosFuturos.forEach(j => { jogosFuturosMap[String(j.id)] = j; });
+
+  const palpitesEditaveis = palpitesFeitos
+    .filter(p => jogosFuturosMap[p.jogo_id])
+    .map(p => ({ ...p, jogo: jogosFuturosMap[p.jogo_id] }));
+
+  const palpitesHistorico = palpitesFeitos
+    .filter(p => !jogosFuturosMap[p.jogo_id]);
+
+  // Jogos futuros ainda sem palpite
   const palpitadosIds = new Set(palpitesFeitos.map(p => p.jogo_id));
   const jogosDisponiveis = jogosFuturos.filter(j => !palpitadosIds.has(String(j.id)));
 
   res.render('pages/meus-palpites', {
     titulo: 'Meus Palpites',
-    palpites: palpitesFeitos,
+    palpites: palpitesHistorico,
+    palpitesEditaveis,
     jogos: jogosDisponiveis
   });
 }

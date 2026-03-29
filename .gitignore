@@ -1,4 +1,33 @@
+# Variáveis de ambiente (nunca versionar secrets)
 .env
+
+# Dependências Node.js
 node_modules/
-database/
-.superpowers/
+
+# Banco de dados SQLite (dados de runtime, não versionar)
+database/db.sqlite
+database/*.sqlite
+
+# Logs de aplicação
+logs/
+*.log
+npm-debug.log*
+
+# Cache e builds
+.cache/
+dist/
+build/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs e editores
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Claude Code (ferramentas internas de desenvolvimento)
+.claude/

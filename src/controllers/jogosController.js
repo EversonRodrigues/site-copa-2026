@@ -3,7 +3,10 @@ const { fetchJogos, fetchGrupos, fetchSelecoes, fetchSelecao } = require('../ser
 async function listarJogos(req, res) {
   const { fase } = req.query;
   try {
-    const jogos = await fetchJogos(fase || null);
+    const todos = await fetchJogos();
+    const jogos = fase
+      ? todos.filter(j => j.fase && j.fase.includes(fase))
+      : todos;
     res.render('pages/jogos', { titulo: 'Jogos', jogos, faseSelecionada: fase || '' });
   } catch (err) {
     console.error('Erro ao buscar jogos:', err.message);
@@ -33,7 +36,7 @@ async function listarSelecoes(req, res) {
 
 async function detalheSelecao(req, res) {
   try {
-    const selecao = await fetchSelecao(req.params.id);
+    const selecao = await fetchSelecao(req.params.nome);
     res.render('pages/selecao', { titulo: selecao.nome || 'Seleção', selecao });
   } catch (err) {
     console.error('Erro ao buscar seleção:', err.message);

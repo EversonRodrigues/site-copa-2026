@@ -1,33 +1,91 @@
 <%- include('../partials/header') %>
 
 <div class="container">
-  <!-- Hero -->
+  <!-- ===== HERO ===== -->
   <section class="hero">
+    <div class="hero-ball" aria-hidden="true">⚽</div>
+
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      FIFA WORLD CUP 2026™
+      <span class="hero-eyebrow-dot"></span>
+    </div>
+
     <h1 class="hero-titulo">COPA DO <span>MUNDO</span></h1>
     <p class="hero-sub">EUA &bull; Canadá &bull; México &mdash; Junho a Julho de 2026</p>
+
     <div class="hero-acoes">
-      <a href="/jogos" class="btn btn-primary">Ver Jogos</a>
-      <a href="/ranking" class="btn btn-outline">Ranking do Bolão</a>
+      <a href="/jogos" class="btn btn-primary btn-lg">⚽ Ver Jogos</a>
+      <a href="/ranking" class="btn btn-outline btn-lg">🏆 Ranking do Bolão</a>
       <% if (!usuario) { %>
-        <a href="/cadastro" class="btn btn-ghost">Participar do Bolão</a>
+        <a href="/cadastro" class="btn btn-ghost btn-lg">🎯 Participar do Bolão</a>
       <% } %>
     </div>
+
+    <!-- Contagem regressiva -->
+    <div class="countdown-container" id="countdown-container">
+      <div class="countdown-label">⏱ Pontapé inicial da Copa 2026</div>
+      <div class="countdown-grid" id="countdown">
+        <div class="countdown-item">
+          <span class="countdown-valor" id="cd-dias">--</span>
+          <span class="countdown-unidade">Dias</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-valor" id="cd-horas">--</span>
+          <span class="countdown-unidade">Horas</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-valor" id="cd-min">--</span>
+          <span class="countdown-unidade">Min</span>
+        </div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item">
+          <span class="countdown-valor" id="cd-seg">--</span>
+          <span class="countdown-unidade">Seg</span>
+        </div>
+      </div>
+      <div class="countdown-jogo">México × África do Sul &mdash; 11/06/2026 às 19h (Brasília)</div>
+    </div>
+
     <div class="hero-stats">
       <div class="hero-stat">
-        <div class="hero-stat-valor">48</div>
+        <div class="hero-stat-valor" data-count="48">48</div>
         <div class="hero-stat-label">Seleções</div>
       </div>
+      <div class="hero-stat-divider"></div>
       <div class="hero-stat">
-        <div class="hero-stat-valor">16</div>
+        <div class="hero-stat-valor" data-count="16">16</div>
         <div class="hero-stat-label">Sedes</div>
       </div>
+      <div class="hero-stat-divider"></div>
       <div class="hero-stat">
-        <div class="hero-stat-valor">104</div>
+        <div class="hero-stat-valor" data-count="104">104</div>
         <div class="hero-stat-label">Jogos</div>
       </div>
+      <div class="hero-stat-divider"></div>
       <div class="hero-stat">
-        <div class="hero-stat-valor">12</div>
+        <div class="hero-stat-valor" data-count="12">12</div>
         <div class="hero-stat-label">Grupos</div>
+      </div>
+    </div>
+
+    <!-- Ticker de fatos Copa -->
+    <div class="ticker-wrap" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item">48 seleções de 6 confederações</span>
+        <span class="ticker-item">104 jogos em 3 países anfitriões</span>
+        <span class="ticker-item">16 estádios nos EUA, Canadá e México</span>
+        <span class="ticker-item">Primeiro jogo: 11 de junho de 2026</span>
+        <span class="ticker-item">Final: 19 de julho de 2026 em Nova Jersey</span>
+        <span class="ticker-item">Maior Copa da história do futebol</span>
+        <span class="ticker-item">48 seleções de 6 confederações</span>
+        <span class="ticker-item">104 jogos em 3 países anfitriões</span>
+        <span class="ticker-item">16 estádios nos EUA, Canadá e México</span>
+        <span class="ticker-item">Primeiro jogo: 11 de junho de 2026</span>
+        <span class="ticker-item">Final: 19 de julho de 2026 em Nova Jersey</span>
+        <span class="ticker-item">Maior Copa da história do futebol</span>
       </div>
     </div>
   </section>
@@ -67,7 +125,7 @@
   <section class="section">
     <h2 class="section-title">Próximos Jogos</h2>
     <% if (proximosJogos.length === 0) { %>
-      <div class="empty-state">
+      <div class="empty-state reveal">
         <div class="empty-state-icon">⚽</div>
         <div class="empty-state-titulo">Nenhum jogo agendado</div>
         <p>Os próximos jogos aparecerão aqui.</p>
@@ -91,12 +149,12 @@
             <div class="jogo-info">
               <span class="jogo-data"><%= jogo.data %></span>
               <span class="jogo-fase"><%= jogo.fase %></span>
-              <% if (jogo.cidade) { %><span class="jogo-cidade"><%= jogo.cidade %></span><% } %>
+              <% if (jogo.cidade) { %><span class="jogo-cidade">📍 <%= jogo.cidade %></span><% } %>
             </div>
           </div>
         <% }) %>
       </div>
-      <a href="/jogos" class="link-mais">Ver todos os 96 jogos &rarr;</a>
+      <a href="/jogos" class="link-mais">Ver todos os 104 jogos &rarr;</a>
     <% } %>
   </section>
 
@@ -108,8 +166,9 @@
     <% } else { %>
       <div class="noticias-lista">
         <% noticias.forEach(n => { %>
-          <a href="<%= n.url %>" target="_blank" rel="noopener noreferrer" class="card-noticia">
+          <a href="<%= n.url %>" target="_blank" rel="noopener noreferrer" class="card-noticia <%= n.ehCopa ? 'card-noticia-copa' : '' %>">
             <div class="noticia-meta">
+              <% if (n.ehCopa) { %><span class="badge-copa-news">COPA 2026</span><% } %>
               <span class="noticia-fonte"><%= n.fonte %></span>
               <span class="noticia-data"><%= n.data %></span>
             </div>
@@ -122,5 +181,22 @@
     <% } %>
   </section>
 </div>
+
+<script>
+(function() {
+  const alvo = new Date('2026-06-11T22:00:00Z');
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function atualizar() {
+    const diff = alvo - new Date();
+    if (diff <= 0) { document.getElementById('countdown-container').style.display = 'none'; return; }
+    document.getElementById('cd-dias').textContent  = pad(Math.floor(diff / 86400000));
+    document.getElementById('cd-horas').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    document.getElementById('cd-min').textContent   = pad(Math.floor((diff % 3600000) / 60000));
+    document.getElementById('cd-seg').textContent   = pad(Math.floor((diff % 60000) / 1000));
+  }
+  atualizar();
+  setInterval(atualizar, 1000);
+})();
+</script>
 
 <%- include('../partials/footer') %>

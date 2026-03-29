@@ -1,20 +1,56 @@
 <%- include('../partials/header') %>
 <div class="container">
-  <h1 class="page-title">Notícias</h1>
+  <div class="page-header">
+    <h1 class="page-title">Notícias</h1>
+    <p class="subtitle">Atualizações sobre a Copa do Mundo 2026 e seleções</p>
+  </div>
+
   <% if (noticias.length === 0) { %>
-    <p class="text-muted">Nenhuma notícia disponível no momento.</p>
-  <% } else { %>
-    <div class="noticias-lista">
-      <% noticias.forEach(n => { %>
-        <a href="<%= n.url %>" target="_blank" rel="noopener" class="card-noticia">
-          <div class="noticia-meta">
-            <span class="noticia-fonte"><%= n.fonte %></span>
-            <span class="noticia-data"><%= n.data %></span>
-          </div>
-          <h3 class="noticia-titulo"><%= n.titulo %></h3>
-        </a>
-      <% }) %>
+    <div class="empty-state">
+      <div class="empty-state-icon">📰</div>
+      <div class="empty-state-titulo">Nenhuma notícia disponível</div>
+      <p class="text-muted">As notícias aparecerão aqui em breve.</p>
     </div>
+  <% } else { %>
+    <% const copaNews = noticias.filter(n => n.ehCopa); %>
+    <% const outrasNews = noticias.filter(n => !n.ehCopa); %>
+
+    <% if (copaNews.length > 0) { %>
+      <section class="section">
+        <h2 class="section-title">Copa do Mundo 2026</h2>
+        <div class="noticias-lista">
+          <% copaNews.forEach(n => { %>
+            <a href="<%= n.url %>" target="_blank" rel="noopener noreferrer" class="card-noticia card-noticia-copa">
+              <div class="noticia-meta">
+                <span class="badge-copa-news">COPA 2026</span>
+                <span class="noticia-fonte"><%= n.fonte %></span>
+                <span class="noticia-data"><%= n.data %></span>
+              </div>
+              <h3 class="noticia-titulo"><%= n.titulo %></h3>
+              <span class="noticia-externa">Ler matéria completa ↗</span>
+            </a>
+          <% }) %>
+        </div>
+      </section>
+    <% } %>
+
+    <% if (outrasNews.length > 0) { %>
+      <section class="section">
+        <h2 class="section-title">Futebol Geral</h2>
+        <div class="noticias-lista">
+          <% outrasNews.forEach(n => { %>
+            <a href="<%= n.url %>" target="_blank" rel="noopener noreferrer" class="card-noticia">
+              <div class="noticia-meta">
+                <span class="noticia-fonte"><%= n.fonte %></span>
+                <span class="noticia-data"><%= n.data %></span>
+              </div>
+              <h3 class="noticia-titulo"><%= n.titulo %></h3>
+              <span class="noticia-externa">Ler matéria completa ↗</span>
+            </a>
+          <% }) %>
+        </div>
+      </section>
+    <% } %>
   <% } %>
 </div>
 <%- include('../partials/footer') %>

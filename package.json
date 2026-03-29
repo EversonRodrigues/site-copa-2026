@@ -1,7 +1,7 @@
 {
-  "name": "site_copa",
+  "name": "site-copa-2026",
   "version": "1.0.0",
-  "description": "",
+  "description": "Site oficial do bolão da Copa do Mundo 2026 — jogos, grupos, seleções, notícias e ranking",
   "main": "server.js",
   "directories": {
     "doc": "docs"
@@ -10,8 +10,8 @@
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["copa-do-mundo", "world-cup", "2026", "futebol", "bolao"],
+  "author": "Everson",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {

@@ -48,7 +48,9 @@
   .grupos-grid { grid-template-columns: 1fr; }
 
   /* Seleções */
-  .selecoes-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: var(--espaco-3); }
+  .selecoes-grid { grid-template-columns: 1fr; gap: var(--espaco-2); }
+  .selecao-detalhe-header { flex-direction: column; }
+  .selecao-detalhe-grid { grid-template-columns: 1fr; }
 
   /* Formulário */
   .form-card { padding: var(--espaco-5); }
@@ -77,7 +79,8 @@
   .navbar { padding: 0 var(--espaco-6); }
   .container { padding: 0 var(--espaco-5); }
   .grupos-grid { grid-template-columns: repeat(2, 1fr); }
-  .selecoes-grid { grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); }
+  .selecoes-grid { grid-template-columns: repeat(2, 1fr); }
+  .selecao-detalhe-grid { grid-template-columns: 1fr; }
   .hero-titulo { font-size: clamp(3rem, 7vw, 4.5rem); }
 }
 

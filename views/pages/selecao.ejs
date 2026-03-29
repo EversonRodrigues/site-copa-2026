@@ -1,18 +1,62 @@
 <%- include('../partials/header') %>
-<div class="container">
-  <a href="/selecoes" class="link-voltar">&larr; Voltar às Seleções</a>
-  <div class="selecao-header">
-    <img src="<%= selecao.bandeira %>" alt="<%= selecao.nome %>" class="selecao-bandeira-grande">
-    <h1 class="page-title"><%= selecao.nome %></h1>
+<div class="container container-md">
+  <a href="/selecoes" class="link-voltar">&larr; Todas as Seleções</a>
+
+  <!-- Header da seleção -->
+  <div class="selecao-detalhe-header" style="--selecao-cor: <%= selecao.cor || '#E8112D' %>">
+    <div class="selecao-detalhe-avatar" style="background: <%= selecao.cor || '#E8112D' %>">
+      <%= (selecao.nome || '?').charAt(0) %>
+    </div>
+    <div class="selecao-detalhe-info">
+      <h1 class="selecao-detalhe-nome"><%= selecao.nome %></h1>
+      <div class="selecao-detalhe-meta">
+        <span class="badge badge-grupo">Grupo <%= selecao.grupo %></span>
+        <span class="badge badge-continente"><%= selecao.continente %></span>
+        <span class="badge badge-ranking">FIFA #<%= selecao.ranking_fifa %></span>
+      </div>
+      <div class="selecao-treinador">
+        <span class="treinador-label">Treinador:</span>
+        <span class="treinador-nome"><%= selecao.treinador %></span>
+      </div>
+    </div>
   </div>
 
-  <div class="selecao-stats">
-    <div class="stat-card"><span class="stat-valor"><%= selecao.jogos %></span><span class="stat-label">Jogos</span></div>
-    <div class="stat-card"><span class="stat-valor"><%= selecao.vitorias %></span><span class="stat-label">Vitórias</span></div>
-    <div class="stat-card"><span class="stat-valor"><%= selecao.empates %></span><span class="stat-label">Empates</span></div>
-    <div class="stat-card"><span class="stat-valor"><%= selecao.derrotas %></span><span class="stat-label">Derrotas</span></div>
-    <div class="stat-card"><span class="stat-valor"><%= selecao.gols_marcados %></span><span class="stat-label">Gols Marcados</span></div>
-    <div class="stat-card"><span class="stat-valor"><%= selecao.gols_sofridos %></span><span class="stat-label">Gols Sofridos</span></div>
+  <div class="selecao-detalhe-grid">
+    <!-- Estilo de Jogo -->
+    <div class="selecao-card-info">
+      <h2 class="selecao-card-titulo">
+        <span class="selecao-card-icone">⚽</span> Estilo de Jogo
+      </h2>
+      <p class="selecao-card-texto"><%= selecao.estilo %></p>
+    </div>
+
+    <!-- Prováveis Jogadores -->
+    <div class="selecao-card-info">
+      <h2 class="selecao-card-titulo">
+        <span class="selecao-card-icone">👕</span> Prováveis Convocados
+      </h2>
+      <ul class="jogadores-lista">
+        <% (selecao.provaveisJogadores || []).forEach(j => { %>
+          <li class="jogador-item"><%= j %></li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <!-- Conquistas -->
+    <div class="selecao-card-info">
+      <h2 class="selecao-card-titulo">
+        <span class="selecao-card-icone">🏆</span> Conquistas
+      </h2>
+      <p class="selecao-card-texto"><%= selecao.conquistas %></p>
+    </div>
+
+    <!-- Curiosidades -->
+    <div class="selecao-card-info">
+      <h2 class="selecao-card-titulo">
+        <span class="selecao-card-icone">💡</span> Curiosidades
+      </h2>
+      <p class="selecao-card-texto"><%= selecao.curiosidades %></p>
+    </div>
   </div>
 </div>
 <%- include('../partials/footer') %>

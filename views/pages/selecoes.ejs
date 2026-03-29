@@ -1,17 +1,48 @@
 <%- include('../partials/header') %>
 <div class="container">
-  <h1 class="page-title">Seleções</h1>
+  <div class="page-header">
+    <h1 class="page-title">Seleções</h1>
+    <p class="subtitle">48 seleções de 6 confederações</p>
+  </div>
+
   <% if (selecoes.length === 0) { %>
-    <p class="text-muted">Dados das seleções em breve.</p>
-  <% } else { %>
-    <div class="selecoes-grid">
-      <% selecoes.forEach(s => { %>
-        <a href="/selecoes/<%= s.id %>" class="card-selecao">
-          <img src="<%= s.bandeira %>" alt="<%= s.nome %>">
-          <span><%= s.nome %></span>
-        </a>
-      <% }) %>
+    <div class="empty-state">
+      <div class="empty-state-icon">🏳️</div>
+      <div class="empty-state-titulo">Dados das seleções em breve</div>
     </div>
+  <% } else { %>
+    <%
+      const grupos = {};
+      selecoes.forEach(s => {
+        if (!grupos[s.grupo]) grupos[s.grupo] = [];
+        grupos[s.grupo].push(s);
+      });
+      const letrasGrupo = Object.keys(grupos).sort();
+    %>
+
+    <% letrasGrupo.forEach(letra => { %>
+      <section class="selecoes-grupo-section">
+        <h2 class="selecoes-grupo-titulo">Grupo <%= letra %></h2>
+        <div class="selecoes-grid">
+          <% grupos[letra].forEach(s => { %>
+            <a href="/selecoes/<%= encodeURIComponent(s.nome) %>" class="card-selecao-rico" style="--selecao-cor: <%= s.cor %>">
+              <div class="selecao-avatar" style="background: <%= s.cor %>">
+                <%= s.nome.charAt(0) %>
+              </div>
+              <div class="selecao-info">
+                <div class="selecao-nome-card"><%= s.nome %></div>
+                <div class="selecao-meta">
+                  <span class="selecao-grupo-badge">Grupo <%= s.grupo %></span>
+                  <span class="selecao-continente-badge"><%= s.continente %></span>
+                </div>
+                <div class="selecao-ranking-card">FIFA #<%= s.ranking_fifa %></div>
+              </div>
+              <div class="selecao-arrow">→</div>
+            </a>
+          <% }) %>
+        </div>
+      </section>
+    <% }) %>
   <% } %>
 </div>
 <%- include('../partials/footer') %>

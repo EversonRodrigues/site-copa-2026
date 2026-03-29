@@ -6,6 +6,6 @@ const router = express.Router();
 router.get('/jogos', listarJogos);
 router.get('/grupos', listarGrupos);
 router.get('/selecoes', listarSelecoes);
-router.get('/selecoes/:id', detalheSelecao);
+router.get('/selecoes/:nome', detalheSelecao);
 
 module.exports = router;
