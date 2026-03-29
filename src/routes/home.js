@@ -1,8 +1,8 @@
 const express = require('express');
+const { home } = require('../controllers/homeController');
+
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('pages/home', { titulo: 'Copa do Mundo 2026' });
-});
+router.get('/', home);
 
 module.exports = router;

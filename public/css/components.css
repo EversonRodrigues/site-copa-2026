@@ -133,6 +133,45 @@
   text-align: center;
 }
 
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--borda);
+  margin-bottom: 2.5rem;
+}
+.hero-titulo { font-size: 3.5rem; color: var(--cor-branca); }
+.hero-sub { color: var(--texto-secundario); font-size: 1.1rem; margin: 0.5rem 0 1.5rem; }
+.hero-acoes { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--cor-primaria);
+  color: var(--cor-primaria);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--raio);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-outline:hover { background: var(--cor-primaria); color: var(--cor-branca); text-decoration: none; }
+
+.badge-ao-vivo {
+  background: var(--cor-primaria);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+.destaque-ao-vivo { border-color: var(--cor-primaria); }
+.link-mais { display: inline-block; margin-top: 1rem; color: var(--texto-secundario); font-size: 0.9rem; }
+.link-mais:hover { color: var(--cor-primaria); }
+
 /* Filtro */
 .filtro-form { margin-bottom: 1.5rem; }
 .filtro-select { max-width: 320px; }
