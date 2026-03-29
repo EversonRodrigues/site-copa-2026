@@ -4,8 +4,12 @@
   <div class="card-perfil">
     <p><strong>Nome:</strong> <%= usuario.nome %></p>
     <p><strong>E-mail:</strong> <%= usuario.email %></p>
-    <p><strong>Pontuação total:</strong> Em breve</p>
-    <p><strong>Posição no ranking:</strong> Em breve</p>
+    <p><strong>Pontuação total:</strong> <%= total_pontos %> pts</p>
+    <p><strong>Posição no ranking:</strong> #<%= posicao %></p>
+  </div>
+  <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+    <a href="/meus-palpites" class="btn btn-primary">Meus Palpites</a>
+    <a href="/ranking" class="btn" style="background: var(--bg-card); border: 1px solid var(--borda);">Ver Ranking</a>
   </div>
 </div>
 <%- include('../partials/footer') %>
