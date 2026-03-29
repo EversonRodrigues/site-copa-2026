@@ -1,62 +1,135 @@
+/* ===== NAVBAR ===== */
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  background-color: var(--bg-card);
-  border-bottom: 2px solid var(--cor-primaria);
-  padding: 0.8rem 2rem;
+  background: rgba(7, 17, 31, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--borda);
+  padding: 0 var(--espaco-8);
+  height: 64px;
 }
 
 .navbar-brand {
   font-family: var(--fonte-titulo);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: var(--cor-branca);
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  flex-shrink: 0;
 }
-.navbar-brand:hover { text-decoration: none; }
+.navbar-brand:hover { color: var(--cor-primaria); text-decoration: none; }
+.navbar-brand span { color: var(--cor-primaria); }
 
 .navbar-menu {
   display: flex;
   list-style: none;
-  gap: 1.5rem;
+  gap: var(--espaco-1);
   align-items: center;
+  margin: 0;
 }
 
 .navbar-menu a {
-  color: var(--cor-branca);
+  color: var(--texto-secundario);
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--raio-sm);
+  transition: all var(--transicao);
+  display: block;
 }
-.navbar-menu a:hover { color: var(--cor-primaria); text-decoration: none; }
+.navbar-menu a:hover {
+  color: var(--cor-branca);
+  background: rgba(255,255,255,0.07);
+  text-decoration: none;
+}
+.navbar-menu a.active {
+  color: var(--cor-branca);
+  background: rgba(232, 17, 45, 0.15);
+}
 
 .btn-nav {
-  background-color: var(--cor-primaria);
+  background: var(--cor-primaria) !important;
   color: var(--cor-branca) !important;
-  padding: 0.4rem 1rem;
-  border-radius: var(--raio);
+  padding: 0.4rem 1rem !important;
+  border-radius: var(--raio) !important;
+  font-weight: 600 !important;
+  min-height: 36px;
+  display: inline-flex !important;
+  align-items: center;
 }
-.btn-nav:hover { opacity: 0.85; }
+.btn-nav:hover {
+  background: var(--cor-primaria-dark) !important;
+  color: var(--cor-branca) !important;
+}
 
 .navbar-toggle {
   display: none;
   background: none;
-  border: none;
+  border: 1px solid var(--borda);
   color: var(--cor-branca);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--raio-sm);
+  min-height: 44px;
+  min-width: 44px;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transicao);
 }
+.navbar-toggle:hover { background: rgba(255,255,255,0.1); }
 
-.main-content { flex: 1; padding: 2rem 0; }
+/* ===== MAIN ===== */
+.main-content { flex: 1; padding: var(--espaco-8) 0 var(--espaco-16); }
 
-.container { max-width: var(--container-max); margin: 0 auto; padding: 0 1.5rem; }
+/* ===== CONTAINER ===== */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--espaco-6);
+}
 .container-sm { max-width: 480px; }
+.container-md { max-width: 720px; }
 
+/* ===== FOOTER ===== */
 .footer {
-  background-color: var(--bg-card);
+  background: var(--bg-card);
   border-top: 1px solid var(--borda);
-  padding: 1.5rem 0;
-  text-align: center;
-  color: var(--texto-secundario);
-  font-size: 0.875rem;
+  padding: var(--espaco-8) 0;
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  flex-wrap: wrap;
+}
+.footer-brand {
+  font-family: var(--fonte-titulo);
+  font-size: 1.2rem;
+  color: var(--cor-branca);
+  letter-spacing: 2px;
+}
+.footer-brand span { color: var(--cor-primaria); }
+.footer-links {
+  display: flex;
+  gap: var(--espaco-6);
+  list-style: none;
+}
+.footer-links a { color: var(--texto-secundario); font-size: 0.875rem; }
+.footer-links a:hover { color: var(--cor-branca); }
+.footer-copy { color: var(--texto-terciario); font-size: 0.8rem; text-align: center; margin-top: var(--espaco-4); }
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  padding: var(--espaco-10) 0 var(--espaco-8);
+  border-bottom: 1px solid var(--borda);
+  margin-bottom: var(--espaco-8);
 }

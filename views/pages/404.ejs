@@ -1,7 +1,10 @@
 <%- include('../partials/header') %>
-<div class="container" style="text-align:center; padding: 4rem 0;">
-  <h1 class="page-title">404</h1>
-  <p class="subtitle">Página não encontrada.</p>
-  <a href="/" class="btn btn-primary">Voltar ao início</a>
+<div class="container" style="text-align:center;">
+  <div class="empty-state" style="padding: var(--espaco-16) 0;">
+    <div style="font-family:var(--fonte-titulo);font-size:8rem;color:var(--borda);line-height:1">404</div>
+    <div class="empty-state-titulo" style="margin-top:var(--espaco-4)">Página não encontrada</div>
+    <p class="text-muted" style="margin:var(--espaco-3) 0 var(--espaco-8)">A página que você procura não existe ou foi movida.</p>
+    <a href="/" class="btn btn-primary">Voltar ao início</a>
+  </div>
 </div>
 <%- include('../partials/footer') %>

@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= titulo %> | Copa 2026</title>
+  <title><%= titulo %> | Copa do Mundo 2026</title>
+  <meta name="description" content="Acompanhe todos os jogos, grupos, seleções e participe do bolão da Copa do Mundo 2026.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/variables.css">
   <link rel="stylesheet" href="/css/base.css">
@@ -13,17 +15,23 @@
   <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body>
-  <nav class="navbar">
-    <a href="/" class="navbar-brand">COPA 2026</a>
-    <button class="navbar-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
-    <ul class="navbar-menu" id="navMenu">
+  <nav class="navbar" role="navigation" aria-label="Navegação principal">
+    <a href="/" class="navbar-brand" aria-label="Copa 2026 — Página inicial">
+      COPA <span>2026</span>
+    </a>
+
+    <button class="navbar-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navMenu">
+      &#9776;
+    </button>
+
+    <ul class="navbar-menu" id="navMenu" role="list">
       <li><a href="/jogos">Jogos</a></li>
       <li><a href="/grupos">Grupos</a></li>
       <li><a href="/selecoes">Seleções</a></li>
       <li><a href="/noticias">Notícias</a></li>
       <li><a href="/ranking">Ranking</a></li>
       <% if (usuario) { %>
-        <li><a href="/meus-palpites">Meus Palpites</a></li>
+        <li><a href="/meus-palpites">Palpites</a></li>
         <li><a href="/perfil">Perfil</a></li>
         <li><a href="/logout">Sair</a></li>
       <% } else { %>
@@ -32,4 +40,5 @@
       <% } %>
     </ul>
   </nav>
-  <main class="main-content">
+
+  <main class="main-content" id="conteudo-principal">

@@ -1,6 +1,8 @@
 <%- include('../partials/header') %>
 <div class="container">
   <h1 class="page-title">Grupos</h1>
+  <p class="subtitle">Copa do Mundo 2026 — 48 seleções divididas em 12 grupos</p>
+
   <% if (grupos.length === 0) { %>
     <p class="text-muted">Dados dos grupos em breve.</p>
   <% } else { %>
@@ -8,23 +10,47 @@
       <% grupos.forEach(grupo => { %>
         <div class="card-grupo">
           <h3>Grupo <%= grupo.nome %></h3>
-          <table class="tabela-grupo">
-            <thead>
-              <tr><th>Seleção</th><th>PJ</th><th>V</th><th>E</th><th>D</th><th>Pts</th></tr>
-            </thead>
-            <tbody>
-              <% grupo.times.forEach(t => { %>
+
+          <% const temPlacar = grupo.times.some(t => t.jogos > 0); %>
+
+          <% if (temPlacar) { %>
+            <table class="tabela-grupo">
+              <thead>
                 <tr>
-                  <td><%= t.nome %></td>
-                  <td><%= t.jogos %></td>
-                  <td><%= t.vitorias %></td>
-                  <td><%= t.empates %></td>
-                  <td><%= t.derrotas %></td>
-                  <td><strong><%= t.pontos %></strong></td>
+                  <th>Seleção</th>
+                  <th title="Jogos">PJ</th>
+                  <th title="Vitórias">V</th>
+                  <th title="Empates">E</th>
+                  <th title="Derrotas">D</th>
+                  <th title="Pontos">Pts</th>
                 </tr>
+              </thead>
+              <tbody>
+                <% grupo.times.forEach(t => { %>
+                  <tr>
+                    <td class="time-nome">
+                      <% if (t.bandeira) { %><img src="<%= t.bandeira %>" alt="" class="bandeira-mini"><% } %>
+                      <%= t.nome %>
+                    </td>
+                    <td><%= t.jogos %></td>
+                    <td><%= t.vitorias %></td>
+                    <td><%= t.empates %></td>
+                    <td><%= t.derrotas %></td>
+                    <td><strong><%= t.pontos %></strong></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          <% } else { %>
+            <ul class="lista-times">
+              <% grupo.times.forEach(t => { %>
+                <li class="item-time">
+                  <% if (t.bandeira) { %><img src="<%= t.bandeira %>" alt="" class="bandeira-mini"><% } %>
+                  <%= t.nome %>
+                </li>
               <% }) %>
-            </tbody>
-          </table>
+            </ul>
+          <% } %>
         </div>
       <% }) %>
     </div>

@@ -1,28 +1,61 @@
 <%- include('../partials/header') %>
-<div class="container">
 
-  <div class="hero">
-    <h1 class="hero-titulo">Copa do Mundo 2026</h1>
-    <p class="hero-sub">EUA &bull; Canadá &bull; México &mdash; Junho/Julho 2026</p>
+<div class="container">
+  <!-- Hero -->
+  <section class="hero">
+    <h1 class="hero-titulo">COPA DO <span>MUNDO</span></h1>
+    <p class="hero-sub">EUA &bull; Canadá &bull; México &mdash; Junho a Julho de 2026</p>
     <div class="hero-acoes">
       <a href="/jogos" class="btn btn-primary">Ver Jogos</a>
       <a href="/ranking" class="btn btn-outline">Ranking do Bolão</a>
+      <% if (!usuario) { %>
+        <a href="/cadastro" class="btn btn-ghost">Participar do Bolão</a>
+      <% } %>
     </div>
-  </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-valor">48</div>
+        <div class="hero-stat-label">Seleções</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-valor">16</div>
+        <div class="hero-stat-label">Sedes</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-valor">104</div>
+        <div class="hero-stat-label">Jogos</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-valor">12</div>
+        <div class="hero-stat-label">Grupos</div>
+      </div>
+    </div>
+  </section>
 
+  <!-- Jogos ao vivo -->
   <% if (jogosAoVivo.length > 0) { %>
   <section class="section">
-    <h2 class="section-title"><span class="badge-ao-vivo">AO VIVO</span> Jogos em andamento</h2>
+    <h2 class="section-title">
+      <span class="badge-ao-vivo">&#9679; AO VIVO</span>
+      Agora
+    </h2>
     <div class="jogos-lista">
       <% jogosAoVivo.forEach(jogo => { %>
         <div class="card-jogo destaque-ao-vivo">
           <span class="jogo-status ao_vivo"><%= jogo.statusLabel %></span>
           <div class="jogo-times">
-            <% if (jogo.bandeirasCasa) { %><img src="<%= jogo.bandeirasCasa %>" alt="" class="bandeira-mini"><% } %>
-            <span class="time"><%= jogo.timeCasa %></span>
+            <div class="time-bloco">
+              <% if (jogo.bandeirasCasa) { %><img src="<%= jogo.bandeirasCasa %>" alt="" class="bandeira-mini"><% } %>
+              <span class="time-nome-jogo"><%= jogo.timeCasa %></span>
+            </div>
             <span class="placar"><%= jogo.placar %></span>
-            <span class="time"><%= jogo.timeFora %></span>
-            <% if (jogo.bandeiraFora) { %><img src="<%= jogo.bandeiraFora %>" alt="" class="bandeira-mini"><% } %>
+            <div class="time-bloco">
+              <% if (jogo.bandeiraFora) { %><img src="<%= jogo.bandeiraFora %>" alt="" class="bandeira-mini"><% } %>
+              <span class="time-nome-jogo"><%= jogo.timeFora %></span>
+            </div>
+          </div>
+          <div class="jogo-info">
+            <span class="jogo-fase"><%= jogo.fase %></span>
           </div>
         </div>
       <% }) %>
@@ -30,33 +63,44 @@
   </section>
   <% } %>
 
+  <!-- Próximos Jogos -->
   <section class="section">
     <h2 class="section-title">Próximos Jogos</h2>
     <% if (proximosJogos.length === 0) { %>
-      <p class="text-muted">Nenhum jogo agendado no momento.</p>
+      <div class="empty-state">
+        <div class="empty-state-icon">⚽</div>
+        <div class="empty-state-titulo">Nenhum jogo agendado</div>
+        <p>Os próximos jogos aparecerão aqui.</p>
+      </div>
     <% } else { %>
       <div class="jogos-lista">
         <% proximosJogos.forEach(jogo => { %>
           <div class="card-jogo">
-            <span class="jogo-status em_breve"><%= jogo.statusLabel %></span>
+            <span class="jogo-status em_breve">Em breve</span>
             <div class="jogo-times">
-              <% if (jogo.bandeirasCasa) { %><img src="<%= jogo.bandeirasCasa %>" alt="" class="bandeira-mini"><% } %>
-              <span class="time"><%= jogo.timeCasa %></span>
+              <div class="time-bloco">
+                <% if (jogo.bandeirasCasa) { %><img src="<%= jogo.bandeirasCasa %>" alt="" class="bandeira-mini"><% } %>
+                <span class="time-nome-jogo"><%= jogo.timeCasa %></span>
+              </div>
               <span class="vs">vs</span>
-              <span class="time"><%= jogo.timeFora %></span>
-              <% if (jogo.bandeiraFora) { %><img src="<%= jogo.bandeiraFora %>" alt="" class="bandeira-mini"><% } %>
+              <div class="time-bloco">
+                <% if (jogo.bandeiraFora) { %><img src="<%= jogo.bandeiraFora %>" alt="" class="bandeira-mini"><% } %>
+                <span class="time-nome-jogo"><%= jogo.timeFora %></span>
+              </div>
             </div>
             <div class="jogo-info">
               <span class="jogo-data"><%= jogo.data %></span>
               <span class="jogo-fase"><%= jogo.fase %></span>
+              <% if (jogo.cidade) { %><span class="jogo-cidade"><%= jogo.cidade %></span><% } %>
             </div>
           </div>
         <% }) %>
       </div>
-      <a href="/jogos" class="link-mais">Ver todos os jogos &rarr;</a>
+      <a href="/jogos" class="link-mais">Ver todos os 96 jogos &rarr;</a>
     <% } %>
   </section>
 
+  <!-- Notícias -->
   <section class="section">
     <h2 class="section-title">Últimas Notícias</h2>
     <% if (noticias.length === 0) { %>
@@ -64,18 +108,19 @@
     <% } else { %>
       <div class="noticias-lista">
         <% noticias.forEach(n => { %>
-          <a href="<%= n.url %>" target="_blank" rel="noopener" class="card-noticia">
+          <a href="<%= n.url %>" target="_blank" rel="noopener noreferrer" class="card-noticia">
             <div class="noticia-meta">
               <span class="noticia-fonte"><%= n.fonte %></span>
               <span class="noticia-data"><%= n.data %></span>
             </div>
             <h3 class="noticia-titulo"><%= n.titulo %></h3>
+            <span class="noticia-externa">Ler matéria completa ↗</span>
           </a>
         <% }) %>
       </div>
       <a href="/noticias" class="link-mais">Ver todas as notícias &rarr;</a>
     <% } %>
   </section>
-
 </div>
+
 <%- include('../partials/footer') %>

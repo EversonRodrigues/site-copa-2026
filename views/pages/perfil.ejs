@@ -1,15 +1,38 @@
 <%- include('../partials/header') %>
 <div class="container container-sm">
-  <h1 class="page-title">Meu Perfil</h1>
-  <div class="card-perfil">
-    <p><strong>Nome:</strong> <%= usuario.nome %></p>
-    <p><strong>E-mail:</strong> <%= usuario.email %></p>
-    <p><strong>Pontuação total:</strong> <%= total_pontos %> pts</p>
-    <p><strong>Posição no ranking:</strong> #<%= posicao %></p>
+  <div class="page-header">
+    <h1 class="page-title">Meu Perfil</h1>
   </div>
-  <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+
+  <div class="card-perfil">
+    <div class="perfil-avatar" aria-hidden="true">
+      <%= usuario.nome.charAt(0).toUpperCase() %>
+    </div>
+
+    <div class="perfil-info">
+      <div class="perfil-row">
+        <span class="perfil-label">Nome</span>
+        <span class="perfil-valor"><%= usuario.nome %></span>
+      </div>
+      <div class="perfil-row">
+        <span class="perfil-label">E-mail</span>
+        <span class="perfil-valor"><%= usuario.email %></span>
+      </div>
+      <div class="perfil-row">
+        <span class="perfil-label">Pontuação total</span>
+        <span class="perfil-pontos"><%= total_pontos %> pts</span>
+      </div>
+      <div class="perfil-row">
+        <span class="perfil-label">Posição no ranking</span>
+        <span class="perfil-valor">#<%= posicao %></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-4 mt-4">
     <a href="/meus-palpites" class="btn btn-primary">Meus Palpites</a>
-    <a href="/ranking" class="btn" style="background: var(--bg-card); border: 1px solid var(--borda);">Ver Ranking</a>
+    <a href="/ranking" class="btn btn-ghost">Ver Ranking</a>
+    <a href="/logout" class="btn btn-ghost">Sair</a>
   </div>
 </div>
 <%- include('../partials/footer') %>

@@ -1,12 +1,47 @@
 :root {
-  --bg-principal: #0A1628;
-  --bg-card: #122040;
-  --cor-primaria: #C8102E;
+  /* Cores principais */
+  --bg-principal: #07111F;
+  --bg-card: #0F1E35;
+  --bg-card-hover: #152646;
+  --cor-primaria: #E8112D;
+  --cor-primaria-dark: #B50D24;
+  --cor-accent: #FFD700;
   --cor-branca: #FFFFFF;
-  --texto-secundario: #8FA3C0;
-  --borda: #1E3A5F;
+  --cor-sucesso: #22C55E;
+  --cor-aviso: #F59E0B;
+
+  /* Texto */
+  --texto-primario: #F0F4FA;
+  --texto-secundario: #7B95B8;
+  --texto-terciario: #4A6480;
+
+  /* Bordas e divisores */
+  --borda: #1A3050;
+  --borda-hover: #2A4D80;
+  --borda-destaque: #E8112D;
+
+  /* Tipografia */
   --fonte-titulo: 'Bebas Neue', sans-serif;
   --fonte-corpo: 'Inter', sans-serif;
+
+  /* Espaçamento (base 8px) */
+  --espaco-1: 0.25rem;   /* 4px */
+  --espaco-2: 0.5rem;    /* 8px */
+  --espaco-3: 0.75rem;   /* 12px */
+  --espaco-4: 1rem;      /* 16px */
+  --espaco-5: 1.25rem;   /* 20px */
+  --espaco-6: 1.5rem;    /* 24px */
+  --espaco-8: 2rem;      /* 32px */
+  --espaco-10: 2.5rem;   /* 40px */
+  --espaco-12: 3rem;     /* 48px */
+  --espaco-16: 4rem;     /* 64px */
+
+  /* Layout */
   --container-max: 1200px;
-  --raio: 8px;
+  --raio: 10px;
+  --raio-sm: 6px;
+  --raio-lg: 16px;
+  --sombra: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --sombra-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --transicao: 0.2s ease;
 }

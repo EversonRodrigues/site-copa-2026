@@ -1,38 +1,58 @@
 <%- include('../partials/header') %>
 <div class="container">
-  <h1 class="page-title">Jogos</h1>
+  <div class="page-header">
+    <h1 class="page-title">Jogos</h1>
+    <p class="subtitle">Copa do Mundo 2026 — Calendário completo</p>
+  </div>
 
   <form class="filtro-form" method="GET" action="/jogos">
-    <select name="fase" class="form-input filtro-select" onchange="this.form.submit()">
+    <select name="fase" class="form-input filtro-select" onchange="this.form.submit()" aria-label="Filtrar por fase">
       <option value="">Todas as fases</option>
-      <option value="Group Stage - 1" <%= faseSelecionada === 'Group Stage - 1' ? 'selected' : '' %>>Fase de Grupos - Rodada 1</option>
-      <option value="Group Stage - 2" <%= faseSelecionada === 'Group Stage - 2' ? 'selected' : '' %>>Fase de Grupos - Rodada 2</option>
-      <option value="Group Stage - 3" <%= faseSelecionada === 'Group Stage - 3' ? 'selected' : '' %>>Fase de Grupos - Rodada 3</option>
-      <option value="Round of 32" <%= faseSelecionada === 'Round of 32' ? 'selected' : '' %>>Oitavas de Final</option>
-      <option value="Quarter-finals" <%= faseSelecionada === 'Quarter-finals' ? 'selected' : '' %>>Quartas de Final</option>
-      <option value="Semi-finals" <%= faseSelecionada === 'Semi-finals' ? 'selected' : '' %>>Semifinais</option>
-      <option value="3rd Place Final" <%= faseSelecionada === '3rd Place Final' ? 'selected' : '' %>>Disputa 3º Lugar</option>
-      <option value="Final" <%= faseSelecionada === 'Final' ? 'selected' : '' %>>Final</option>
+      <optgroup label="Fase de Grupos">
+        <option value="Rodada 1" <%= faseSelecionada === 'Rodada 1' ? 'selected' : '' %>>Rodada 1</option>
+        <option value="Rodada 2" <%= faseSelecionada === 'Rodada 2' ? 'selected' : '' %>>Rodada 2</option>
+        <option value="Rodada 3" <%= faseSelecionada === 'Rodada 3' ? 'selected' : '' %>>Rodada 3</option>
+      </optgroup>
+      <optgroup label="Mata-mata">
+        <option value="Oitavas de Final" <%= faseSelecionada === 'Oitavas de Final' ? 'selected' : '' %>>Oitavas de Final</option>
+        <option value="Quartas de Final" <%= faseSelecionada === 'Quartas de Final' ? 'selected' : '' %>>Quartas de Final</option>
+        <option value="Semifinal" <%= faseSelecionada === 'Semifinal' ? 'selected' : '' %>>Semifinais</option>
+        <option value="3º Lugar" <%= faseSelecionada === '3º Lugar' ? 'selected' : '' %>>3º Lugar</option>
+        <option value="Final" <%= faseSelecionada === 'Final' ? 'selected' : '' %>>Final</option>
+      </optgroup>
     </select>
   </form>
 
   <% if (jogos.length === 0) { %>
-    <p class="text-muted">Nenhum jogo encontrado.</p>
+    <div class="empty-state">
+      <div class="empty-state-icon">🔍</div>
+      <div class="empty-state-titulo">Nenhum jogo encontrado</div>
+      <p>Tente outro filtro ou <a href="/jogos">veja todos os jogos</a>.</p>
+    </div>
   <% } else { %>
     <div class="jogos-lista">
       <% jogos.forEach(jogo => { %>
         <div class="card-jogo">
           <span class="jogo-status <%= jogo.status %>"><%= jogo.statusLabel %></span>
           <div class="jogo-times">
-            <% if (jogo.bandeirasCasa) { %><img src="<%= jogo.bandeirasCasa %>" alt="" class="bandeira-mini"><% } %>
-            <span class="time"><%= jogo.timeCasa %></span>
-            <span class="placar"><%= jogo.placar %></span>
-            <span class="time"><%= jogo.timeFora %></span>
-            <% if (jogo.bandeiraFora) { %><img src="<%= jogo.bandeiraFora %>" alt="" class="bandeira-mini"><% } %>
+            <div class="time-bloco">
+              <% if (jogo.bandeirasCasa) { %><img src="<%= jogo.bandeirasCasa %>" alt="" class="bandeira-mini"><% } %>
+              <span class="time-nome-jogo"><%= jogo.timeCasa %></span>
+            </div>
+            <% if (jogo.status === 'encerrado' || jogo.status === 'ao_vivo') { %>
+              <span class="placar"><%= jogo.placar %></span>
+            <% } else { %>
+              <span class="vs">vs</span>
+            <% } %>
+            <div class="time-bloco">
+              <% if (jogo.bandeiraFora) { %><img src="<%= jogo.bandeiraFora %>" alt="" class="bandeira-mini"><% } %>
+              <span class="time-nome-jogo"><%= jogo.timeFora %></span>
+            </div>
           </div>
           <div class="jogo-info">
             <span class="jogo-data"><%= jogo.data %></span>
             <span class="jogo-fase"><%= jogo.fase %></span>
+            <% if (jogo.cidade) { %><span class="jogo-cidade">📍 <%= jogo.cidade %></span><% } %>
           </div>
         </div>
       <% }) %>
