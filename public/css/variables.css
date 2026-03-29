@@ -1,0 +1,12 @@
+:root {
+  --bg-principal: #0A1628;
+  --bg-card: #122040;
+  --cor-primaria: #C8102E;
+  --cor-branca: #FFFFFF;
+  --texto-secundario: #8FA3C0;
+  --borda: #1E3A5F;
+  --fonte-titulo: 'Bebas Neue', sans-serif;
+  --fonte-corpo: 'Inter', sans-serif;
+  --container-max: 1200px;
+  --raio: 8px;
+}

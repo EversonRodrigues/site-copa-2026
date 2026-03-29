@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <h1 class="page-title">Notícias</h1>
+  <% if (noticias.length === 0) { %>
+    <p class="text-muted">Nenhuma notícia disponível no momento.</p>
+  <% } else { %>
+    <div class="noticias-lista">
+      <% noticias.forEach(n => { %>
+        <a href="<%= n.url %>" target="_blank" rel="noopener" class="card-noticia">
+          <div class="noticia-meta">
+            <span class="noticia-fonte"><%= n.fonte %></span>
+            <span class="noticia-data"><%= n.data %></span>
+          </div>
+          <h3 class="noticia-titulo"><%= n.titulo %></h3>
+        </a>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

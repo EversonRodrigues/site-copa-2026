@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <h1 class="page-title">Meus Palpites</h1>
+  <% if (jogos.length === 0) { %>
+    <p class="text-muted">Nenhum jogo disponível para palpitar no momento.</p>
+  <% } else { %>
+    <div class="palpites-lista" id="palpites-lista">
+      <% jogos.forEach(jogo => { %>
+        <div class="card-palpite" data-jogo-id="<%= jogo.id %>">
+          <div class="jogo-times">
+            <span class="time"><%= jogo.timeCasa %></span>
+            <span class="vs">x</span>
+            <span class="time"><%= jogo.timeFora %></span>
+          </div>
+          <div class="palpite-form">
+            <input type="number" class="input-placar" name="gols_casa" min="0" max="20" placeholder="0">
+            <span>x</span>
+            <input type="number" class="input-placar" name="gols_fora" min="0" max="20" placeholder="0">
+            <button class="btn btn-small btn-primary btn-palpitar" data-jogo-id="<%= jogo.id %>">Palpitar</button>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <h2 class="section-title">Histórico</h2>
+  <% if (palpites.length === 0) { %>
+    <p class="text-muted">Você ainda não fez nenhum palpite.</p>
+  <% } else { %>
+    <table class="tabela-historico">
+      <thead>
+        <tr><th>Jogo</th><th>Seu Palpite</th><th>Resultado</th><th>Pontos</th></tr>
+      </thead>
+      <tbody>
+        <% palpites.forEach(p => { %>
+          <tr>
+            <td><%= p.timeCasa %> x <%= p.timeFora %></td>
+            <td><%= p.gols_casa %> x <%= p.gols_fora %></td>
+            <td><%= p.resultado || '-' %></td>
+            <td><%= p.pontos !== null ? p.pontos : '-' %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+<script src="/js/palpites.js"></script>
+<%- include('../partials/footer') %>

@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <h1 class="page-title">Jogos</h1>
+  <% if (jogos.length === 0) { %>
+    <p class="text-muted">Nenhum jogo disponível no momento.</p>
+  <% } else { %>
+    <div class="jogos-lista">
+      <% jogos.forEach(jogo => { %>
+        <div class="card-jogo">
+          <span class="jogo-status <%= jogo.status %>"><%= jogo.statusLabel %></span>
+          <div class="jogo-times">
+            <span class="time"><%= jogo.timeCasa %></span>
+            <span class="placar"><%= jogo.placar %></span>
+            <span class="time"><%= jogo.timeFora %></span>
+          </div>
+          <span class="jogo-data"><%= jogo.data %></span>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <h1 class="page-title">Seleções</h1>
+  <% if (selecoes.length === 0) { %>
+    <p class="text-muted">Dados das seleções em breve.</p>
+  <% } else { %>
+    <div class="selecoes-grid">
+      <% selecoes.forEach(s => { %>
+        <a href="/selecoes/<%= s.id %>" class="card-selecao">
+          <img src="<%= s.bandeira %>" alt="<%= s.nome %>">
+          <span><%= s.nome %></span>
+        </a>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>

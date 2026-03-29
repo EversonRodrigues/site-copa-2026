@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= titulo %> | Copa 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">COPA 2026</a>
+    <button class="navbar-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+    <ul class="navbar-menu" id="navMenu">
+      <li><a href="/jogos">Jogos</a></li>
+      <li><a href="/grupos">Grupos</a></li>
+      <li><a href="/selecoes">Seleções</a></li>
+      <li><a href="/noticias">Notícias</a></li>
+      <li><a href="/ranking">Ranking</a></li>
+      <% if (usuario) { %>
+        <li><a href="/meus-palpites">Meus Palpites</a></li>
+        <li><a href="/perfil">Perfil</a></li>
+        <li><a href="/logout">Sair</a></li>
+      <% } else { %>
+        <li><a href="/login">Entrar</a></li>
+        <li><a href="/cadastro" class="btn-nav">Cadastrar</a></li>
+      <% } %>
+    </ul>
+  </nav>
+  <main class="main-content">

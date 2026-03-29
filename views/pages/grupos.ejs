@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <h1 class="page-title">Grupos</h1>
+  <% if (grupos.length === 0) { %>
+    <p class="text-muted">Dados dos grupos em breve.</p>
+  <% } else { %>
+    <div class="grupos-grid">
+      <% grupos.forEach(grupo => { %>
+        <div class="card-grupo">
+          <h3>Grupo <%= grupo.nome %></h3>
+          <table class="tabela-grupo">
+            <thead>
+              <tr><th>Seleção</th><th>PJ</th><th>V</th><th>E</th><th>D</th><th>Pts</th></tr>
+            </thead>
+            <tbody>
+              <% grupo.times.forEach(t => { %>
+                <tr>
+                  <td><%= t.nome %></td>
+                  <td><%= t.jogos %></td>
+                  <td><%= t.vitorias %></td>
+                  <td><%= t.empates %></td>
+                  <td><%= t.derrotas %></td>
+                  <td><strong><%= t.pontos %></strong></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/footer') %>
