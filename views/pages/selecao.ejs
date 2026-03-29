@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <a href="/selecoes" class="link-voltar">&larr; Voltar às Seleções</a>
+  <div class="selecao-header">
+    <img src="<%= selecao.bandeira %>" alt="<%= selecao.nome %>" class="selecao-bandeira-grande">
+    <h1 class="page-title"><%= selecao.nome %></h1>
+  </div>
+
+  <div class="selecao-stats">
+    <div class="stat-card"><span class="stat-valor"><%= selecao.jogos %></span><span class="stat-label">Jogos</span></div>
+    <div class="stat-card"><span class="stat-valor"><%= selecao.vitorias %></span><span class="stat-label">Vitórias</span></div>
+    <div class="stat-card"><span class="stat-valor"><%= selecao.empates %></span><span class="stat-label">Empates</span></div>
+    <div class="stat-card"><span class="stat-valor"><%= selecao.derrotas %></span><span class="stat-label">Derrotas</span></div>
+    <div class="stat-card"><span class="stat-valor"><%= selecao.gols_marcados %></span><span class="stat-label">Gols Marcados</span></div>
+    <div class="stat-card"><span class="stat-valor"><%= selecao.gols_sofridos %></span><span class="stat-label">Gols Sofridos</span></div>
+  </div>
+</div>
+<%- include('../partials/footer') %>

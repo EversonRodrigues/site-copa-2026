@@ -1,8 +1,11 @@
 const express = require('express');
+const { listarJogos, listarGrupos, listarSelecoes, detalheSelecao } = require('../controllers/jogosController');
+
 const router = express.Router();
 
-router.get('/jogos', (req, res) => res.render('pages/jogos', { titulo: 'Jogos', jogos: [] }));
-router.get('/grupos', (req, res) => res.render('pages/grupos', { titulo: 'Grupos', grupos: [] }));
-router.get('/selecoes', (req, res) => res.render('pages/selecoes', { titulo: 'Seleções', selecoes: [] }));
+router.get('/jogos', listarJogos);
+router.get('/grupos', listarGrupos);
+router.get('/selecoes', listarSelecoes);
+router.get('/selecoes/:id', detalheSelecao);
 
 module.exports = router;

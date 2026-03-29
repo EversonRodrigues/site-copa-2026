@@ -1,19 +1,39 @@
 <%- include('../partials/header') %>
 <div class="container">
   <h1 class="page-title">Jogos</h1>
+
+  <form class="filtro-form" method="GET" action="/jogos">
+    <select name="fase" class="form-input filtro-select" onchange="this.form.submit()">
+      <option value="">Todas as fases</option>
+      <option value="Group Stage - 1" <%= faseSelecionada === 'Group Stage - 1' ? 'selected' : '' %>>Fase de Grupos - Rodada 1</option>
+      <option value="Group Stage - 2" <%= faseSelecionada === 'Group Stage - 2' ? 'selected' : '' %>>Fase de Grupos - Rodada 2</option>
+      <option value="Group Stage - 3" <%= faseSelecionada === 'Group Stage - 3' ? 'selected' : '' %>>Fase de Grupos - Rodada 3</option>
+      <option value="Round of 32" <%= faseSelecionada === 'Round of 32' ? 'selected' : '' %>>Oitavas de Final</option>
+      <option value="Quarter-finals" <%= faseSelecionada === 'Quarter-finals' ? 'selected' : '' %>>Quartas de Final</option>
+      <option value="Semi-finals" <%= faseSelecionada === 'Semi-finals' ? 'selected' : '' %>>Semifinais</option>
+      <option value="3rd Place Final" <%= faseSelecionada === '3rd Place Final' ? 'selected' : '' %>>Disputa 3º Lugar</option>
+      <option value="Final" <%= faseSelecionada === 'Final' ? 'selected' : '' %>>Final</option>
+    </select>
+  </form>
+
   <% if (jogos.length === 0) { %>
-    <p class="text-muted">Nenhum jogo disponível no momento.</p>
+    <p class="text-muted">Nenhum jogo encontrado.</p>
   <% } else { %>
     <div class="jogos-lista">
       <% jogos.forEach(jogo => { %>
         <div class="card-jogo">
           <span class="jogo-status <%= jogo.status %>"><%= jogo.statusLabel %></span>
           <div class="jogo-times">
+            <% if (jogo.bandeirasCasa) { %><img src="<%= jogo.bandeirasCasa %>" alt="" class="bandeira-mini"><% } %>
             <span class="time"><%= jogo.timeCasa %></span>
             <span class="placar"><%= jogo.placar %></span>
             <span class="time"><%= jogo.timeFora %></span>
+            <% if (jogo.bandeiraFora) { %><img src="<%= jogo.bandeiraFora %>" alt="" class="bandeira-mini"><% } %>
           </div>
-          <span class="jogo-data"><%= jogo.data %></span>
+          <div class="jogo-info">
+            <span class="jogo-data"><%= jogo.data %></span>
+            <span class="jogo-fase"><%= jogo.fase %></span>
+          </div>
         </div>
       <% }) %>
     </div>
