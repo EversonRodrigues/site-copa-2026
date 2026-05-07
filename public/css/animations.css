@@ -1,11 +1,11 @@
 /* ===================================================
-   COPA 2026 — ANIMAÇÕES E ENERGIA VISUAL
+   COPA 2026 — ANIMAÇÕES
    =================================================== */
 
 /* ===== KEYFRAMES ===== */
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(32px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -15,33 +15,38 @@
 }
 
 @keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-24px); }
+  from { opacity: 0; transform: translateX(-28px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(24px); }
+  from { opacity: 0; transform: translateX(28px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.88); }
+  from { opacity: 0; transform: scale(0.9); }
   to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(-5deg); }
-  50%       { transform: translateY(-18px) rotate(5deg); }
+  0%, 100% { transform: translateY(0px) rotate(-3deg); }
+  50%       { transform: translateY(-16px) rotate(3deg); }
 }
 
-@keyframes pulse-glow {
+@keyframes pulse-glow-red {
   0%, 100% { box-shadow: 0 0 0 0 rgba(232, 17, 45, 0.5); }
-  50%       { box-shadow: 0 0 20px 6px rgba(232, 17, 45, 0.25); }
+  50%       { box-shadow: 0 0 16px 4px rgba(232, 17, 45, 0.2); }
+}
+
+@keyframes pulse-glow-cyan {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(6, 200, 232, 0.4); }
+  50%       { box-shadow: 0 0 14px 3px rgba(6, 200, 232, 0.15); }
 }
 
 @keyframes pulse-dot {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(1.5); opacity: 0.6; }
+  50%       { transform: scale(1.6); opacity: 0.5; }
 }
 
 @keyframes shimmer {
@@ -61,27 +66,32 @@
 }
 
 @keyframes bounce-in {
-  0%   { transform: scale(0.3); opacity: 0; }
-  50%  { transform: scale(1.05); }
-  70%  { transform: scale(0.9); }
+  0%   { transform: scale(0.4) translateY(10px); opacity: 0; }
+  60%  { transform: scale(1.06); }
+  80%  { transform: scale(0.96); }
   100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes count-flip {
-  0%   { transform: translateY(-10px); opacity: 0; }
+  0%   { transform: translateY(-8px); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes ripple-out {
-  0%   { transform: scale(1); opacity: 0.6; }
+  0%   { transform: scale(0); opacity: 0.4; }
   100% { transform: scale(3); opacity: 0; }
+}
+
+@keyframes slide-bar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
 /* ===== SCROLL REVEAL ===== */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .reveal.visible {
   opacity: 1;
@@ -89,19 +99,19 @@
 }
 .reveal-left {
   opacity: 0;
-  transform: translateX(-24px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateX(-20px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
 .reveal-left.visible { opacity: 1; transform: translateX(0); }
 
 .reveal-scale {
   opacity: 0;
-  transform: scale(0.92);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: scale(0.94);
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
 .reveal-scale.visible { opacity: 1; transform: scale(1); }
 
-/* Delay stagger para listas de cards */
+/* Delay stagger */
 .reveal:nth-child(1) { transition-delay: 0s; }
 .reveal:nth-child(2) { transition-delay: 0.07s; }
 .reveal:nth-child(3) { transition-delay: 0.14s; }
@@ -113,83 +123,56 @@
 .hero {
   background: linear-gradient(
     135deg,
-    #07111F 0%,
-    #0d1f38 30%,
-    #12102a 60%,
-    #07111F 100%
+    #060B14 0%,
+    #0E1B2E 30%,
+    #0A1020 60%,
+    #060B14 100%
   );
   background-size: 300% 300%;
-  animation: hero-gradient 8s ease infinite;
-  position: relative;
-  overflow: hidden;
+  animation: hero-gradient 10s ease infinite;
 }
 
-/* Linhas decorativas de campo de futebol */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 50% 50%, rgba(232,17,45,0.06) 0%, transparent 60%),
-    radial-gradient(circle at 20% 80%, rgba(255,215,0,0.04) 0%, transparent 40%);
-  pointer-events: none;
-}
-
-/* Bola flutuante decorativa */
-.hero-ball {
-  position: absolute;
-  right: 8%;
-  top: 15%;
-  font-size: clamp(4rem, 8vw, 7rem);
-  animation: float 4s ease-in-out infinite;
-  opacity: 0.18;
-  pointer-events: none;
-  user-select: none;
-  filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
-}
-
-/* ===== TÍTULO COM SHIMMER ===== */
+/* Título shimmer */
 .hero-titulo {
-  animation: fadeInUp 0.8s ease both;
+  animation: fadeInUp 0.7s ease both;
 }
 .hero-titulo span {
   background: linear-gradient(
     90deg,
     #E8112D 0%,
-    #FFD700 40%,
-    #E8112D 80%,
-    #FFD700 100%
+    #FFD700 35%,
+    #06C8E8 65%,
+    #E8112D 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 3s linear infinite;
+  animation: shimmer 4s linear infinite;
 }
 
-.hero-sub { animation: fadeInUp 0.8s ease 0.2s both; }
-.hero-acoes { animation: fadeInUp 0.8s ease 0.4s both; }
-.countdown-container { animation: fadeInUp 0.8s ease 0.5s both; }
-.hero-stats { animation: fadeInUp 0.8s ease 0.6s both; }
+.hero-sub      { animation: fadeInUp 0.7s ease 0.15s both; }
+.hero-eyebrow  { animation: fadeInUp 0.6s ease both; }
+.hero-acoes    { animation: fadeInUp 0.7s ease 0.3s both; }
+.countdown-container { animation: fadeInUp 0.7s ease 0.45s both; }
+.hero-stats    { animation: fadeInUp 0.7s ease 0.55s both; }
 
 /* ===== STATS CONTADOR ===== */
 .hero-stat-valor {
-  display: block;
-  animation: bounce-in 0.8s ease both;
+  animation: bounce-in 0.7s ease both;
 }
-.hero-stat:nth-child(1) .hero-stat-valor { animation-delay: 0.6s; }
-.hero-stat:nth-child(2) .hero-stat-valor { animation-delay: 0.75s; }
-.hero-stat:nth-child(3) .hero-stat-valor { animation-delay: 0.9s; }
-.hero-stat:nth-child(4) .hero-stat-valor { animation-delay: 1.05s; }
+.hero-stat:nth-child(1) .hero-stat-valor { animation-delay: 0.55s; }
+.hero-stat:nth-child(3) .hero-stat-valor { animation-delay: 0.7s; }
+.hero-stat:nth-child(5) .hero-stat-valor { animation-delay: 0.85s; }
+.hero-stat:nth-child(7) .hero-stat-valor { animation-delay: 1.0s; }
 
-/* ===== CARDS ENERGÉTICOS ===== */
+/* ===== CARDS HOVER ===== */
 .card-jogo {
-  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease !important;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease !important;
 }
 .card-jogo:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,17,45,0.3) !important;
-  border-color: rgba(232,17,45,0.4) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6) !important;
 }
 
 .card-selecao-rico {
@@ -197,81 +180,63 @@
 }
 .card-selecao-rico:hover {
   transform: translateX(6px) !important;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.4) !important;
 }
 
 .card-noticia {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
 }
 .card-noticia:hover {
-  transform: translateX(4px) translateY(-2px) !important;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.4) !important;
+  transform: translateX(4px) !important;
 }
 
-/* ===== BOTÕES MAIS VIVOS ===== */
+/* ===== BOTÕES COM RIPPLE ===== */
 .btn {
-  position: relative;
-  overflow: hidden;
   transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease !important;
 }
-.btn:hover {
-  transform: translateY(-2px);
-}
-.btn:active {
-  transform: translateY(0) scale(0.97);
-}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(0.98); }
+
 .btn-primary:hover {
-  box-shadow: 0 6px 20px rgba(232,17,45,0.45) !important;
+  box-shadow: 0 8px 28px rgba(232, 17, 45, 0.5) !important;
 }
 
 /* Ripple no clique */
 .btn .ripple {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.2);
   transform: scale(0);
-  animation: ripple-out 0.5s ease-out forwards;
+  animation: ripple-out 0.55s ease-out forwards;
   pointer-events: none;
 }
 
-/* ===== BADGE AO VIVO PULSANTE ===== */
+/* ===== BADGE AO VIVO ===== */
 .badge-ao-vivo,
 .jogo-status.ao_vivo {
-  animation: pulse-glow 1.8s ease-in-out infinite;
-}
-.badge-ao-vivo::before {
-  animation: pulse-dot 1.2s ease-in-out infinite !important;
+  animation: pulse-glow-red 2s ease-in-out infinite;
 }
 
-/* ===== COUNTDOWN ENERGÉTICO ===== */
-.countdown-grid {
-  border-color: rgba(232,17,45,0.3) !important;
-  box-shadow: 0 0 30px rgba(232,17,45,0.08), inset 0 0 20px rgba(7,17,31,0.5);
-}
-.countdown-valor {
-  animation: count-flip 0.25s ease;
-  display: block;
-}
+/* ===== COUNTDOWN FLIP ===== */
 .countdown-valor.flip {
-  animation: count-flip 0.25s ease;
+  animation: count-flip 0.22s ease;
 }
 
-/* ===== NAVBAR BRAND ANIMADA ===== */
+/* ===== NAVBAR BRAND ===== */
 .navbar-brand span {
   background: linear-gradient(90deg, #E8112D, #FFD700, #E8112D);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 3s linear infinite;
+  animation: shimmer 4s linear infinite;
 }
 
-/* ===== TICKER DE NOTÍCIAS (rodapé hero) ===== */
+/* ===== TICKER DE NOTÍCIAS ===== */
 .ticker-wrap {
   overflow: hidden;
-  background: rgba(232,17,45,0.08);
-  border-top: 1px solid rgba(232,17,45,0.2);
-  border-bottom: 1px solid rgba(232,17,45,0.2);
+  background: rgba(232, 17, 45, 0.05);
+  border-top: 1px solid rgba(232, 17, 45, 0.15);
+  border-bottom: 1px solid rgba(232, 17, 45, 0.15);
   padding: var(--espaco-2) 0;
   margin-top: var(--espaco-8);
   position: relative;
@@ -279,48 +244,52 @@
 .ticker-track {
   display: flex;
   white-space: nowrap;
-  animation: ticker-scroll 40s linear infinite;
+  animation: ticker-scroll 45s linear infinite;
   width: max-content;
 }
 .ticker-item {
-  font-size: 0.8rem;
-  color: var(--texto-secundario);
-  padding: 0 var(--espaco-8);
+  font-size: 0.72rem;
+  color: var(--texto-terciario);
+  padding: 0 var(--espaco-10);
   display: inline-flex;
   align-items: center;
   gap: var(--espaco-3);
+  font-family: var(--fonte-dados);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 .ticker-item::before {
-  content: '⚽';
-  font-size: 0.75rem;
+  content: '▸';
+  font-size: 0.6rem;
+  color: var(--cor-primaria);
 }
 
-/* ===== SEÇÃO DESTAQUE DE JOGO ===== */
+/* ===== DESTAQUE AO VIVO ===== */
 .destaque-ao-vivo {
-  border-color: rgba(232,17,45,0.5) !important;
-  box-shadow: 0 0 24px rgba(232,17,45,0.15), 0 4px 16px rgba(0,0,0,0.4) !important;
+  box-shadow: 0 0 28px rgba(232, 17, 45, 0.12), 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* ===== RANKING ANIMADO ===== */
-.ranking-pos-1 .ranking-nome { color: var(--cor-accent); }
+/* ===== RANKING HOVER ===== */
 .ranking-row:hover {
-  background: rgba(255,215,0,0.05) !important;
-  transform: translateX(4px);
+  transform: translateX(5px);
   transition: all 0.2s ease;
 }
 
-/* ===== SECTION TITLE ===== */
-.section-title { position: relative; }
-
-/* ===== GRUPOS — TIMES COM HOVER ===== */
+/* ===== GRUPOS — TIMES HOVER ===== */
 .grupo-time:hover {
-  background: rgba(255,215,0,0.08) !important;
-  border-color: rgba(255,215,0,0.3) !important;
+  background: rgba(6, 200, 232, 0.06) !important;
+  border-color: rgba(6, 200, 232, 0.2) !important;
   transform: translateX(3px);
   transition: all 0.2s ease;
 }
 
 /* ===== PAGE LOAD ===== */
 .main-content {
-  animation: fadeIn 0.4s ease both;
+  animation: fadeIn 0.35s ease both;
+}
+
+/* ===== SECTION TITLE BAR ===== */
+.section-title::after {
+  transform-origin: left;
+  animation: slide-bar 0.8s ease 0.3s both;
 }

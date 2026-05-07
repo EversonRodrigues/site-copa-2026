@@ -1,57 +1,113 @@
 <%- include('../partials/header') %>
+
+<%
+  const totalTimes = grupos.reduce((acc, g) => acc + (g.times ? g.times.length : 0), 0);
+  const grupoTemPlacar = grupos.some(g => g.times && g.times.some(t => t.jogos > 0));
+%>
+
 <div class="container">
-  <h1 class="page-title">Grupos</h1>
-  <p class="subtitle">Copa do Mundo 2026 — 48 seleções divididas em 12 grupos</p>
+  <section class="dash-page-hero">
+    <div class="dash-page-hero-text">
+      <span class="dash-eyebrow"><span class="dash-eyebrow-dot"></span>FIFA WC 2026 · FASE DE GRUPOS</span>
+      <h1 class="dash-page-title">Grupos</h1>
+      <p class="dash-page-sub">12 grupos · <%= totalTimes %> seleções · classificação atualizada conforme os jogos</p>
+    </div>
+
+    <div class="dash-mini-kpis">
+      <div class="dash-mini-kpi">
+        <span class="dash-mini-kpi-num"><%= grupos.length %></span>
+        <span class="dash-mini-kpi-label">Grupos</span>
+      </div>
+      <div class="dash-mini-kpi">
+        <span class="dash-mini-kpi-num"><%= totalTimes %></span>
+        <span class="dash-mini-kpi-label">Seleções</span>
+      </div>
+      <div class="dash-mini-kpi">
+        <span class="dash-mini-kpi-num">2</span>
+        <span class="dash-mini-kpi-label">Classificam</span>
+      </div>
+    </div>
+  </section>
 
   <% if (grupos.length === 0) { %>
-    <p class="text-muted">Dados dos grupos em breve.</p>
+    <div class="dash-empty">
+      <div class="dash-empty-icon">📋</div>
+      <p class="dash-empty-text">Dados dos grupos em breve.</p>
+    </div>
   <% } else { %>
-    <div class="grupos-grid">
+    <div class="dash-grupos-grid">
       <% grupos.forEach(grupo => { %>
-        <div class="card-grupo">
-          <h3>Grupo <%= grupo.nome %></h3>
-
-          <% const temPlacar = grupo.times.some(t => t.jogos > 0); %>
+        <%
+          const temPlacar = grupo.times.some(t => t.jogos > 0);
+          const maxPontos = Math.max(...grupo.times.map(t => t.pontos || 0), 9);
+        %>
+        <article class="dash-grupo">
+          <header class="dash-grupo-head">
+            <div class="dash-grupo-letra">Grupo <span><%= grupo.nome %></span></div>
+            <span class="dash-grupo-tag">
+              <%= temPlacar ? 'Em andamento' : 'Aguardando' %>
+            </span>
+          </header>
 
           <% if (temPlacar) { %>
-            <table class="tabela-grupo">
+            <table class="dash-grupo-table">
               <thead>
                 <tr>
+                  <th class="dash-grupo-th-pos">#</th>
                   <th>Seleção</th>
-                  <th title="Jogos">PJ</th>
-                  <th title="Vitórias">V</th>
-                  <th title="Empates">E</th>
-                  <th title="Derrotas">D</th>
                   <th title="Pontos">Pts</th>
+                  <th title="Jogos">PJ</th>
+                  <th>V</th>
+                  <th>E</th>
+                  <th>D</th>
                 </tr>
               </thead>
               <tbody>
-                <% grupo.times.forEach(t => { %>
-                  <tr>
-                    <td class="time-nome">
-                      <% if (t.bandeira) { %><img src="<%= t.bandeira %>" alt="" class="bandeira-mini"><% } %>
-                      <%= t.nome %>
+                <% grupo.times.forEach((t, i) => { %>
+                  <tr class="<%= i < 2 ? 'dash-grupo-classifica' : '' %>">
+                    <td class="dash-grupo-th-pos"><%= i + 1 %></td>
+                    <td class="dash-grupo-time">
+                      <% if (t.bandeira) { %>
+                        <img src="<%= t.bandeira %>" alt="" class="bandeira-mini">
+                      <% } %>
+                      <span><%= t.nome %></span>
+                    </td>
+                    <td class="dash-grupo-pts">
+                      <span class="dash-grupo-pts-num"><%= t.pontos %></span>
+                      <div class="dash-grupo-bar" aria-hidden="true">
+                        <div class="dash-grupo-bar-fill"
+                             style="width: <%= Math.round((t.pontos || 0) / maxPontos * 100) %>%"></div>
+                      </div>
                     </td>
                     <td><%= t.jogos %></td>
                     <td><%= t.vitorias %></td>
                     <td><%= t.empates %></td>
                     <td><%= t.derrotas %></td>
-                    <td><strong><%= t.pontos %></strong></td>
                   </tr>
                 <% }) %>
               </tbody>
             </table>
           <% } else { %>
-            <ul class="lista-times">
-              <% grupo.times.forEach(t => { %>
-                <li class="item-time">
-                  <% if (t.bandeira) { %><img src="<%= t.bandeira %>" alt="" class="bandeira-mini"><% } %>
-                  <%= t.nome %>
+            <ol class="dash-grupo-lista">
+              <% grupo.times.forEach((t, i) => { %>
+                <li class="dash-grupo-lista-item <%= i < 2 ? 'dash-grupo-lista-favorito' : '' %>">
+                  <span class="dash-grupo-lista-pos"><%= i + 1 %></span>
+                  <% if (t.bandeira) { %>
+                    <img src="<%= t.bandeira %>" alt="" class="bandeira-mini">
+                  <% } %>
+                  <span class="dash-grupo-lista-nome"><%= t.nome %></span>
                 </li>
               <% }) %>
-            </ul>
+            </ol>
           <% } %>
-        </div>
+
+          <footer class="dash-grupo-foot">
+            <span class="dash-grupo-foot-legenda">
+              <span class="dash-grupo-foot-marker"></span>
+              Top 2 classificam
+            </span>
+          </footer>
+        </article>
       <% }) %>
     </div>
   <% } %>

@@ -92,11 +92,26 @@ async function paginaMeusPalpites(req, res) {
   const palpitadosIds = new Set(palpitesFeitos.map(p => p.jogo_id));
   const jogosDisponiveis = jogosFuturos.filter(j => !palpitadosIds.has(String(j.id)));
 
+  // Stats do usuário pra sidebar
+  const pontuacao = db.prepare('SELECT total_pontos FROM pontuacao WHERE usuario_id = ?').get(usuario_id);
+  const placarExatos = palpitesHistorico.filter(p => p.pontos === 5).length;
+  const resultadosCertos = palpitesHistorico.filter(p => p.pontos === 2).length;
+  const erros = palpitesHistorico.filter(p => p.pontos === 0).length;
+
   res.render('pages/meus-palpites', {
     titulo: 'Meus Palpites',
     palpites: palpitesHistorico,
     palpitesEditaveis,
-    jogos: jogosDisponiveis
+    jogos: jogosDisponiveis,
+    stats: {
+      total_pontos: pontuacao?.total_pontos || 0,
+      total_palpites: palpitesFeitos.length,
+      editaveis: palpitesEditaveis.length,
+      pendentes: jogosDisponiveis.length,
+      placar_exatos: placarExatos,
+      resultados_certos: resultadosCertos,
+      erros
+    }
   });
 }
 

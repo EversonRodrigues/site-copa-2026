@@ -1,47 +1,60 @@
 :root {
-  /* Cores principais */
-  --bg-principal: #07111F;
-  --bg-card: #0F1E35;
-  --bg-card-hover: #152646;
+  /* === CORES BASE === */
+  --bg-principal: #060B14;
+  --bg-card: #0C1525;
+  --bg-card-hover: #122034;
+  --bg-terciario: rgba(15, 26, 48, 0.8);
+
+  /* === CORES MARCA === */
   --cor-primaria: #E8112D;
   --cor-primaria-dark: #B50D24;
+  --cor-primaria-rgb: 232, 17, 45;
   --cor-accent: #FFD700;
+  --cor-accent-rgb: 255, 215, 0;
+  --cor-ciano: #06C8E8;
+  --cor-ciano-rgb: 6, 200, 232;
   --cor-branca: #FFFFFF;
   --cor-sucesso: #22C55E;
   --cor-aviso: #F59E0B;
 
-  /* Texto */
-  --texto-primario: #F0F4FA;
-  --texto-secundario: #7B95B8;
-  --texto-terciario: #4A6480;
+  /* === TEXTO === */
+  --texto-primario: #EEF2F8;
+  --texto-secundario: #6B8AAE;
+  --texto-terciario: #3A5272;
 
-  /* Bordas e divisores */
-  --borda: #1A3050;
-  --borda-hover: #2A4D80;
+  /* === BORDAS === */
+  --borda: #111E30;
+  --borda-hover: #1C3050;
   --borda-destaque: #E8112D;
 
-  /* Tipografia */
+  /* === TIPOGRAFIA === */
   --fonte-titulo: 'Bebas Neue', sans-serif;
-  --fonte-corpo: 'Inter', sans-serif;
+  --fonte-corpo: 'Figtree', sans-serif;
+  --fonte-dados: 'JetBrains Mono', monospace;
 
-  /* Espaçamento (base 8px) */
-  --espaco-1: 0.25rem;   /* 4px */
-  --espaco-2: 0.5rem;    /* 8px */
-  --espaco-3: 0.75rem;   /* 12px */
-  --espaco-4: 1rem;      /* 16px */
-  --espaco-5: 1.25rem;   /* 20px */
-  --espaco-6: 1.5rem;    /* 24px */
-  --espaco-8: 2rem;      /* 32px */
-  --espaco-10: 2.5rem;   /* 40px */
-  --espaco-12: 3rem;     /* 48px */
-  --espaco-16: 4rem;     /* 64px */
+  /* === ESPAÇAMENTO (base 8px) === */
+  --espaco-1: 0.25rem;
+  --espaco-2: 0.5rem;
+  --espaco-3: 0.75rem;
+  --espaco-4: 1rem;
+  --espaco-5: 1.25rem;
+  --espaco-6: 1.5rem;
+  --espaco-8: 2rem;
+  --espaco-10: 2.5rem;
+  --espaco-12: 3rem;
+  --espaco-16: 4rem;
 
-  /* Layout */
+  /* === LAYOUT === */
   --container-max: 1200px;
-  --raio: 10px;
-  --raio-sm: 6px;
-  --raio-lg: 16px;
-  --sombra: 0 4px 20px rgba(0, 0, 0, 0.4);
-  --sombra-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+  --raio: 6px;
+  --raio-sm: 3px;
+  --raio-lg: 10px;
+  --sombra: 0 8px 40px rgba(0, 0, 0, 0.7);
+  --sombra-card: 0 2px 12px rgba(0, 0, 0, 0.5);
   --transicao: 0.2s ease;
+
+  /* === GRADIENTES UTILITÁRIOS === */
+  --grad-red: linear-gradient(135deg, #E8112D 0%, #B50D24 100%);
+  --grad-gold: linear-gradient(135deg, #FFD700 0%, #E6A800 100%);
+  --grad-ciano: linear-gradient(135deg, #06C8E8 0%, #0494AE 100%);
 }

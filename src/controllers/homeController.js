@@ -5,6 +5,7 @@ async function home(req, res) {
   let proximosJogos = [];
   let jogosAoVivo = [];
   let noticias = [];
+  let topRanking = [];
 
   try {
     const todos = await fetchJogos();
@@ -25,11 +26,24 @@ async function home(req, res) {
     console.error('Erro ao buscar notícias para home:', err.message);
   }
 
+  try {
+    topRanking = req.app.locals.db.prepare(`
+      SELECT u.nome, p.total_pontos
+      FROM pontuacao p
+      JOIN usuarios u ON u.id = p.usuario_id
+      ORDER BY p.total_pontos DESC
+      LIMIT 5
+    `).all();
+  } catch (err) {
+    console.error('Erro ao buscar ranking para home:', err.message);
+  }
+
   res.render('pages/home', {
     titulo: 'Copa do Mundo 2026',
     jogosAoVivo,
     proximosJogos,
-    noticias
+    noticias,
+    topRanking
   });
 }
 

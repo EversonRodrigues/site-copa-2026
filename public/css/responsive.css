@@ -6,12 +6,12 @@
   .navbar-menu {
     display: none;
     position: absolute;
-    top: 64px;
+    top: 60px;
     left: 0;
     right: 0;
     flex-direction: column;
-    background: rgba(7, 17, 31, 0.98);
-    backdrop-filter: blur(12px);
+    background: rgba(6, 11, 20, 0.98);
+    backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--borda);
     padding: var(--espaco-3) var(--espaco-4);
     gap: var(--espaco-1);
@@ -21,7 +21,7 @@
   .navbar-menu li { width: 100%; }
   .navbar-menu a {
     display: block;
-    padding: 0.7rem 0.75rem;
+    padding: 0.75rem 0.75rem;
     border-radius: var(--raio-sm);
   }
 
@@ -30,10 +30,16 @@
 
   /* Hero */
   .hero { padding: var(--espaco-10) 0 var(--espaco-8); }
-  .hero-stats { gap: var(--espaco-6); }
-  .hero-stat-valor { font-size: 2rem; }
+  .hero-stats { gap: var(--espaco-4); }
+  .hero-stat { padding: 0 var(--espaco-5); }
+  .hero-stat-valor { font-size: 1.8rem; }
   .hero-acoes { flex-direction: column; align-items: center; }
   .hero-acoes .btn { width: 100%; max-width: 280px; justify-content: center; }
+
+  /* Countdown */
+  .countdown-grid { gap: var(--espaco-1); }
+  .countdown-item { min-width: 66px; padding: var(--espaco-3) var(--espaco-3); }
+  .countdown-valor { font-size: 1.6rem; }
 
   /* Jogos */
   .card-jogo {
@@ -57,6 +63,9 @@
 
   /* Palpites */
   .card-palpite { flex-direction: column; align-items: flex-start; }
+  .palpite-times-row { flex-wrap: wrap; gap: var(--espaco-2); }
+  .palpite-time { flex: none; width: 100%; text-align: left; }
+  .palpite-time-fora { text-align: left; }
 
   /* Perfil */
   .card-perfil { padding: var(--espaco-5); }
@@ -72,6 +81,10 @@
   /* Tabela histórico — scroll horizontal */
   .tabela-historico-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .tabela-historico { min-width: 500px; }
+
+  /* Botões perfil */
+  .flex.gap-4.mt-4 { flex-direction: column; }
+  .flex.gap-4.mt-4 .btn { width: 100%; justify-content: center; }
 }
 
 /* ===== TABLET (768px – 1024px) ===== */
@@ -81,7 +94,7 @@
   .grupos-grid { grid-template-columns: repeat(2, 1fr); }
   .selecoes-grid { grid-template-columns: repeat(2, 1fr); }
   .selecao-detalhe-grid { grid-template-columns: 1fr; }
-  .hero-titulo { font-size: clamp(3rem, 7vw, 4.5rem); }
+  .hero-titulo { font-size: clamp(3rem, 7vw, 5rem); }
 }
 
 /* ===== DESKTOP LARGE (> 1400px) ===== */
