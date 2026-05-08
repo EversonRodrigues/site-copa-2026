@@ -2,6 +2,8 @@
 // Baseado no sorteio oficial de dezembro de 2024
 // Formato: 12 grupos de 4 seleções | 72 jogos na fase de grupos | 32 no mata-mata = 104 total
 
+const { bandeiraDe } = require('./bandeiras');
+
 const GRUPOS = {
   A: ['México', 'Jamaica', 'África do Sul', 'Uzbequistão'],
   B: ['Qatar', 'Suíça', 'Canadá', 'Panamá'],
@@ -157,8 +159,8 @@ function gerarJogosGrupos() {
       id: String(_idCounter++),
       timeCasa,
       timeFora,
-      bandeirasCasa: '',
-      bandeiraFora: '',
+      bandeirasCasa: bandeiraDe(timeCasa),
+      bandeiraFora: bandeiraDe(timeFora),
       gols_casa: null,
       gols_fora: null,
       placar: '-',
@@ -187,8 +189,8 @@ function gerarJogosMataMata() {
       id: String(_idCounter++),
       timeCasa: m.casa,
       timeFora: m.fora,
-      bandeirasCasa: '',
-      bandeiraFora: '',
+      bandeirasCasa: bandeiraDe(m.casa),
+      bandeiraFora: bandeiraDe(m.fora),
       gols_casa: null,
       gols_fora: null,
       placar: '-',
@@ -213,7 +215,7 @@ function getGruposEstaticos() {
     nome,
     times: times.map(t => ({
       nome: t,
-      bandeira: '',
+      bandeira: bandeiraDe(t),
       jogos: 0, vitorias: 0, empates: 0, derrotas: 0, pontos: 0
     }))
   }));
