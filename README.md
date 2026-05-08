@@ -1,5 +1,7 @@
 # Copa do Mundo 2026 — Site Oficial do Bolão
 
+🚀 **Demo ao vivo:** https://site-copa-2026-production.up.railway.app
+
 Site completo da Copa do Mundo 2026 com calendário de jogos, grupos, seleções, notícias e bolão interativo com palpites e ranking.
 
 ## Tecnologias
