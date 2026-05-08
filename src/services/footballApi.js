@@ -1,8 +1,7 @@
 const Database = require('better-sqlite3');
-const path = require('path');
+const { DB_PATH } = require('../../database/init');
 const { getTodosJogosEstaticos, getGruposEstaticos } = require('./jogosEstaticos');
 
-const DB_PATH = path.join(__dirname, '../../database/db.sqlite');
 // TheSportsDB — gratuita, sem chave de API
 const BASE_URL = 'https://www.thesportsdb.com/api/v1/json/3';
 const COPA_ID = '4429'; // FIFA World Cup na TheSportsDB
