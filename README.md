@@ -23,13 +23,17 @@ Site completo da Copa do Mundo 2026 com calendário de jogos, grupos, seleções
 | `/selecoes` | Perfil rico de cada seleção (estilo, convocados, conquistas) |
 | `/noticias` | Notícias em tempo real via RSS, priorizando Copa 2026 |
 | `/ranking` | Ranking do bolão com medalhas para o top 3 |
-| `/meus-palpites` | Fazer, editar e acompanhar palpites (até 1h antes do jogo) |
+| `/meus-palpites` | Fazer, editar e acompanhar palpites (antes do início do jogo) |
+| `/admin` | Registrar o campeão da Copa e premiar o bônus (somente `ADMIN_EMAIL`) |
 
 ## Sistema de Pontuação do Bolão
 
 - **5 pontos** — Placar exato (ex: palpitou 2×1, resultado foi 2×1)
-- **2 pontos** — Resultado correto (ex: palpitou 2×1, resultado foi 3×0 — ambos vitória)
-- **0 pontos** — Resultado errado
+- **3 pontos** — Resultado correto (ex: palpitou 3×1, resultado foi 2×0 — ambos vitória)
+- **0 pontos** — Resultado errado, ou sem palpite registrado antes do jogo
+- **+15 pontos** — Bônus por acertar o campeão da Copa
+- **Prazo:** palpites até o início de cada jogo; só valem os 90' + acréscimos (sem prorrogação/pênaltis)
+- **Desempate:** maior pontuação → mais placares exatos (5 pts) → mais resultados certos (3 pts)
 
 ## Instalação e Execução
 
@@ -76,6 +80,33 @@ site_copa/
 ## Variáveis de Ambiente
 
 Veja [.env.example](.env.example) para a lista completa de variáveis necessárias.
+
+| Variável | Obrigatória | Descrição |
+|----------|-------------|-----------|
+| `SESSION_SECRET` | Sim (produção) | String longa e aleatória para assinar as sessões |
+| `ADMIN_EMAIL` | Para usar `/admin` | E-mail do usuário com acesso ao painel de administração |
+| `DB_PATH` | Em deploy | Caminho do SQLite. Em produção, aponte para um volume persistente |
+| `PORT` | Não | Porta HTTP (padrão 3000; em deploy a plataforma define) |
+
+## Deploy (Railway)
+
+O deploy é automático a cada push na `main` (build via Nixpacks, `npm start`).
+
+> ⚠️ **Banco persistente — obrigatório.** O SQLite grava em arquivo. Sem um volume
+> persistente, o banco é apagado a cada novo deploy (usuários, palpites e ranking se perdem).
+
+**Passo a passo:**
+
+1. No serviço do Railway, vá em **Settings → Volumes → New Volume**
+2. Defina o **Mount path** como `/data`
+3. Em **Variables**, adicione:
+   - `DB_PATH=/data/db.sqlite` (faz o SQLite viver dentro do volume)
+   - `SESSION_SECRET=<string longa e aleatória>`
+   - `ADMIN_EMAIL=<e-mail do administrador>`
+4. Salve e deixe o Railway **redeployar**
+
+O diretório do volume é criado automaticamente pelo app (`database/init.js`), então não há
+passo manual de migração — as tabelas são criadas no primeiro start.
 
 ## Dados da Copa
 
