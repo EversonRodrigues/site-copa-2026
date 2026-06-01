@@ -1,0 +1,8 @@
+node_modules
+.git
+.claude
+docs
+scripts
+database/*.sqlite
+.env
+*.log

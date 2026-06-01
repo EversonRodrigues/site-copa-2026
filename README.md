@@ -90,7 +90,16 @@ Veja [.env.example](.env.example) para a lista completa de variáveis necessári
 
 ## Deploy (Railway)
 
-O deploy é automático a cada push na `main` (build via Nixpacks, `npm start`).
+O deploy é feito **manualmente via CLI** (este serviço **não** está conectado ao GitHub para deploy automático):
+
+```bash
+railway login          # uma vez, autentica no navegador
+railway link           # uma vez, vincula a pasta ao projeto/serviço
+railway up             # publica o código atual (build via Railpack, npm start)
+```
+
+> Como não há auto-deploy, **um `git push` sozinho não atualiza o site** — é preciso rodar `railway up`.
+> O arquivo `.railwayignore` mantém o upload enxuto (sem `node_modules`, `.git`, etc.).
 
 > ⚠️ **Banco persistente — obrigatório.** O SQLite grava em arquivo. Sem um volume
 > persistente, o banco é apagado a cada novo deploy (usuários, palpites e ranking se perdem).
