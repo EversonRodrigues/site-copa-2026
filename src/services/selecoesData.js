@@ -383,6 +383,15 @@ const SELECOES = {
   },
 
   // GRUPO K
+  'Croácia': {
+    grupo: 'K', continente: 'UEFA', cor: '#FF0000',
+    estilo: 'Posse de bola e controle do meio-campo. Geração talentosa que valoriza a técnica e a inteligência tática.',
+    treinador: 'Zlatko Dalić',
+    provaveisJogadores: ['Dominik Livaković (goleiro)', 'Joško Gvardiol (zagueiro)', 'Mateo Kovačić (volante)', 'Luka Modrić (meia)', 'Andrej Kramarić (atacante)', 'Ante Budimir (atacante)'],
+    conquistas: 'Vice-campeã mundial em 2018 e 3º lugar em 2022. Maior potência do futebol balcânico.',
+    curiosidades: 'Apesar da pequena população, a Croácia é uma das seleções mais consistentes em Copas recentes. Luka Modrić ganhou a Bola de Ouro em 2018.',
+    ranking_fifa: 10
+  },
   'Coreia do Sul': {
     grupo: 'K', continente: 'AFC', cor: '#003478',
     estilo: 'Técnico, intenso e bem organizado. Forte na pressão coletiva.',

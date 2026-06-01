@@ -43,6 +43,7 @@ const ISO = {
   'Argélia': 'dz',
   'Áustria': 'at',
   'Jordânia': 'jo',
+  'Croácia': 'hr',
   'Coreia do Sul': 'kr',
   'Inglaterra': 'gb-eng',
   'Tunísia': 'tn',

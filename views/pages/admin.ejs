@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+<div class="container container-sm">
+  <div class="page-header">
+    <h1 class="page-title">Administração</h1>
+    <p class="subtitle">Registrar o campeão da Copa e premiar o bônus (+15 pts)</p>
+  </div>
+
+  <% if (msg === 'ok') { %>
+    <div class="admin-alert admin-alert-ok">
+      Campeão registrado! <strong><%= premiados %></strong> palpite(s) processado(s) — quem acertou recebeu +15 pts.
+    </div>
+  <% } else if (msg === 'erro') { %>
+    <div class="admin-alert admin-alert-erro">Seleção inválida. Tente novamente.</div>
+  <% } %>
+
+  <div class="card-perfil">
+    <div class="perfil-info">
+      <div class="perfil-row">
+        <span class="perfil-label">Campeão registrado</span>
+        <span class="perfil-valor"><%= campeaoReal ? campeaoReal : '— ainda não definido' %></span>
+      </div>
+      <div class="perfil-row">
+        <span class="perfil-label">Palpites de campeão</span>
+        <span class="perfil-valor"><%= totalPalpites %></span>
+      </div>
+    </div>
+
+    <form method="POST" action="/admin/campeao" class="admin-form" onsubmit="return confirm('Registrar este campeão e distribuir os +15 pts? Esta ação atualiza a pontuação dos participantes.');">
+      <label class="admin-label" for="selecao">Seleção campeã</label>
+      <select class="campeao-select" id="selecao" name="selecao" required>
+        <option value="">— Selecione —</option>
+        <% selecoes.forEach(s => { %>
+          <option value="<%= s.nome %>" <%= campeaoReal === s.nome ? 'selected' : '' %>><%= s.nome %></option>
+        <% }) %>
+      </select>
+      <button type="submit" class="btn btn-primary">Registrar campeão e premiar</button>
+    </form>
+
+    <p class="admin-nota">
+      Pode ser executado mais de uma vez (ex.: para corrigir). A cada registro, apenas os palpites ainda não pontuados são processados —
+      reexecutar com o mesmo campeão não soma pontos em dobro.
+    </p>
+  </div>
+
+  <div class="flex gap-4 mt-4">
+    <a href="/ranking" class="btn btn-ghost">Ver Ranking</a>
+    <a href="/meus-palpites" class="btn btn-ghost">Meus Palpites</a>
+  </div>
+</div>
+<%- include('../partials/footer') %>

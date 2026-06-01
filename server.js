@@ -43,6 +43,7 @@ app.use('/', require('./src/routes/jogos'));
 app.use('/', require('./src/routes/noticias'));
 app.use('/', require('./src/routes/bolao'));
 app.use('/', require('./src/routes/perfil'));
+app.use('/', require('./src/routes/admin'));
 
 // 404
 app.use((req, res) => {

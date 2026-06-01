@@ -15,7 +15,7 @@ const GRUPOS = {
   H: ['Arábia Saudita', 'Uruguai', 'Espanha', 'Cabo Verde'],
   I: ['França', 'Senegal', 'Honduras', 'Venezuela'],
   J: ['Argentina', 'Argélia', 'Áustria', 'Jordânia'],
-  K: ['Canadá', 'Coreia do Sul', 'Inglaterra', 'Tunísia'],
+  K: ['Croácia', 'Coreia do Sul', 'Inglaterra', 'Tunísia'],
   L: ['Portugal', 'Sérvia', 'El Salvador', 'Iraque'],
 };
 
