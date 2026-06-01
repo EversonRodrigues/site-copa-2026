@@ -58,6 +58,63 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Palpite de campeão da Copa (bônus +15 pts)
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('btn-campeao');
+  if (!btn) return;
+  const select = document.getElementById('campeao-select');
+  const atual = document.getElementById('campeao-atual');
+  const feedback = document.getElementById('campeao-feedback');
+
+  function mostrar(msg, tipo) {
+    feedback.textContent = msg;
+    feedback.className = `palpite-feedback palpite-feedback-${tipo}`;
+    feedback.hidden = false;
+    if (tipo === 'sucesso') {
+      clearTimeout(feedback._timer);
+      feedback._timer = setTimeout(() => { feedback.hidden = true; }, 3000);
+    }
+  }
+
+  btn.addEventListener('click', async () => {
+    const selecao = select.value;
+    if (!selecao) {
+      mostrar('Escolha uma seleção antes de confirmar.', 'erro');
+      return;
+    }
+
+    btn.disabled = true;
+    const textoOriginal = btn.textContent;
+    btn.textContent = 'Salvando…';
+
+    try {
+      const res = await fetch('/api/palpite-campeao', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ selecao })
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        if (atual) {
+          atual.innerHTML = `Seu palpite atual: <strong>${data.selecao}</strong>`;
+          atual.hidden = false;
+        }
+        btn.textContent = 'Alterar palpite';
+        mostrar('Campeão salvo!', 'sucesso');
+      } else {
+        mostrar(data.erro || 'Erro ao salvar palpite.', 'erro');
+        btn.textContent = textoOriginal;
+      }
+    } catch {
+      mostrar('Erro de conexão. Tente novamente.', 'erro');
+      btn.textContent = textoOriginal;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+});
+
 function mostrarFeedback(card, mensagem, tipo) {
   let feedback = card.querySelector('.palpite-feedback');
   if (!feedback) {

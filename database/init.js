@@ -52,6 +52,21 @@ function initDb() {
       dados_json TEXT NOT NULL,
       atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS palpite_campeao (
+      usuario_id INTEGER PRIMARY KEY,
+      selecao TEXT NOT NULL,
+      pontos INTEGER DEFAULT NULL,
+      criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+      atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS config (
+      chave TEXT PRIMARY KEY,
+      valor TEXT,
+      atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 
   return db;

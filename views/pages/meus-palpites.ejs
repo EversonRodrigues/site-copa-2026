@@ -5,7 +5,7 @@
     <div class="dash-page-hero-text">
       <span class="dash-eyebrow"><span class="dash-eyebrow-dot"></span>BOLÃO COPA 2026</span>
       <h1 class="dash-page-title">Meus Palpites</h1>
-      <p class="dash-page-sub">Faça ou edite seus palpites até <strong>1 hora antes</strong> de cada jogo · 5 pts placar exato · 2 pts resultado</p>
+      <p class="dash-page-sub">Faça ou edite seus palpites <strong>antes do início</strong> de cada jogo · 5 pts placar exato · 3 pts resultado · +15 acertar o campeão</p>
     </div>
   </section>
 
@@ -27,7 +27,7 @@
         <div class="dash-bolao-stat dash-bolao-stat-green">
           <span class="dash-bolao-stat-num"><%= stats.resultados_certos %></span>
           <span class="dash-bolao-stat-label">✅ Resultado Certo</span>
-          <span class="dash-bolao-stat-pts">+2 pts cada</span>
+          <span class="dash-bolao-stat-pts">+3 pts cada</span>
         </div>
         <div class="dash-bolao-stat dash-bolao-stat-red">
           <span class="dash-bolao-stat-num"><%= stats.erros %></span>
@@ -59,6 +59,61 @@
 
     <!-- Conteúdo principal -->
     <div class="dash-bolao-main">
+      <!-- Palpite de Campeão (bônus +15 pts) -->
+      <section class="dash-section">
+        <div class="dash-section-head">
+          <h2 class="dash-section-title">
+            <span class="dash-pill" style="color: var(--cor-accent); border-color: rgba(255,215,0,.25); background: rgba(255,215,0,.08)">🏆 BÔNUS</span>
+            Campeão da Copa
+          </h2>
+          <span class="dash-link">+<%= campeao.bonus %> pts</span>
+        </div>
+
+        <div class="campeao-card">
+          <% if (campeao.campeaoReal) { %>
+            <%# Copa encerrada: campeão definido %>
+            <div class="campeao-resultado">
+              <p class="campeao-info">Campeã da Copa: <strong><%= campeao.campeaoReal %></strong></p>
+              <% if (campeao.escolha) { %>
+                <% if (campeao.escolha === campeao.campeaoReal) { %>
+                  <span class="pontos-badge pontos-campeao">Você acertou! +<%= campeao.bonus %> pts ⭐</span>
+                <% } else { %>
+                  <span class="campeao-erro">Seu palpite: <%= campeao.escolha %> · 0 pts</span>
+                <% } %>
+              <% } else { %>
+                <span class="campeao-erro">Você não palpitou o campeão.</span>
+              <% } %>
+            </div>
+          <% } else if (!campeao.aberto) { %>
+            <%# Prazo encerrado, ainda sem campeão definido %>
+            <p class="campeao-info">
+              Prazo encerrado.
+              <% if (campeao.escolha) { %>Seu palpite: <strong><%= campeao.escolha %></strong>. Aguardando o fim da Copa.<% } else { %>Você não registrou um palpite de campeão.<% } %>
+            </p>
+          <% } else { %>
+            <%# Aberto para palpitar %>
+            <p class="campeao-info">Escolha quem você acha que vai <strong>levantar a taça</strong>. Vale <strong>+<%= campeao.bonus %> pts</strong> e pode ser alterado até o início da Copa.</p>
+            <div class="campeao-form">
+              <select class="campeao-select" id="campeao-select" aria-label="Seleção campeã">
+                <option value="">— Selecione uma seleção —</option>
+                <% campeao.selecoes.forEach(s => { %>
+                  <option value="<%= s.nome %>" <%= campeao.escolha === s.nome ? 'selected' : '' %>><%= s.nome %></option>
+                <% }) %>
+              </select>
+              <button class="btn btn-small btn-primary" id="btn-campeao">
+                <%= campeao.escolha ? 'Alterar palpite' : 'Confirmar campeão' %>
+              </button>
+            </div>
+            <% if (campeao.escolha) { %>
+              <p class="campeao-atual" id="campeao-atual">Seu palpite atual: <strong><%= campeao.escolha %></strong></p>
+            <% } else { %>
+              <p class="campeao-atual" id="campeao-atual" hidden></p>
+            <% } %>
+            <div class="palpite-feedback" id="campeao-feedback" hidden></div>
+          <% } %>
+        </div>
+      </section>
+
       <% if (palpitesEditaveis && palpitesEditaveis.length > 0) { %>
       <section class="dash-section">
         <div class="dash-section-head">
@@ -179,8 +234,8 @@
                     <td>
                       <% if (p.pontos === 5) { %>
                         <span class="pontos-badge pontos-5">5 pts ⭐</span>
-                      <% } else if (p.pontos === 2) { %>
-                        <span class="pontos-badge pontos-2">2 pts</span>
+                      <% } else if (p.pontos === 3) { %>
+                        <span class="pontos-badge pontos-3">3 pts</span>
                       <% } else if (p.pontos === 0) { %>
                         <span class="pontos-badge pontos-0">0 pts</span>
                       <% } else { %>
@@ -193,6 +248,41 @@
             </table>
           </div>
         <% } %>
+      </section>
+
+      <!-- Regulamento completo -->
+      <section class="dash-section">
+        <details class="regulamento">
+          <summary class="regulamento-summary">
+            <span class="dash-pill">📋 REGRAS</span>
+            Regulamento do Bolão
+            <span class="regulamento-chevron">▾</span>
+          </summary>
+          <div class="regulamento-corpo">
+            <h3>Sistema de pontuação</h3>
+            <ul class="regulamento-lista">
+              <li><strong class="reg-5">5 pontos</strong> — acertar o <strong>placar exato</strong> da partida.<br><span class="reg-ex">Ex.: palpite 2×1 e resultado 2×1.</span></li>
+              <li><strong class="reg-3">3 pontos</strong> — acertar apenas o <strong>resultado</strong> (vitória, empate ou derrota), errando o placar.<br><span class="reg-ex">Ex.: palpite 3×1, resultado 2×0 · palpite 1×1, resultado 2×2.</span></li>
+              <li><strong class="reg-0">0 pontos</strong> — errar o resultado, ou não registrar palpite antes do início da partida.</li>
+              <li><strong class="reg-bonus">+15 pontos</strong> — bônus para quem acertar o <strong>campeão da Copa</strong>.</li>
+            </ul>
+
+            <h3>Regras gerais</h3>
+            <ul class="regulamento-lista">
+              <li>Os palpites devem ser enviados <strong>antes do início</strong> de cada jogo. Após o apito inicial, não são permitidas alterações.</li>
+              <li>Vale apenas o resultado dos <strong>90 minutos regulamentares</strong> (mais acréscimos). Prorrogação e disputa de pênaltis são desconsideradas.</li>
+              <li>O palpite de campeão pode ser alterado até o início do primeiro jogo da Copa.</li>
+              <li>Ao final da Copa, vence quem somar a <strong>maior pontuação</strong>.</li>
+            </ul>
+
+            <h3>Critério de desempate</h3>
+            <ol class="regulamento-lista">
+              <li>Maior número de <strong>placares exatos</strong> (5 pontos).</li>
+              <li>Maior número de <strong>acertos de resultado</strong> (3 pontos).</li>
+              <li>Persistindo o empate, o prêmio é dividido entre os participantes empatados.</li>
+            </ol>
+          </div>
+        </details>
       </section>
     </div>
   </div>

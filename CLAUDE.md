@@ -61,15 +61,18 @@ SQLite (better-sqlite3)      TheSportsDB API (games/results)
 
 **Shared context in handlers:** `req.app.locals.db` gives access to the SQLite instance from any route/controller. `res.locals.usuario` (set by a global middleware in `server.js`) is available in all EJS templates — no need to pass it explicitly.
 
-**Database** (`database/init.js`) — 5 SQLite tables: `usuarios`, `palpites`, `pontuacao`, `noticias_cache`, `jogos_cache`. All caches stored in SQLite (TheSportsDB: 5-min TTL; RSS: 30-min TTL). Unique constraints on `usuarios.email`, `noticias_cache.url`, and `(usuario_id, jogo_id)` in `palpites`.
+**Database** (`database/init.js`) — 7 SQLite tables: `usuarios`, `palpites`, `pontuacao`, `noticias_cache`, `jogos_cache`, `palpite_campeao` (one champion pick per user), `config` (key/value store, e.g. the actual `campeao_copa`). All caches stored in SQLite (TheSportsDB: 5-min TTL; RSS: 30-min TTL). Unique constraints on `usuarios.email`, `noticias_cache.url`, and `(usuario_id, jogo_id)` in `palpites`.
 
 ## Key Domain Logic
 
 **Betting pool scoring** (`src/controllers/bolaoController.js`):
 - 5 pts — exact score match
-- 2 pts — correct result (win/draw/loss) only
-- 0 pts — wrong prediction
-- Deadline: predictions must be submitted ≥1 hour before kickoff (enforced server-side)
+- 3 pts — correct result (win/draw/loss) only
+- 0 pts — wrong prediction, or no prediction registered before kickoff
+- +15 pts (bonus) — correctly predicting the World Cup champion; pick stored in `palpite_campeao`, awarded by `processarBonusCampeao(selecao)` which also records the actual champion in the `config` table. Champion-pick deadline is the first match kickoff.
+- Deadline: predictions must be submitted before kickoff (enforced server-side in `src/routes/bolao.js`)
+- Ranking tiebreaker (`GET /ranking`): total points → most exact scores (5 pts) → most correct results (3 pts)
+- Only 90' + stoppage time counts (extra time / penalties ignored) — informational, applied when results are entered
 
 **Authentication:** bcrypt for password hashing, express-session with 7-day HTTPOnly cookies, rate limiting on auth routes via express-rate-limit.
 
