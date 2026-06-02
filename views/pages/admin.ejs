@@ -11,6 +11,12 @@
     </div>
   <% } else if (msg === 'erro') { %>
     <div class="admin-alert admin-alert-erro">Seleção inválida. Tente novamente.</div>
+  <% } else if (msg === 'pag_ok') { %>
+    <div class="admin-alert admin-alert-ok">Status de depósito atualizado.</div>
+  <% } else if (msg === 'pix_ok') { %>
+    <div class="admin-alert admin-alert-ok">Chave PIX salva.</div>
+  <% } else if (msg === 'pag_erro') { %>
+    <div class="admin-alert admin-alert-erro">Não foi possível atualizar o depósito.</div>
   <% } %>
 
   <div class="card-perfil">
@@ -40,6 +46,78 @@
       Pode ser executado mais de uma vez (ex.: para corrigir). A cada registro, apenas os palpites ainda não pontuados são processados —
       reexecutar com o mesmo campeão não soma pontos em dobro.
     </p>
+  </div>
+
+  <div class="card-perfil mt-4" id="pagamentos">
+    <div class="page-header" style="margin-bottom:1rem">
+      <h2 class="page-title" style="font-size:1.4rem">Pagamentos do Bolão</h2>
+      <p class="subtitle">Confirme os depósitos (taxa de <%= premio.taxaFmt %>) para liberar os palpites de cada participante</p>
+    </div>
+
+    <div class="perfil-info">
+      <div class="perfil-row">
+        <span class="perfil-label">Participantes pagos</span>
+        <span class="perfil-valor"><%= premio.pagantes %></span>
+      </div>
+      <div class="perfil-row">
+        <span class="perfil-label">Total arrecadado</span>
+        <span class="perfil-valor"><%= premio.totalFmt %></span>
+      </div>
+      <div class="perfil-row">
+        <span class="perfil-label">Prêmio (80%)</span>
+        <span class="perfil-valor"><%= premio.premioFmt %></span>
+      </div>
+    </div>
+
+    <form method="POST" action="/admin/pix" class="admin-form" style="margin-top:1rem">
+      <label class="admin-label" for="pix_chave">Chave PIX exibida aos participantes</label>
+      <input type="text" id="pix_chave" name="pix_chave" class="campeao-select"
+        value="<%= pixChave %>" placeholder="CPF, e-mail, telefone ou chave aleatória">
+      <button type="submit" class="btn btn-primary">Salvar chave PIX</button>
+    </form>
+
+    <% if (usuarios.length === 0) { %>
+      <p class="admin-nota">Nenhum participante cadastrado ainda.</p>
+    <% } else { %>
+      <table class="tabela-ranking" style="margin-top:1.5rem" aria-label="Participantes e status de depósito">
+        <thead>
+          <tr>
+            <th scope="col">Participante</th>
+            <th scope="col">Status</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% usuarios.forEach(u => { %>
+            <tr>
+              <td class="rank-nome">
+                <%= u.nome %>
+                <br><small style="color:var(--texto-terciario)"><%= u.email %></small>
+              </td>
+              <td>
+                <% if (u.pago) { %>
+                  <span class="pontos-badge pontos-3">✅ Pago</span>
+                <% } else { %>
+                  <span class="pontos-badge pontos-0">Pendente</span>
+                <% } %>
+              </td>
+              <td>
+                <form method="POST" action="/admin/pagamento" style="display:inline">
+                  <input type="hidden" name="usuario_id" value="<%= u.id %>">
+                  <% if (u.pago) { %>
+                    <input type="hidden" name="acao" value="cancelar">
+                    <button type="submit" class="btn btn-small btn-outline">Cancelar</button>
+                  <% } else { %>
+                    <input type="hidden" name="acao" value="confirmar">
+                    <button type="submit" class="btn btn-small btn-primary">Confirmar depósito</button>
+                  <% } %>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
   </div>
 
   <div class="flex gap-4 mt-4">

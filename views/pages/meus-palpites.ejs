@@ -9,6 +9,27 @@
     </div>
   </section>
 
+  <% if (!pagamento.pago) { %>
+    <div class="deposito-banner">
+      <div class="deposito-banner-icon">🔒</div>
+      <div class="deposito-banner-texto">
+        <h2 class="deposito-banner-titulo">Deposite a taxa de <%= pagamento.taxaFmt %> para liberar seus palpites</h2>
+        <p class="deposito-banner-sub">
+          Assim que o organizador confirmar seu depósito, seus palpites e o palpite de campeão são liberados automaticamente.
+          O prêmio atual do bolão é de <strong><%= pagamento.premioFmt %></strong>.
+        </p>
+        <% if (pagamento.pix) { %>
+          <div class="deposito-pix">
+            <span class="deposito-pix-label">Chave PIX</span>
+            <code class="deposito-pix-chave"><%= pagamento.pix %></code>
+          </div>
+        <% } else { %>
+          <p class="deposito-banner-sub">Peça os dados de depósito ao organizador do bolão.</p>
+        <% } %>
+      </div>
+    </div>
+  <% } %>
+
   <div class="dash-bolao-layout">
     <!-- Sidebar com stats do usuário -->
     <aside class="dash-bolao-sidebar">
@@ -100,7 +121,7 @@
                   <option value="<%= s.nome %>" <%= campeao.escolha === s.nome ? 'selected' : '' %>><%= s.nome %></option>
                 <% }) %>
               </select>
-              <button class="btn btn-small btn-primary" id="btn-campeao">
+              <button class="btn btn-small btn-primary" id="btn-campeao" <%= !pagamento.pago ? 'disabled title="Deposite a taxa para liberar"' : '' %>>
                 <%= campeao.escolha ? 'Alterar palpite' : 'Confirmar campeão' %>
               </button>
             </div>
@@ -143,7 +164,7 @@
               </div>
               <div class="palpite-acoes">
                 <span class="palpite-atual-label">Palpite atual: <strong><%= p.gols_casa %> × <%= p.gols_fora %></strong></span>
-                <button class="btn btn-small btn-outline btn-palpitar" data-jogo-id="<%= p.jogo.id %>">
+                <button class="btn btn-small btn-outline btn-palpitar" data-jogo-id="<%= p.jogo.id %>" <%= !pagamento.pago ? 'disabled title="Deposite a taxa para liberar"' : '' %>>
                   Salvar edição
                 </button>
               </div>
@@ -189,7 +210,7 @@
                   <span class="palpite-time palpite-time-fora"><%= jogo.timeFora %></span>
                 </div>
                 <div class="palpite-acoes">
-                  <button class="btn btn-small btn-primary btn-palpitar" data-jogo-id="<%= jogo.id %>">
+                  <button class="btn btn-small btn-primary btn-palpitar" data-jogo-id="<%= jogo.id %>" <%= !pagamento.pago ? 'disabled title="Deposite a taxa para liberar"' : '' %>>
                     Confirmar palpite
                   </button>
                 </div>

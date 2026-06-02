@@ -5,6 +5,17 @@
     <p class="subtitle">Classificação geral dos participantes</p>
   </div>
 
+  <div class="premio-banner">
+    <div class="premio-banner-icon">💰</div>
+    <div class="premio-banner-texto">
+      <span class="premio-banner-label">Prêmio atual</span>
+      <span class="premio-banner-valor"><%= premio.premioFmt %></span>
+    </div>
+    <div class="premio-banner-detalhe">
+      80% de <%= premio.totalFmt %> · <%= premio.pagantes %> participante<%= premio.pagantes === 1 ? '' : 's' %> · +<%= premio.taxaFmt %> a cada nova entrada
+    </div>
+  </div>
+
   <% if (ranking.length === 0) { %>
     <div class="empty-state">
       <div class="empty-state-icon">🏆</div>

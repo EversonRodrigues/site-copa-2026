@@ -69,6 +69,15 @@ function initDb() {
     );
   `);
 
+  // Migração: taxa de inscrição do bolão (depósito confirmado libera os palpites)
+  const colunas = db.prepare('PRAGMA table_info(usuarios)').all();
+  if (!colunas.some(c => c.name === 'pago')) {
+    db.exec('ALTER TABLE usuarios ADD COLUMN pago INTEGER NOT NULL DEFAULT 0');
+  }
+  if (!colunas.some(c => c.name === 'pago_em')) {
+    db.exec('ALTER TABLE usuarios ADD COLUMN pago_em DATETIME');
+  }
+
   return db;
 }
 

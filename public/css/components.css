@@ -2275,3 +2275,64 @@
   .dash-bolao-stats { grid-template-columns: 1fr; }
   .dash-bolao-pontos-num { font-size: 2.8rem; }
 }
+
+/* === DEPÓSITO / PRÊMIO DO BOLÃO === */
+.deposito-banner {
+  display: flex;
+  gap: var(--espaco-4);
+  align-items: flex-start;
+  background: linear-gradient(135deg, rgba(var(--cor-accent-rgb), 0.10), rgba(var(--cor-primaria-rgb), 0.06));
+  border: 1px solid rgba(var(--cor-accent-rgb), 0.30);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-5) var(--espaco-6);
+  margin-bottom: var(--espaco-6);
+}
+.deposito-banner-icon { font-size: 2rem; line-height: 1; }
+.deposito-banner-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  color: var(--texto-primario);
+  margin: 0 0 var(--espaco-2);
+}
+.deposito-banner-sub { color: var(--texto-secundario); margin: 0 0 var(--espaco-3); font-size: 0.95rem; }
+.deposito-pix {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  background: var(--bg-principal);
+  border: 1px solid var(--borda-hover);
+  border-radius: var(--raio);
+  padding: var(--espaco-2) var(--espaco-4);
+}
+.deposito-pix-label { color: var(--texto-terciario); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+.deposito-pix-chave { font-family: var(--fonte-dados); color: var(--cor-accent); font-size: 1rem; }
+
+.premio-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-4);
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, rgba(var(--cor-accent-rgb), 0.12), rgba(var(--cor-accent-rgb), 0.02));
+  border: 1px solid rgba(var(--cor-accent-rgb), 0.30);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-4) var(--espaco-6);
+  margin-bottom: var(--espaco-6);
+}
+.premio-banner-icon { font-size: 2.2rem; line-height: 1; }
+.premio-banner-texto { display: flex; flex-direction: column; }
+.premio-banner-label { color: var(--texto-terciario); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+.premio-banner-valor {
+  font-family: var(--fonte-titulo);
+  font-size: 2.2rem;
+  line-height: 1;
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.premio-banner-detalhe { margin-left: auto; color: var(--texto-secundario); font-size: 0.9rem; text-align: right; }
+
+@media (max-width: 768px) {
+  .premio-banner-detalhe { margin-left: 0; text-align: left; width: 100%; }
+}

@@ -1,8 +1,9 @@
 const express = require('express');
-const { requireAuth } = require('../middleware/auth');
+const { requireAuth, requirePago } = require('../middleware/auth');
 const { paginaMeusPalpites } = require('../controllers/bolaoController');
 const { getTodasSelecoes } = require('../services/selecoesData');
 const { getTodosJogosEstaticos } = require('../services/jogosEstaticos');
+const { calcularPremio } = require('../services/premio');
 
 const router = express.Router();
 
@@ -18,12 +19,12 @@ router.get('/ranking', (req, res) => {
     ORDER BY p.total_pontos DESC, exatos DESC, resultados DESC
     LIMIT 100
   `).all();
-  res.render('pages/ranking', { titulo: 'Ranking do Bolão', ranking });
+  res.render('pages/ranking', { titulo: 'Ranking do Bolão', ranking, premio: calcularPremio(db) });
 });
 
 router.get('/meus-palpites', requireAuth, paginaMeusPalpites);
 
-router.post('/api/palpites', requireAuth, (req, res) => {
+router.post('/api/palpites', requireAuth, requirePago, (req, res) => {
   const { jogo_id, gols_casa, gols_fora } = req.body;
   const db = req.app.locals.db;
   const usuario_id = req.session.usuario.id;
@@ -53,7 +54,7 @@ router.post('/api/palpites', requireAuth, (req, res) => {
   }
 });
 
-router.post('/api/palpite-campeao', requireAuth, (req, res) => {
+router.post('/api/palpite-campeao', requireAuth, requirePago, (req, res) => {
   const { selecao } = req.body;
   const db = req.app.locals.db;
   const usuario_id = req.session.usuario.id;

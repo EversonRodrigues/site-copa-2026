@@ -3,6 +3,7 @@ const { DB_PATH } = require('../../database/init');
 const { getTodasSelecoes } = require('../services/selecoesData');
 const { getTodosJogosEstaticos } = require('../services/jogosEstaticos');
 const { bandeiraDe } = require('../services/bandeiras');
+const { calcularPremio } = require('../services/premio');
 
 // Bônus por acertar o campeão da Copa (regulamento)
 const BONUS_CAMPEAO = 15;
@@ -147,8 +148,20 @@ async function paginaMeusPalpites(req, res) {
     .map(s => ({ nome: s.nome, bandeira: bandeiraDe(s.nome) }))
     .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 
+  // Status do depósito (taxa de inscrição) — só libera os palpites quando confirmado pelo admin
+  const usuario = db.prepare('SELECT pago FROM usuarios WHERE id = ?').get(usuario_id);
+  const pixChave = db.prepare("SELECT valor FROM config WHERE chave = 'pix_chave'").get();
+  const premio = calcularPremio(db);
+  const pagamento = {
+    pago: !!(usuario && usuario.pago),
+    taxaFmt: premio.taxaFmt,
+    premioFmt: premio.premioFmt,
+    pix: pixChave?.valor || null
+  };
+
   res.render('pages/meus-palpites', {
     titulo: 'Meus Palpites',
+    pagamento,
     palpites: palpitesHistorico,
     palpitesEditaveis,
     jogos: jogosDisponiveis,
