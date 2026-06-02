@@ -1,0 +1,62 @@
+<%- include('../partials/header') %>
+<div class="container container-sm">
+  <div class="page-header">
+    <h1 class="page-title">Mata-mata</h1>
+    <p class="subtitle">Defina os times de cada jogo quando a fase de grupos terminar. Ao salvar, o jogo aparece com os nomes reais e libera o palpite.</p>
+  </div>
+
+  <% if (msg === 'ok') { %>
+    <div class="admin-alert admin-alert-ok">Confronto salvo! Já aparece para os participantes.</div>
+  <% } else if (msg === 'limpo') { %>
+    <div class="admin-alert admin-alert-ok">Confronto removido — o jogo volta a ficar oculto até ser definido.</div>
+  <% } else if (msg === 'erro') { %>
+    <div class="admin-alert admin-alert-erro">Dados inválidos. Escolha duas seleções diferentes.</div>
+  <% } %>
+
+  <% const fases = [...new Set(jogos.map(j => j.fase))]; %>
+  <% fases.forEach(fase => { %>
+    <div class="card-perfil mt-4">
+      <div class="page-header" style="margin-bottom:1rem">
+        <h2 class="page-title" style="font-size:1.3rem"><%= fase %></h2>
+      </div>
+
+      <% jogos.filter(j => j.fase === fase).forEach(j => { %>
+        <form method="POST" action="/admin/mata-mata" class="mm-jogo">
+          <input type="hidden" name="jogo_id" value="<%= j.id %>">
+          <div class="mm-jogo-head">
+            <span class="mm-jogo-slot"><%= j.placeholderCasa %> × <%= j.placeholderFora %></span>
+            <span class="mm-jogo-data"><%= j.data %></span>
+            <% if (j.definido) { %><span class="pontos-badge pontos-3">definido</span><% } else { %><span class="pontos-badge pontos-0">a definir</span><% } %>
+          </div>
+          <div class="mm-jogo-selects">
+            <select name="time_casa" class="campeao-select" required>
+              <option value="">— mandante —</option>
+              <% selecoes.forEach(s => { %>
+                <option value="<%= s.nome %>" <%= j.definido && j.timeCasa === s.nome ? 'selected' : '' %>><%= s.nome %></option>
+              <% }) %>
+            </select>
+            <span class="palpite-x">×</span>
+            <select name="time_fora" class="campeao-select" required>
+              <option value="">— visitante —</option>
+              <% selecoes.forEach(s => { %>
+                <option value="<%= s.nome %>" <%= j.definido && j.timeFora === s.nome ? 'selected' : '' %>><%= s.nome %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="mm-jogo-acoes">
+            <button type="submit" class="btn btn-small btn-primary">Salvar</button>
+            <% if (j.definido) { %>
+              <button type="submit" name="acao" value="limpar" class="btn btn-small btn-ghost"
+                onclick="return confirm('Remover o confronto definido deste jogo?');">Limpar</button>
+            <% } %>
+          </div>
+        </form>
+      <% }) %>
+    </div>
+  <% }) %>
+
+  <div class="flex gap-4 mt-4">
+    <a href="/admin" class="btn btn-ghost">← Voltar ao admin</a>
+  </div>
+</div>
+<%- include('../partials/footer') %>

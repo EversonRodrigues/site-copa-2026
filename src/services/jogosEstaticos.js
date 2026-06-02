@@ -141,22 +141,27 @@ const MATA_MATA = [
   { fase: 'Final', casa: 'A definir', fora: 'A definir', data: '2026-07-19T17:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
 ];
 
-let _idCounter = 9000000;
+// IDs determinísticos e estáveis (não mudam entre chamadas), para o cache
+// não duplicar e os palpites referenciarem sempre o mesmo jogo.
+const BASE_ID_GRUPOS = 9000000;
+const BASE_ID_MATA = 9100000;
+
+function dataFmt(dataHora) {
+  return dataHora.toLocaleString('pt-BR', {
+    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit',
+    timeZone: 'America/Sao_Paulo'
+  });
+}
 
 function gerarJogosGrupos() {
-  const jogos = [];
-  CALENDARIO_GRUPOS.forEach(c => {
+  return CALENDARIO_GRUPOS.map((c, index) => {
     const times = GRUPOS[c.grupo];
     const timeCasa = times[c.casa];
     const timeFora = times[c.fora];
     const dataHora = new Date(c.data);
-    const dataFormatada = dataHora.toLocaleString('pt-BR', {
-      day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit',
-      timeZone: 'America/Sao_Paulo'
-    });
 
-    jogos.push({
-      id: String(_idCounter++),
+    return {
+      id: String(BASE_ID_GRUPOS + index),
       timeCasa,
       timeFora,
       bandeirasCasa: bandeiraDe(timeCasa),
@@ -166,27 +171,22 @@ function gerarJogosGrupos() {
       placar: '-',
       status: 'em_breve',
       statusLabel: 'Em breve',
-      data: dataFormatada,
+      data: dataFmt(dataHora),
       inicio: dataHora.toISOString(),
       fase: `Grupo ${c.grupo} — Rodada ${c.rodada}`,
       estadio: c.estadio,
       cidade: c.cidade,
       grupo: c.grupo,
       fonte: 'estatico'
-    });
+    };
   });
-  return jogos;
 }
 
 function gerarJogosMataMata() {
-  return MATA_MATA.map(m => {
+  return MATA_MATA.map((m, index) => {
     const dataHora = new Date(m.data);
-    const dataFormatada = dataHora.toLocaleString('pt-BR', {
-      day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit',
-      timeZone: 'America/Sao_Paulo'
-    });
     return {
-      id: String(_idCounter++),
+      id: String(BASE_ID_MATA + index),
       timeCasa: m.casa,
       timeFora: m.fora,
       bandeirasCasa: bandeiraDe(m.casa),
@@ -196,11 +196,15 @@ function gerarJogosMataMata() {
       placar: '-',
       status: 'em_breve',
       statusLabel: 'Em breve',
-      data: dataFormatada,
+      data: dataFmt(dataHora),
       inicio: dataHora.toISOString(),
       fase: m.fase,
       estadio: m.estadio,
       cidade: m.cidade,
+      mataMata: true,
+      // confronto "cru" (placeholder), preservado para referência do admin
+      confrontoCasa: m.casa,
+      confrontoFora: m.fora,
       fonte: 'estatico'
     };
   });
@@ -208,6 +212,10 @@ function gerarJogosMataMata() {
 
 function getTodosJogosEstaticos() {
   return [...gerarJogosGrupos(), ...gerarJogosMataMata()];
+}
+
+function getJogoEstatico(id) {
+  return getTodosJogosEstaticos().find(j => j.id === String(id)) || null;
 }
 
 function getGruposEstaticos() {
@@ -221,4 +229,4 @@ function getGruposEstaticos() {
   }));
 }
 
-module.exports = { getTodosJogosEstaticos, getGruposEstaticos, GRUPOS };
+module.exports = { getTodosJogosEstaticos, getJogoEstatico, getGruposEstaticos, GRUPOS };

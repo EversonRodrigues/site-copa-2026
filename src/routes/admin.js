@@ -5,6 +5,8 @@ const { resetarSenhaUsuario } = require('../controllers/authController');
 const { getTodasSelecoes } = require('../services/selecoesData');
 const { bandeiraDe } = require('../services/bandeiras');
 const { calcularPremio } = require('../services/premio');
+const { getTodosJogosEstaticos } = require('../services/jogosEstaticos');
+const { aplicarConfrontos, setConfronto, limparConfronto, jogoDefinido } = require('../services/mataMata');
 
 const router = express.Router();
 
@@ -75,6 +77,47 @@ router.post('/admin/reset-senha', requireAdmin, async (req, res) => {
   if (!r) return res.redirect('/admin?msg=pag_erro#pagamentos');
 
   res.redirect(`/admin?msg=senha_resetada&tmp=${encodeURIComponent(r.senha)}&quem=${encodeURIComponent(r.nome)}#pagamentos`);
+});
+
+// Definição dos confrontos do mata-mata (preencher os times quando os grupos acabarem).
+router.get('/admin/mata-mata', requireAdmin, (req, res) => {
+  const db = req.app.locals.db;
+  const jogos = aplicarConfrontos(db, getTodosJogosEstaticos())
+    .filter(j => j.mataMata)
+    .map(j => ({
+      id: j.id,
+      fase: j.fase,
+      data: j.data,
+      placeholderCasa: j.confrontoCasa,
+      placeholderFora: j.confrontoFora,
+      timeCasa: j.timeCasa,
+      timeFora: j.timeFora,
+      definido: jogoDefinido(j)
+    }));
+  res.render('pages/admin-mata-mata', {
+    titulo: 'Mata-mata',
+    jogos,
+    selecoes: listaSelecoes(),
+    msg: req.query.msg || null
+  });
+});
+
+router.post('/admin/mata-mata', requireAdmin, (req, res) => {
+  const db = req.app.locals.db;
+  const { jogo_id, time_casa, time_fora, acao } = req.body;
+  if (!jogo_id) return res.redirect('/admin/mata-mata?msg=erro');
+
+  if (acao === 'limpar') {
+    limparConfronto(db, jogo_id);
+    return res.redirect('/admin/mata-mata?msg=limpo');
+  }
+
+  const valido = nome => getTodasSelecoes().some(s => s.nome === nome);
+  if (!valido(time_casa) || !valido(time_fora) || time_casa === time_fora) {
+    return res.redirect('/admin/mata-mata?msg=erro');
+  }
+  setConfronto(db, jogo_id, time_casa, time_fora);
+  res.redirect('/admin/mata-mata?msg=ok');
 });
 
 // Salva a chave PIX exibida aos participantes que ainda não depositaram.

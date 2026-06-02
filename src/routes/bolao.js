@@ -2,8 +2,9 @@ const express = require('express');
 const { requireAuth, requirePago } = require('../middleware/auth');
 const { paginaMeusPalpites } = require('../controllers/bolaoController');
 const { getTodasSelecoes } = require('../services/selecoesData');
-const { getTodosJogosEstaticos } = require('../services/jogosEstaticos');
+const { getTodosJogosEstaticos, getJogoEstatico } = require('../services/jogosEstaticos');
 const { calcularPremio } = require('../services/premio');
+const { aplicarConfrontos, jogoDefinido } = require('../services/mataMata');
 
 const router = express.Router();
 
@@ -33,11 +34,15 @@ router.post('/api/palpites', requireAuth, requirePago, (req, res) => {
     return res.status(400).json({ erro: 'Dados incompletos.' });
   }
 
-  const jogo = db.prepare('SELECT dados_json FROM jogos_cache WHERE jogo_id_api = ?').get(String(jogo_id));
-  if (!jogo) return res.status(404).json({ erro: 'Jogo não encontrado.' });
+  const jogoBase = getJogoEstatico(jogo_id);
+  if (!jogoBase) return res.status(404).json({ erro: 'Jogo não encontrado.' });
 
-  const dados = JSON.parse(jogo.dados_json);
-  const inicio = new Date(dados.inicio || dados.fixture?.date);
+  const [jogo] = aplicarConfrontos(db, [jogoBase]);
+  if (!jogoDefinido(jogo)) {
+    return res.status(400).json({ erro: 'Os times deste jogo ainda não foram definidos.' });
+  }
+
+  const inicio = new Date(jogo.inicio);
   if (isNaN(inicio) || new Date() >= inicio) {
     return res.status(400).json({ erro: 'Prazo encerrado: o jogo já começou.' });
   }

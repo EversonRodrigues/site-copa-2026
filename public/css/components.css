@@ -2336,3 +2336,29 @@
 @media (max-width: 768px) {
   .premio-banner-detalhe { margin-left: 0; text-align: left; width: 100%; }
 }
+
+/* === ADMIN MATA-MATA === */
+.mm-jogo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) 0;
+  border-bottom: 1px solid var(--borda);
+}
+.mm-jogo:last-child { border-bottom: none; }
+.mm-jogo-head {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  flex: 1 1 100%;
+}
+.mm-jogo-slot { font-family: var(--fonte-dados); color: var(--texto-secundario); font-size: 0.9rem; }
+.mm-jogo-data { color: var(--texto-terciario); font-size: 0.85rem; }
+.mm-jogo-selects { display: flex; align-items: center; gap: var(--espaco-2); flex: 1 1 auto; }
+.mm-jogo-selects .campeao-select { flex: 1 1 0; min-width: 0; }
+.mm-jogo-acoes { display: flex; gap: var(--espaco-2); }
+
+@media (max-width: 768px) {
+  .mm-jogo-selects { flex: 1 1 100%; }
+}

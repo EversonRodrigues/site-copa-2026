@@ -67,7 +67,28 @@ function initDb() {
       valor TEXT,
       atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS mata_mata (
+      jogo_id TEXT PRIMARY KEY,
+      time_casa TEXT NOT NULL,
+      time_fora TEXT NOT NULL,
+      atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
+
+  // Limpeza única: versões antigas geravam IDs instáveis e o jogos_cache
+  // acumulou linhas de jogo duplicadas. Zera essas linhas uma vez (o cache
+  // se repopula sozinho na próxima visita, já com IDs estáveis).
+  const flag = db.prepare("SELECT valor FROM config WHERE chave = 'cache_ids_v2'").get();
+  if (!flag) {
+    db.prepare(`
+      DELETE FROM jogos_cache
+      WHERE jogo_id_api NOT IN ('jogos_todos', 'grupos', 'selecoes')
+        AND jogo_id_api NOT LIKE 'jogos_fase_%'
+        AND jogo_id_api NOT LIKE 'selecao_%'
+    `).run();
+    db.prepare("INSERT INTO config (chave, valor) VALUES ('cache_ids_v2', '1') ON CONFLICT(chave) DO NOTHING").run();
+  }
 
   // Migração: taxa de inscrição do bolão (depósito confirmado libera os palpites)
   const colunas = db.prepare('PRAGMA table_info(usuarios)').all();

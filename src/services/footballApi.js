@@ -1,6 +1,7 @@
 const Database = require('better-sqlite3');
 const { DB_PATH } = require('../../database/init');
 const { getTodosJogosEstaticos, getGruposEstaticos } = require('./jogosEstaticos');
+const { aplicarConfrontos } = require('./mataMata');
 
 // TheSportsDB — gratuita, sem chave de API
 const BASE_URL = 'https://www.thesportsdb.com/api/v1/json/3';
@@ -66,7 +67,17 @@ async function fetchJogos() {
     }
   });
 
-  const jogos = jogosEstaticos.sort((a, b) => new Date(a.inicio) - new Date(b.inicio));
+  let jogos = jogosEstaticos.sort((a, b) => new Date(a.inicio) - new Date(b.inicio));
+  // Aplica os confrontos do mata-mata já definidos pelo admin (nomes reais)
+  jogos = aplicarConfrontos(db, jogos);
+
+  // Remove linhas de jogo antigas antes de regravar (auto-cura duplicatas de IDs legados)
+  db.prepare(`
+    DELETE FROM jogos_cache
+    WHERE jogo_id_api NOT IN ('jogos_todos', 'grupos', 'selecoes')
+      AND jogo_id_api NOT LIKE 'jogos_fase_%'
+      AND jogo_id_api NOT LIKE 'selecao_%'
+  `).run();
 
   const upsert = db.prepare(`
     INSERT INTO jogos_cache (jogo_id_api, dados_json, atualizado_em)

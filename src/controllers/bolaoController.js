@@ -4,6 +4,7 @@ const { getTodasSelecoes } = require('../services/selecoesData');
 const { getTodosJogosEstaticos } = require('../services/jogosEstaticos');
 const { bandeiraDe } = require('../services/bandeiras');
 const { calcularPremio } = require('../services/premio');
+const { aplicarConfrontos, jogoDefinido } = require('../services/mataMata');
 
 // Bônus por acertar o campeão da Copa (regulamento)
 const BONUS_CAMPEAO = 15;
@@ -82,22 +83,15 @@ async function paginaMeusPalpites(req, res) {
   const db = req.app.locals.db;
   const usuario_id = req.session.usuario.id;
 
-  // Busca jogos futuros do cache para exibir formulário de palpite
-  const jogosCache = db.prepare(`
-    SELECT jogo_id_api, dados_json FROM jogos_cache
-    WHERE jogo_id_api NOT IN ('jogos_todos', 'grupos', 'selecoes')
-    AND jogo_id_api NOT LIKE 'jogos_fase_%'
-    AND jogo_id_api NOT LIKE 'selecao_%'
-    ORDER BY atualizado_em DESC
-    LIMIT 200
-  `).all();
-
   const agora = new Date();
 
-  // Regulamento: palpites permitidos até o início do jogo
-  const jogosFuturos = jogosCache
-    .map(j => { try { return JSON.parse(j.dados_json); } catch { return null; } })
-    .filter(j => j && j.inicio && new Date(j.inicio) > agora && j.status === 'em_breve');
+  // Fixtures vêm da fonte estática (IDs estáveis) com os confrontos de mata-mata
+  // já definidos pelo admin. Regulamento: palpites permitidos até o início do jogo.
+  // Só entram jogos futuros com os DOIS times definidos — jogos de grupo sempre;
+  // mata-mata só depois que o admin define os times (senão ficam ocultos).
+  const jogosFuturos = aplicarConfrontos(db, getTodosJogosEstaticos())
+    .filter(j => j.inicio && new Date(j.inicio) > agora && jogoDefinido(j))
+    .sort((a, b) => new Date(a.inicio) - new Date(b.inicio));
 
   // Palpites já feitos pelo usuário
   const palpitesFeitos = db.prepare(`
