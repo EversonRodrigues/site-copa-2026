@@ -2362,3 +2362,11 @@
 @media (max-width: 768px) {
   .mm-jogo-selects { flex: 1 1 100%; }
 }
+
+/* === BARRA DE NAVEGAÇÃO DO ADMIN === */
+.admin-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  margin-bottom: var(--espaco-5);
+}

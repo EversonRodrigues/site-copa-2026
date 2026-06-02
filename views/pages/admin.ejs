@@ -2,8 +2,14 @@
 <div class="container container-sm">
   <div class="page-header">
     <h1 class="page-title">Administração</h1>
-    <p class="subtitle">Registrar o campeão da Copa e premiar o bônus (+15 pts)</p>
+    <p class="subtitle">Gerencie o bolão: pagamentos, mata-mata e campeão</p>
   </div>
+
+  <nav class="admin-nav">
+    <a href="/admin/mata-mata" class="btn btn-primary btn-small">⚽ Definir mata-mata</a>
+    <a href="#pagamentos" class="btn btn-outline btn-small">💳 Pagamentos</a>
+    <a href="#campeao" class="btn btn-outline btn-small">🏆 Campeão</a>
+  </nav>
 
   <% if (msg === 'ok') { %>
     <div class="admin-alert admin-alert-ok">
@@ -25,7 +31,7 @@
     </div>
   <% } %>
 
-  <div class="card-perfil">
+  <div class="card-perfil" id="campeao">
     <div class="perfil-info">
       <div class="perfil-row">
         <span class="perfil-label">Campeão registrado</span>
