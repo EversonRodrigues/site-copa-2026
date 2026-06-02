@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 12;
 
 async function cadastro(req, res) {
-  const { nome, email, senha } = req.body;
+  const { nome, senha } = req.body;
+  const email = (req.body.email || '').trim().toLowerCase();
   const db = req.app.locals.db;
 
   if (!nome || !email || !senha || senha.length < 6) {
@@ -31,7 +32,8 @@ async function cadastro(req, res) {
 }
 
 async function login(req, res) {
-  const { email, senha } = req.body;
+  const { senha } = req.body;
+  const email = (req.body.email || '').trim().toLowerCase();
   const db = req.app.locals.db;
 
   if (!email || !senha) {
