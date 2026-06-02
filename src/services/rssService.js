@@ -8,9 +8,10 @@ const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutos
 const MAX_POR_FONTE = 20;
 
 const FEEDS = [
-  { nome: 'ge.globo.com', url: 'https://ge.globo.com/rss/feeds/futebol.xml' },
-  { nome: 'ESPN Brasil', url: 'https://www.espn.com.br/rss/futebol/noticias' },
-  { nome: 'UOL Esporte', url: 'https://esporte.uol.com.br/rss.xml' },
+  { nome: 'GE — Copa do Mundo', url: 'https://ge.globo.com/rss/ge/copa-do-mundo/' },
+  { nome: 'GE — Futebol', url: 'https://ge.globo.com/rss/ge/futebol/' },
+  { nome: 'Trivela', url: 'https://trivela.com.br/feed/' },
+  { nome: 'Gazeta Esportiva', url: 'https://www.gazetaesportiva.com/feed/' },
 ];
 
 // Palavras-chave para filtrar notícias relacionadas à Copa / seleções
@@ -20,6 +21,7 @@ const PALAVRAS_COPA = [
   'fifa', 'copa', 'mundial',
   'brasil', 'argentina', 'frança', 'espanha', 'alemanha', 'portugal',
   'inglater', 'uruguai', 'colombia', 'holanda',
+  'convoca', 'convocad', 'amistoso', 'seleções', 'grupo da morte',
 ];
 
 function relevanteCopa(titulo) {
@@ -27,7 +29,14 @@ function relevanteCopa(titulo) {
   return PALAVRAS_COPA.some(p => t.includes(p));
 }
 
-const parser = new Parser({ timeout: 8000 });
+// User-Agent de navegador: vários feeds bloqueiam requisições sem isso (403/406).
+const parser = new Parser({
+  timeout: 10000,
+  headers: {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+  }
+});
 
 function getDb() {
   return new Database(DB_PATH);
