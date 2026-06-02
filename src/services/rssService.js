@@ -7,21 +7,21 @@ const DB_PATH = process.env.DB_PATH || path.join(__dirname, '../../database/db.s
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutos
 const MAX_POR_FONTE = 20;
 
+// apenasCopa: feed 100% dedicado à Copa (entra inteiro). Os demais são de futebol
+// geral e passam pelo filtro de palavras-chave (só itens sobre a Copa).
 const FEEDS = [
-  { nome: 'GE — Copa do Mundo', url: 'https://ge.globo.com/rss/ge/copa-do-mundo/' },
+  { nome: 'GE — Copa do Mundo', url: 'https://ge.globo.com/rss/ge/copa-do-mundo/', apenasCopa: true },
   { nome: 'GE — Futebol', url: 'https://ge.globo.com/rss/ge/futebol/' },
   { nome: 'Trivela', url: 'https://trivela.com.br/feed/' },
   { nome: 'Gazeta Esportiva', url: 'https://www.gazetaesportiva.com/feed/' },
 ];
 
-// Palavras-chave para filtrar notícias relacionadas à Copa / seleções
+// Palavras-chave específicas da Copa do Mundo (evita falso positivo de clube:
+// "Copa do Brasil", "Mundial de Clubes", "Brasileirão" não entram).
 const PALAVRAS_COPA = [
-  'copa do mundo', 'world cup', '2026', 'copa 2026',
-  'seleção brasileira', 'seleção', 'eliminatórias',
-  'fifa', 'copa', 'mundial',
-  'brasil', 'argentina', 'frança', 'espanha', 'alemanha', 'portugal',
-  'inglater', 'uruguai', 'colombia', 'holanda',
-  'convoca', 'convocad', 'amistoso', 'seleções', 'grupo da morte',
+  'copa do mundo', 'world cup', 'copa 2026', 'mundial 2026',
+  'seleção brasileira', 'seleção', 'seleções',
+  'eliminatórias', 'convoca', 'convocad', 'convocação', 'amistoso',
 ];
 
 function relevanteCopa(titulo) {
@@ -56,7 +56,7 @@ async function fetchNoticias() {
   }
 
   const resultados = await Promise.allSettled(
-    FEEDS.map(feed => buscarFeed(feed.nome, feed.url))
+    FEEDS.map(feed => buscarFeed(feed.nome, feed.url, feed.apenasCopa))
   );
 
   const upsert = db.prepare(`
@@ -81,7 +81,7 @@ async function fetchNoticias() {
     .map(formatarNoticia);
 }
 
-async function buscarFeed(nome, url) {
+async function buscarFeed(nome, url, apenasCopa) {
   const feed = await parser.parseURL(url);
   const itens = (feed.items || []).slice(0, MAX_POR_FONTE).map(item => ({
     titulo: item.title || '',
@@ -90,10 +90,8 @@ async function buscarFeed(nome, url) {
     publicado_em: item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString()
   }));
 
-  // Prioriza notícias Copa, mas inclui todas
-  const copa = itens.filter(i => relevanteCopa(i.titulo));
-  const outras = itens.filter(i => !relevanteCopa(i.titulo));
-  return [...copa, ...outras];
+  // Feed dedicado à Copa entra inteiro; os demais só com itens sobre a Copa
+  return apenasCopa ? itens : itens.filter(i => relevanteCopa(i.titulo));
 }
 
 function formatarNoticia(n) {

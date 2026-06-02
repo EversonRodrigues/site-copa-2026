@@ -98,6 +98,14 @@ function initDb() {
     db.prepare("INSERT INTO config (chave, valor) VALUES ('cache_ids_v2', '1') ON CONFLICT(chave) DO NOTHING").run();
   }
 
+  // Limpeza única: passamos a exibir só notícias da Copa. Zera o cache de notícias
+  // uma vez para remover itens antigos de futebol geral (repopula só com Copa).
+  const flagNoticias = db.prepare("SELECT valor FROM config WHERE chave = 'noticias_so_copa'").get();
+  if (!flagNoticias) {
+    db.prepare('DELETE FROM noticias_cache').run();
+    db.prepare("INSERT INTO config (chave, valor) VALUES ('noticias_so_copa', '1') ON CONFLICT(chave) DO NOTHING").run();
+  }
+
   // Migração: taxa de inscrição do bolão (depósito confirmado libera os palpites)
   const colunas = db.prepare('PRAGMA table_info(usuarios)').all();
   if (!colunas.some(c => c.name === 'pago')) {
