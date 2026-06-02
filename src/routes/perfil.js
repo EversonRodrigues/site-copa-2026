@@ -1,5 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('../middleware/auth');
+const { trocarSenha } = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -13,8 +14,11 @@ router.get('/perfil', requireAuth, (req, res) => {
   res.render('pages/perfil', {
     titulo: 'Meu Perfil',
     total_pontos: pontuacao?.total_pontos || 0,
-    posicao: posicao?.pos || '-'
+    posicao: posicao?.pos || '-',
+    msg: req.query.msg || null
   });
 });
+
+router.post('/perfil/senha', requireAuth, trocarSenha);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 const { requireAdmin } = require('../middleware/auth');
 const { processarBonusCampeao } = require('../controllers/bolaoController');
+const { resetarSenhaUsuario } = require('../controllers/authController');
 const { getTodasSelecoes } = require('../services/selecoesData');
 const { bandeiraDe } = require('../services/bandeiras');
 const { calcularPremio } = require('../services/premio');
@@ -32,7 +33,9 @@ router.get('/admin', requireAdmin, (req, res) => {
     pixChave: pixChave?.valor || '',
     premio: calcularPremio(db),
     msg: req.query.msg || null,
-    premiados: req.query.premiados || null
+    premiados: req.query.premiados || null,
+    tmpSenha: req.query.tmp || null,
+    quemSenha: req.query.quem || null
   });
 });
 
@@ -60,6 +63,18 @@ router.post('/admin/pagamento', requireAdmin, (req, res) => {
     return res.redirect('/admin?msg=pag_erro');
   }
   res.redirect('/admin?msg=pag_ok#pagamentos');
+});
+
+// Reset de senha pelo admin: gera uma senha temporária para o participante.
+router.post('/admin/reset-senha', requireAdmin, async (req, res) => {
+  const db = req.app.locals.db;
+  const id = Number(req.body.usuario_id);
+  if (!id) return res.redirect('/admin?msg=pag_erro#pagamentos');
+
+  const r = await resetarSenhaUsuario(db, id);
+  if (!r) return res.redirect('/admin?msg=pag_erro#pagamentos');
+
+  res.redirect(`/admin?msg=senha_resetada&tmp=${encodeURIComponent(r.senha)}&quem=${encodeURIComponent(r.nome)}#pagamentos`);
 });
 
 // Salva a chave PIX exibida aos participantes que ainda não depositaram.

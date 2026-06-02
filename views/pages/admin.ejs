@@ -17,6 +17,12 @@
     <div class="admin-alert admin-alert-ok">Chave PIX salva.</div>
   <% } else if (msg === 'pag_erro') { %>
     <div class="admin-alert admin-alert-erro">Não foi possível atualizar o depósito.</div>
+  <% } else if (msg === 'senha_resetada' && tmpSenha) { %>
+    <div class="admin-alert admin-alert-ok">
+      Senha de <strong><%= quemSenha %></strong> redefinida. Senha temporária:
+      <code class="deposito-pix-chave"><%= tmpSenha %></code><br>
+      <small>Passe essa senha à pessoa. Ela deve entrar e trocar em <em>Perfil → Trocar senha</em>. Esta senha não será exibida de novo.</small>
+    </div>
   <% } %>
 
   <div class="card-perfil">
@@ -111,6 +117,11 @@
                     <input type="hidden" name="acao" value="confirmar">
                     <button type="submit" class="btn btn-small btn-primary">Confirmar depósito</button>
                   <% } %>
+                </form>
+                <form method="POST" action="/admin/reset-senha" style="display:inline"
+                  onsubmit="return confirm('Gerar uma senha temporária para <%= u.nome %>? A senha atual deixará de funcionar.');">
+                  <input type="hidden" name="usuario_id" value="<%= u.id %>">
+                  <button type="submit" class="btn btn-small btn-ghost">Resetar senha</button>
                 </form>
               </td>
             </tr>
