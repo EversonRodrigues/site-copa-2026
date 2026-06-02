@@ -459,14 +459,19 @@ const SELECOES = {
   },
 };
 
+const { bandeiraDe } = require('./bandeiras');
+
 function getSelecao(nome) {
-  return SELECOES[nome] || null;
+  const dados = SELECOES[nome];
+  if (!dados) return null;
+  return { ...dados, bandeira: bandeiraDe(nome), bandeiraGrande: bandeiraDe(nome, 'w320') };
 }
 
 function getTodasSelecoes() {
   return Object.entries(SELECOES).map(([nome, dados]) => ({
     nome,
-    ...dados
+    ...dados,
+    bandeira: bandeiraDe(nome)
   }));
 }
 

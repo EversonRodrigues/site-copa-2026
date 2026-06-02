@@ -26,8 +26,12 @@
         <div class="selecoes-grid">
           <% grupos[letra].forEach(s => { %>
             <a href="/selecoes/<%= encodeURIComponent(s.nome) %>" class="card-selecao-rico" style="--selecao-cor: <%= s.cor %>">
-              <div class="selecao-avatar" style="background: <%= s.cor %>">
-                <%= s.nome.charAt(0) %>
+              <div class="selecao-avatar selecao-avatar-flag">
+                <% if (s.bandeira) { %>
+                  <img src="<%= s.bandeira %>" alt="Bandeira <%= s.nome %>" class="selecao-flag-img" loading="lazy">
+                <% } else { %>
+                  <span style="background: <%= s.cor %>"><%= s.nome.charAt(0) %></span>
+                <% } %>
               </div>
               <div class="selecao-info">
                 <div class="selecao-nome-card"><%= s.nome %></div>

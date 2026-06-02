@@ -15,7 +15,13 @@
 
     <div class="dash-team-hero-grid">
       <div class="dash-team-hero-main">
-        <div class="dash-team-avatar" style="background: <%= cor %>"><%= inicial %></div>
+        <div class="dash-team-avatar dash-team-avatar-flag">
+          <% if (selecao.bandeira) { %>
+            <img src="<%= selecao.bandeiraGrande || selecao.bandeira %>" alt="Bandeira <%= selecao.nome %>" class="dash-team-flag-img">
+          <% } else { %>
+            <span style="background: <%= cor %>"><%= inicial %></span>
+          <% } %>
+        </div>
         <div class="dash-team-meta">
           <span class="dash-eyebrow">
             <span class="dash-eyebrow-dot"></span>
