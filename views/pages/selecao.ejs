@@ -3,7 +3,7 @@
 <%
   const cor = selecao.cor || '#E8112D';
   const inicial = (selecao.nome || '?').charAt(0).toUpperCase();
-  const provaveis = selecao.provaveisJogadores || [];
+  const buscaElenco = 'https://www.google.com/search?q=' + encodeURIComponent('convocados ' + selecao.nome + ' Copa do Mundo 2026');
 %>
 
 <div class="container">
@@ -46,8 +46,8 @@
           <span class="dash-team-stat-value dash-team-stat-num">#<%= selecao.ranking_fifa %></span>
         </div>
         <div class="dash-team-stat">
-          <span class="dash-team-stat-label">Convocados (prov.)</span>
-          <span class="dash-team-stat-value dash-team-stat-num"><%= provaveis.length %></span>
+          <span class="dash-team-stat-label">Grupo</span>
+          <span class="dash-team-stat-value dash-team-stat-num"><%= selecao.grupo %></span>
         </div>
       </aside>
     </div>
@@ -82,21 +82,10 @@
     <article class="dash-team-card dash-team-card-wide">
       <header class="dash-team-card-head">
         <span class="dash-team-card-icon">👕</span>
-        <h2 class="dash-team-card-title">Prováveis Convocados</h2>
-        <span class="dash-team-card-count"><%= provaveis.length %></span>
+        <h2 class="dash-team-card-title">Elenco / Convocados</h2>
       </header>
-      <% if (provaveis.length === 0) { %>
-        <p class="dash-team-card-text text-muted">Lista a confirmar.</p>
-      <% } else { %>
-        <ul class="dash-team-roster">
-          <% provaveis.forEach((j, i) => { %>
-            <li class="dash-team-roster-item">
-              <span class="dash-team-roster-num"><%= String(i + 1).padStart(2, '0') %></span>
-              <span class="dash-team-roster-nome"><%= j %></span>
-            </li>
-          <% }) %>
-        </ul>
-      <% } %>
+      <p class="dash-team-card-text">A lista oficial de convocados é divulgada e atualizada pelas próprias seleções. Veja a convocação mais recente de <strong><%= selecao.nome %></strong>:</p>
+      <a href="<%= buscaElenco %>" target="_blank" rel="noopener" class="btn btn-primary btn-small">Ver elenco atualizado →</a>
     </article>
   </section>
 </div>

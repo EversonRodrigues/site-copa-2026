@@ -82,7 +82,7 @@ const SELECOES = {
   'Brasil': {
     grupo: 'C', continente: 'CONMEBOL', cor: '#009C3B',
     estilo: 'Futebol ofensivo, técnica individual e coletiva, jogo rápido. O "jogo bonito" como filosofia.',
-    treinador: 'Dorival Júnior',
+    treinador: 'Carlo Ancelotti',
     provaveisJogadores: ['Alisson (goleiro)', 'Danilo (lateral)', 'Marquinhos (zagueiro)', 'Casemiro (volante)', 'Vinicius Jr. (atacante)', 'Rodrygo (meia)', 'Endrick (atacante)'],
     conquistas: 'Pentacampeão mundial (1958, 1962, 1970, 1994, 2002). Único a participar de todas as edições.',
     curiosidades: 'O Brasil é o maior vencedor da Copa. Pelé marcou 77 gols pela seleção. Vinicius Jr. foi eleito melhor do mundo em 2024.',
@@ -234,7 +234,7 @@ const SELECOES = {
   'Bélgica': {
     grupo: 'G', continente: 'UEFA', cor: '#EF3340',
     estilo: 'Físico e técnico, com talento individual excepcional. A "geração dourada" ainda está ativa.',
-    treinador: 'Domenico Tedesco',
+    treinador: 'Rudi Garcia',
     provaveisJogadores: ['Thibaut Courtois (goleiro)', 'Toby Alderweireld (zagueiro)', 'Kevin De Bruyne (meia)', 'Axel Witsel (volante)', 'Romelu Lukaku (atacante)', 'Dries Mertens (meia)'],
     conquistas: '3º lugar em 2018. Liderou o ranking FIFA por vários anos.',
     curiosidades: 'Bélgica teve a melhor geração de sua história nos anos 2010. Kevin De Bruyne é considerado um dos melhores meias do mundo.',
@@ -404,7 +404,7 @@ const SELECOES = {
   'Inglaterra': {
     grupo: 'K', continente: 'UEFA', cor: '#FFFFFF',
     estilo: 'Físico, técnico e cada vez mais moderno. A nova geração trouxe futebol atraente.',
-    treinador: 'Lee Carsley',
+    treinador: 'Thomas Tuchel',
     provaveisJogadores: ['Jordan Pickford (goleiro)', 'Kyle Walker (lateral)', 'Harry Maguire (zagueiro)', 'Declan Rice (volante)', 'Jude Bellingham (meia)', 'Harry Kane (atacante)', 'Phil Foden (meia)'],
     conquistas: 'Campeão mundial em 1966 (único título). Vice-campeão Euro 2021 e 2024.',
     curiosidades: 'Harry Kane é o maior artilheiro da história da seleção. England sofre com a "dor de pênaltis" em eliminatórias.',
