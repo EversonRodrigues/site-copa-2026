@@ -15,7 +15,7 @@ const SELECOES = {
   'Jamaica': {
     grupo: 'A', continente: 'CONCACAF', cor: '#000000',
     estilo: 'Defesa organizada e contra-ataques rápidos. Aproveita a velocidade dos atacantes.',
-    treinador: 'Heimir Hallgrímsson',
+    treinador: 'Steve McClaren',
     provaveisJogadores: ['Andre Blake (goleiro)', 'Damion Lowe (zagueiro)', 'Kasey Palmer (meia)', 'Bobby Decordova-Reid (atacante)', 'Michail Antonio (atacante)'],
     conquistas: 'Primeira classificação para a Copa em 1998. Histórico retorno em 2026.',
     curiosidades: 'A Jamaica tem forte influência caribenha no futebol. Vários jogadores atuam na Premier League inglesa.',
@@ -33,7 +33,7 @@ const SELECOES = {
   'Uzbequistão': {
     grupo: 'A', continente: 'AFC', cor: '#1EB53A',
     estilo: 'Organizado taticamente, com foco na solidez defensiva. Estreante na Copa.',
-    treinador: 'Srecko Katanec',
+    treinador: 'Timur Kapadze',
     provaveisJogadores: ['Otabek Shukurov (goleiro)', 'Sanjar Tursunov (zagueiro)', 'Jaloliddin Masharipov (meia)', 'Eldor Shomurodov (atacante)', 'Dostonbek Khamdamov (meia)'],
     conquistas: 'Primeira Copa do Mundo da história do país.',
     curiosidades: 'O Uzbequistão faz parte da Ásia Central e tem crescido muito no futebol desde a independência em 1991.',
@@ -147,7 +147,7 @@ const SELECOES = {
   'Nigéria': {
     grupo: 'D', continente: 'CAF', cor: '#008751',
     estilo: 'Veloz e atlético, com grande talento individual. As "Super Águias" são temidas.',
-    treinador: 'Finidi George',
+    treinador: 'Eric Chelle',
     provaveisJogadores: ['Francis Uzoho (goleiro)', 'Semi Ajayi (zagueiro)', 'Wilfred Ndidi (volante)', 'Alex Iwobi (meia)', 'Victor Osimhen (atacante)', 'Samuel Chukwueze (ponta)'],
     conquistas: 'Tricampeão africano. Oitavas de final em 1994 e 1998.',
     curiosidades: 'Victor Osimhen foi artilheiro da Serie A italiana em 2022/23. Nigéria é a nação mais populosa da África.',
@@ -167,7 +167,7 @@ const SELECOES = {
   'Curaçao': {
     grupo: 'E', continente: 'CONCACAF', cor: '#003DA5',
     estilo: 'Técnico e criativo, com jogadores de origem holandesa. Estilo europeu.',
-    treinador: 'Remko Bicentini',
+    treinador: 'Dick Advocaat',
     provaveisJogadores: ['Eloy Room (goleiro)', 'Ethan Do Blessman (zagueiro)', 'Leandro Bacuna (meia)', 'Cuco Martina (lateral)', 'Juninho (atacante)'],
     conquistas: 'Primeira Copa do Mundo da história.',
     curiosidades: 'Curaçao é uma ilha do Caribe com forte influência holandesa. Muitos jogadores atuam na Eredivisie.',
@@ -243,7 +243,7 @@ const SELECOES = {
   'Egito': {
     grupo: 'G', continente: 'CAF', cor: '#CE1126',
     estilo: 'Organizado e experiente, com estrela individual absoluta.',
-    treinador: 'Hossam El-Badry',
+    treinador: 'Hossam Hassan',
     provaveisJogadores: ['Mohamed El-Shenawy (goleiro)', 'Ahmed Hegazi (zagueiro)', 'Tarek Hamed (volante)', 'Mohamed Salah (meia/atacante)', 'Mostafa Mohamed (atacante)'],
     conquistas: '7x campeão africano. Última Copa em 1990.',
     curiosidades: 'Mohamed Salah é um dos melhores do mundo e maior ídolo do país. O Egito tem o recorde de títulos da CAN.',
@@ -272,7 +272,7 @@ const SELECOES = {
   'Arábia Saudita': {
     grupo: 'H', continente: 'AFC', cor: '#006C35',
     estilo: 'Organizado e disciplinado, com jogadores de alto nível chegando à Saudi Pro League.',
-    treinador: 'Roberto Mancini',
+    treinador: 'Hervé Renard',
     provaveisJogadores: ['Mohammed Al-Owais (goleiro)', 'Ali Al-Bulayhi (lateral)', 'Abdulelah Al-Malki (volante)', 'Salem Al-Dawsari (ponta)', 'Firas Al-Buraikan (atacante)'],
     conquistas: 'Oitavas de final em 1994. Surpreendeu ao vencer a Argentina em 2022.',
     curiosidades: 'A Arábia Saudita venceu a Argentina por 2x1 em 2022, em uma das maiores zebras da história. Cristiano Ronaldo joga na Saudi League.',
@@ -319,7 +319,7 @@ const SELECOES = {
   'Senegal': {
     grupo: 'I', continente: 'CAF', cor: '#00853F',
     estilo: 'Atlético, físico e técnico. Uma das seleções mais completas da África.',
-    treinador: 'Aliou Cissé',
+    treinador: 'Pape Thiaw',
     provaveisJogadores: ['Édouard Mendy (goleiro)', 'Kalidou Koulibaly (zagueiro)', 'Idrissa Gueye (volante)', 'Sadio Mané (atacante)', 'Ismaïla Sarr (ponta)'],
     conquistas: 'Campeão africano 2021 e 2022. Quartas de final em 2002.',
     curiosidades: 'Sadio Mané é o maior ídolo da história. Senegal eliminou o Brasil em 2002 nas oitavas de final.',
@@ -328,7 +328,7 @@ const SELECOES = {
   'Honduras': {
     grupo: 'I', continente: 'CONCACAF', cor: '#0073CF',
     estilo: 'Físico e combativo, com defesa sólida.',
-    treinador: 'Diego Vázquez',
+    treinador: 'Reinaldo Rueda',
     provaveisJogadores: ['Luis López (goleiro)', 'Maynor Figueroa (zagueiro)', 'Andy Najar (lateral)', 'Alberth Elis (ponta)', 'Romell Quioto (ponta)'],
     conquistas: 'Participou de Copas em 1982, 2010 e 2014.',
     curiosidades: 'Honduras nunca venceu uma partida em Copas do Mundo. Alberth Elis é a principal estrela da geração atual.',
