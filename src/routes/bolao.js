@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAuth, requirePago } = require('../middleware/auth');
-const { paginaMeusPalpites } = require('../controllers/bolaoController');
+const { paginaMeusPalpites, limitePalpite } = require('../controllers/bolaoController');
 const { getTodasSelecoes } = require('../services/selecoesData');
 const { getTodosJogosEstaticos, getJogoEstatico } = require('../services/jogosEstaticos');
 const { calcularPremio } = require('../services/premio');
@@ -43,8 +43,8 @@ router.post('/api/palpites', requireAuth, requirePago, (req, res) => {
   }
 
   const inicio = new Date(jogo.inicio);
-  if (isNaN(inicio) || new Date() >= inicio) {
-    return res.status(400).json({ erro: 'Prazo encerrado: o jogo já começou.' });
+  if (isNaN(inicio) || new Date() >= limitePalpite(inicio)) {
+    return res.status(400).json({ erro: 'Prazo encerrado: o palpite fecha 5 minutos antes do jogo.' });
   }
 
   try {
@@ -70,11 +70,11 @@ router.post('/api/palpite-campeao', requireAuth, requirePago, (req, res) => {
   const valida = getTodasSelecoes().some(s => s.nome === selecao);
   if (!valida) return res.status(400).json({ erro: 'Seleção inválida.' });
 
-  // Prazo: até o início do primeiro jogo da Copa
+  // Prazo: até 5 minutos antes do início do primeiro jogo da Copa
   const inicios = getTodosJogosEstaticos().map(j => j.inicio).filter(Boolean).sort();
-  const prazo = inicios[0] ? new Date(inicios[0]) : null;
+  const prazo = inicios[0] ? limitePalpite(inicios[0]) : null;
   if (prazo && new Date() >= prazo) {
-    return res.status(400).json({ erro: 'Prazo encerrado: a Copa já começou.' });
+    return res.status(400).json({ erro: 'Prazo encerrado: o palpite de campeão fecha 5 minutos antes do primeiro jogo.' });
   }
 
   try {

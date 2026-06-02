@@ -9,6 +9,13 @@ const { aplicarConfrontos, jogoDefinido } = require('../services/mataMata');
 // Bônus por acertar o campeão da Copa (regulamento)
 const BONUS_CAMPEAO = 15;
 
+// Prazo: palpites fecham 5 minutos antes do início de cada jogo
+const PRAZO_PALPITE_MS = 5 * 60 * 1000;
+// Limite a partir do qual o palpite NÃO é mais aceito (início - 5 min)
+function limitePalpite(inicio) {
+  return new Date(new Date(inicio).getTime() - PRAZO_PALPITE_MS);
+}
+
 function getDb() {
   return new Database(DB_PATH);
 }
@@ -90,7 +97,7 @@ async function paginaMeusPalpites(req, res) {
   // Só entram jogos futuros com os DOIS times definidos — jogos de grupo sempre;
   // mata-mata só depois que o admin define os times (senão ficam ocultos).
   const jogosFuturos = aplicarConfrontos(db, getTodosJogosEstaticos())
-    .filter(j => j.inicio && new Date(j.inicio) > agora && jogoDefinido(j))
+    .filter(j => j.inicio && limitePalpite(j.inicio) > agora && jogoDefinido(j))
     .sort((a, b) => new Date(a.inicio) - new Date(b.inicio));
 
   // Palpites já feitos pelo usuário
@@ -135,7 +142,7 @@ async function paginaMeusPalpites(req, res) {
 
   // Palpite de campeão (bônus +15 pts) — prazo até o primeiro jogo
   const prazoCamp = prazoCampeao();
-  const campeaoAberto = !prazoCamp || agora < new Date(prazoCamp);
+  const campeaoAberto = !prazoCamp || agora < limitePalpite(prazoCamp);
   const meuCampeao = db.prepare('SELECT selecao, pontos FROM palpite_campeao WHERE usuario_id = ?').get(usuario_id);
   const campeaoReal = db.prepare("SELECT valor FROM config WHERE chave = 'campeao_copa'").get();
   const selecoes = getTodasSelecoes()
@@ -180,4 +187,4 @@ async function paginaMeusPalpites(req, res) {
   });
 }
 
-module.exports = { atualizarPontuacaoJogo, processarBonusCampeao, paginaMeusPalpites };
+module.exports = { atualizarPontuacaoJogo, processarBonusCampeao, paginaMeusPalpites, limitePalpite, PRAZO_PALPITE_MS };
