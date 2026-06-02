@@ -7,6 +7,10 @@ const { initDb } = require('./database/init');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Atrás do proxy do Railway: confia no primeiro proxy para que o IP real
+// (X-Forwarded-For) seja usado pelo express-rate-limit e pelos cookies.
+app.set('trust proxy', 1);
+
 // Inicializa banco de dados
 const db = initDb();
 app.locals.db = db;

@@ -2,7 +2,8 @@ const Parser = require('rss-parser');
 const Database = require('better-sqlite3');
 const path = require('path');
 
-const DB_PATH = path.join(__dirname, '../../database/db.sqlite');
+// Respeita DB_PATH (volume persistente em produção); cai no caminho local em dev.
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, '../../database/db.sqlite');
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutos
 const MAX_POR_FONTE = 20;
 
