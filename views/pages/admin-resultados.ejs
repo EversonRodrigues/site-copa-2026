@@ -1,0 +1,53 @@
+<%- include('../partials/header') %>
+<div class="container container-sm">
+  <div class="page-header">
+    <h1 class="page-title">Resultados</h1>
+    <p class="subtitle">Lance o placar final (90' + acréscimos) de cada jogo. Ao salvar, os pontos (5/3/0) são distribuídos automaticamente. Jogos encerrados na fonte de dados são preenchidos sozinhos — você pode corrigir aqui.</p>
+  </div>
+
+  <% if (msg === 'ok') { %>
+    <div class="admin-alert admin-alert-ok">Resultado salvo e pontos contabilizados.</div>
+  <% } else if (msg === 'removido') { %>
+    <div class="admin-alert admin-alert-ok">Resultado removido — os pontos desse jogo foram zerados.</div>
+  <% } else if (msg === 'erro') { %>
+    <div class="admin-alert admin-alert-erro">Placar inválido. Use números inteiros (0 ou mais).</div>
+  <% } %>
+
+  <div class="card-perfil mt-4">
+    <% if (jogos.length === 0) { %>
+      <p class="admin-nota">Nenhum jogo com times definidos ainda.</p>
+    <% } else { %>
+      <% jogos.forEach(j => { %>
+        <form method="POST" action="/admin/resultado" class="mm-jogo">
+          <input type="hidden" name="jogo_id" value="<%= j.id %>">
+          <div class="mm-jogo-head">
+            <span class="mm-jogo-slot"><%= j.fase %></span>
+            <span class="mm-jogo-data"><%= j.data %></span>
+            <% if (j.fonte === 'manual') { %><span class="pontos-badge pontos-3">lançado</span>
+            <% } else if (j.fonte === 'api') { %><span class="pontos-badge pontos-5">automático</span>
+            <% } else if (j.iniciado) { %><span class="pontos-badge pontos-0">sem resultado</span><% } %>
+          </div>
+          <div class="mm-jogo-selects">
+            <span class="palpite-time"><%= j.timeCasa %></span>
+            <input type="number" name="gols_casa" class="input-placar" min="0" max="30" value="<%= j.gols_casa %>" aria-label="Gols <%= j.timeCasa %>">
+            <span class="palpite-x">×</span>
+            <input type="number" name="gols_fora" class="input-placar" min="0" max="30" value="<%= j.gols_fora %>" aria-label="Gols <%= j.timeFora %>">
+            <span class="palpite-time palpite-time-fora"><%= j.timeFora %></span>
+          </div>
+          <div class="mm-jogo-acoes">
+            <button type="submit" class="btn btn-small btn-primary">Salvar placar</button>
+            <% if (j.fonte) { %>
+              <button type="submit" name="acao" value="remover" class="btn btn-small btn-ghost"
+                onclick="return confirm('Remover o resultado e zerar os pontos deste jogo?');">Remover</button>
+            <% } %>
+          </div>
+        </form>
+      <% }) %>
+    <% } %>
+  </div>
+
+  <div class="flex gap-4 mt-4">
+    <a href="/admin" class="btn btn-ghost">← Voltar ao admin</a>
+  </div>
+</div>
+<%- include('../partials/footer') %>

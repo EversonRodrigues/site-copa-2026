@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAdmin } = require('../middleware/auth');
-const { processarBonusCampeao } = require('../controllers/bolaoController');
+const { processarBonusCampeao, registrarResultado, removerResultado, getResultadosMap } = require('../controllers/bolaoController');
 const { resetarSenhaUsuario } = require('../controllers/authController');
 const { getTodasSelecoes } = require('../services/selecoesData');
 const { bandeiraDe } = require('../services/bandeiras');
@@ -77,6 +77,44 @@ router.post('/admin/reset-senha', requireAdmin, async (req, res) => {
   if (!r) return res.redirect('/admin?msg=pag_erro#pagamentos');
 
   res.redirect(`/admin?msg=senha_resetada&tmp=${encodeURIComponent(r.senha)}&quem=${encodeURIComponent(r.nome)}#pagamentos`);
+});
+
+// Lançamento de resultados (placar final) e contabilização dos pontos.
+router.get('/admin/resultados', requireAdmin, (req, res) => {
+  const db = req.app.locals.db;
+  const resultados = getResultadosMap(db);
+  const agora = new Date();
+  const jogos = aplicarConfrontos(db, getTodosJogosEstaticos())
+    .filter(j => jogoDefinido(j))
+    .sort((a, b) => new Date(a.inicio) - new Date(b.inicio))
+    .map(j => {
+      const r = resultados[j.id];
+      return {
+        id: j.id, fase: j.fase, data: j.data,
+        timeCasa: j.timeCasa, timeFora: j.timeFora,
+        iniciado: new Date(j.inicio) <= agora,
+        gols_casa: r ? r.gols_casa : '',
+        gols_fora: r ? r.gols_fora : '',
+        fonte: r ? r.fonte : null
+      };
+    });
+  res.render('pages/admin-resultados', { titulo: 'Resultados', jogos, msg: req.query.msg || null });
+});
+
+router.post('/admin/resultado', requireAdmin, (req, res) => {
+  const db = req.app.locals.db;
+  const { jogo_id, gols_casa, gols_fora, acao } = req.body;
+  if (!jogo_id) return res.redirect('/admin/resultados?msg=erro');
+  try {
+    if (acao === 'remover') {
+      removerResultado(db, jogo_id);
+      return res.redirect('/admin/resultados?msg=removido');
+    }
+    registrarResultado(db, jogo_id, gols_casa, gols_fora, 'manual');
+    res.redirect('/admin/resultados?msg=ok');
+  } catch {
+    res.redirect('/admin/resultados?msg=erro');
+  }
 });
 
 // Definição dos confrontos do mata-mata (preencher os times quando os grupos acabarem).

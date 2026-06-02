@@ -74,6 +74,14 @@ function initDb() {
       time_fora TEXT NOT NULL,
       atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS resultados (
+      jogo_id TEXT PRIMARY KEY,
+      gols_casa INTEGER NOT NULL,
+      gols_fora INTEGER NOT NULL,
+      fonte TEXT DEFAULT 'manual',
+      atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
   `);
 
   // Limpeza única: versões antigas geravam IDs instáveis e o jogos_cache

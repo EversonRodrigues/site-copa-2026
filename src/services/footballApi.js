@@ -88,6 +88,14 @@ async function fetchJogos() {
   jogos.forEach(j => upsert.run(String(j.id), JSON.stringify(j)));
   upsert.run('jogos_todos', JSON.stringify(jogos));
 
+  // Automático: contabiliza pontos de jogos encerrados (sem sobrescrever lançamento manual)
+  try {
+    const { autoRegistrarResultados } = require('../controllers/bolaoController');
+    autoRegistrarResultados(db, jogos);
+  } catch (err) {
+    console.warn('Falha ao contabilizar resultados automáticos:', err.message);
+  }
+
   return jogos;
 }
 

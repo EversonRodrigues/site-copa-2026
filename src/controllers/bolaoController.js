@@ -64,9 +64,11 @@ function processarBonusCampeao(selecao) {
   return palpites.length;
 }
 
-function atualizarPontuacaoJogo(jogoId, gols_casa_real, gols_fora_real) {
-  const db = getDb();
-  const palpites = db.prepare('SELECT * FROM palpites WHERE jogo_id = ? AND pontos IS NULL').all(jogoId);
+// (Re)calcula os pontos de todos os palpites de um jogo conforme o placar real.
+// Corrigível: ajusta o total pela diferença (pontos novos - antigos), então pode
+// ser reexecutado se o resultado for corrigido, sem somar em dobro.
+function atualizarPontuacaoJogo(db, jogoId, gols_casa_real, gols_fora_real) {
+  const palpites = db.prepare('SELECT id, usuario_id, gols_casa, gols_fora, pontos FROM palpites WHERE jogo_id = ?').all(String(jogoId));
 
   const atualizarPalpite = db.prepare('UPDATE palpites SET pontos = ? WHERE id = ?');
   const atualizarTotal = db.prepare(`
@@ -76,14 +78,71 @@ function atualizarPontuacaoJogo(jogoId, gols_casa_real, gols_fora_real) {
 
   const transacao = db.transaction(() => {
     for (const p of palpites) {
-      const pontos = calcularPontos(p.gols_casa, p.gols_fora, gols_casa_real, gols_fora_real);
-      atualizarPalpite.run(pontos, p.id);
-      atualizarTotal.run(pontos, p.usuario_id);
+      const novo = calcularPontos(p.gols_casa, p.gols_fora, gols_casa_real, gols_fora_real);
+      const antigo = p.pontos == null ? 0 : p.pontos;
+      if (novo !== antigo) {
+        atualizarPalpite.run(novo, p.id);
+        atualizarTotal.run(novo - antigo, p.usuario_id);
+      }
     }
   });
 
   transacao();
   return palpites.length;
+}
+
+// Grava (ou corrige) o placar final de um jogo e contabiliza os pontos.
+function registrarResultado(db, jogoId, golsCasa, golsFora, fonte = 'manual') {
+  const gc = Number(golsCasa);
+  const gf = Number(golsFora);
+  if (!Number.isInteger(gc) || !Number.isInteger(gf) || gc < 0 || gf < 0) {
+    throw new Error('Placar inválido');
+  }
+  db.prepare(`
+    INSERT INTO resultados (jogo_id, gols_casa, gols_fora, fonte, atualizado_em)
+    VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+    ON CONFLICT(jogo_id) DO UPDATE SET
+      gols_casa = excluded.gols_casa, gols_fora = excluded.gols_fora,
+      fonte = excluded.fonte, atualizado_em = CURRENT_TIMESTAMP
+  `).run(String(jogoId), gc, gf, fonte);
+  atualizarPontuacaoJogo(db, jogoId, gc, gf);
+}
+
+// Remove o resultado de um jogo e zera os pontos correspondentes (corrigindo o total).
+function removerResultado(db, jogoId) {
+  const palpites = db.prepare('SELECT id, usuario_id, pontos FROM palpites WHERE jogo_id = ? AND pontos IS NOT NULL').all(String(jogoId));
+  const zerar = db.prepare('UPDATE palpites SET pontos = NULL WHERE id = ?');
+  const subtrair = db.prepare('UPDATE pontuacao SET total_pontos = total_pontos - ?, atualizado_em = CURRENT_TIMESTAMP WHERE usuario_id = ?');
+  const tx = db.transaction(() => {
+    for (const p of palpites) {
+      subtrair.run(p.pontos, p.usuario_id);
+      zerar.run(p.id);
+    }
+    db.prepare('DELETE FROM resultados WHERE jogo_id = ?').run(String(jogoId));
+  });
+  tx();
+}
+
+function getResultadosMap(db) {
+  const map = {};
+  db.prepare('SELECT jogo_id, gols_casa, gols_fora, fonte FROM resultados').all()
+    .forEach(r => { map[r.jogo_id] = r; });
+  return map;
+}
+
+// Automático: para cada jogo encerrado com placar (vindo da TheSportsDB), grava o
+// resultado e contabiliza — SEM sobrescrever um resultado lançado manualmente.
+function autoRegistrarResultados(db, jogos) {
+  const manuais = new Set(
+    db.prepare("SELECT jogo_id FROM resultados WHERE fonte = 'manual'").all().map(r => r.jogo_id)
+  );
+  let n = 0;
+  for (const j of jogos) {
+    if (j.status === 'encerrado' && Number.isInteger(j.gols_casa) && Number.isInteger(j.gols_fora) && !manuais.has(String(j.id))) {
+      try { registrarResultado(db, j.id, j.gols_casa, j.gols_fora, 'api'); n++; } catch { /* ignora */ }
+    }
+  }
+  return n;
 }
 
 async function paginaMeusPalpites(req, res) {
@@ -187,4 +246,8 @@ async function paginaMeusPalpites(req, res) {
   });
 }
 
-module.exports = { atualizarPontuacaoJogo, processarBonusCampeao, paginaMeusPalpites, limitePalpite, PRAZO_PALPITE_MS };
+module.exports = {
+  atualizarPontuacaoJogo, processarBonusCampeao, paginaMeusPalpites,
+  limitePalpite, PRAZO_PALPITE_MS,
+  registrarResultado, removerResultado, getResultadosMap, autoRegistrarResultados
+};
