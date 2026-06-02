@@ -2370,3 +2370,59 @@
   gap: var(--espaco-2);
   margin-bottom: var(--espaco-5);
 }
+
+/* === DASHBOARD DO ADMIN === */
+.dash-resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-6);
+}
+.dash-resumo-card {
+  background: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-4);
+  text-align: center;
+}
+.dash-resumo-num {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: 1.9rem;
+  line-height: 1.1;
+  color: var(--cor-accent);
+}
+.dash-resumo-label { display: block; font-size: 0.8rem; color: var(--texto-secundario); margin-top: var(--espaco-1); }
+
+.dash-admin-lista { display: flex; flex-direction: column; gap: var(--espaco-3); }
+.dash-admin-card {
+  background: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-4);
+}
+.dash-admin-card-head { display: flex; align-items: center; gap: var(--espaco-3); }
+.dash-admin-pos { font-family: var(--fonte-titulo); font-size: 1.4rem; min-width: 2.2rem; text-align: center; }
+.dash-admin-nome-bloco { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; }
+.dash-admin-nome { font-weight: 700; color: var(--texto-primario); }
+.dash-admin-email { font-size: 0.78rem; color: var(--texto-terciario); }
+.dash-admin-badges { display: flex; align-items: center; gap: var(--espaco-2); flex-wrap: wrap; }
+.dash-admin-pontos { font-family: var(--fonte-titulo); font-size: 1.2rem; color: var(--cor-accent); }
+.dash-admin-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2) var(--espaco-4);
+  margin-top: var(--espaco-3);
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+}
+.dash-admin-falta { color: var(--cor-aviso); font-weight: 600; }
+.dash-admin-ok { color: var(--cor-sucesso); }
+.dash-admin-palpites { margin-top: var(--espaco-3); }
+.dash-admin-palpites summary {
+  cursor: pointer;
+  color: var(--cor-ciano);
+  font-size: 0.85rem;
+  padding: var(--espaco-2) 0;
+}
+.dash-admin-sempalpite { margin-top: var(--espaco-3); font-size: 0.85rem; color: var(--texto-terciario); }

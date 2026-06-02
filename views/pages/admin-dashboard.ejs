@@ -1,0 +1,102 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="subtitle">Visão geral do bolão em tempo real — ranking, palpites e quem ainda falta palpitar</p>
+  </div>
+
+  <!-- Resumo -->
+  <div class="dash-resumo">
+    <div class="dash-resumo-card">
+      <span class="dash-resumo-num"><%= resumo.participantes %></span>
+      <span class="dash-resumo-label">Participantes</span>
+    </div>
+    <div class="dash-resumo-card">
+      <span class="dash-resumo-num"><%= resumo.pagos %></span>
+      <span class="dash-resumo-label">Pagos</span>
+    </div>
+    <div class="dash-resumo-card">
+      <span class="dash-resumo-num"><%= resumo.premio.premioFmt %></span>
+      <span class="dash-resumo-label">Prêmio (80%)</span>
+    </div>
+    <div class="dash-resumo-card">
+      <span class="dash-resumo-num"><%= resumo.totalPalpites %></span>
+      <span class="dash-resumo-label">Palpites feitos</span>
+    </div>
+    <div class="dash-resumo-card">
+      <span class="dash-resumo-num"><%= resumo.jogosComResultado %></span>
+      <span class="dash-resumo-label">Jogos com resultado</span>
+    </div>
+    <div class="dash-resumo-card">
+      <span class="dash-resumo-num"><%= resumo.totalAbertos %></span>
+      <span class="dash-resumo-label">Jogos abertos p/ palpite</span>
+    </div>
+  </div>
+
+  <% if (participantes.length === 0) { %>
+    <div class="card-perfil mt-4"><p class="admin-nota">Nenhum participante cadastrado ainda.</p></div>
+  <% } else { %>
+    <div class="dash-admin-lista">
+      <% participantes.forEach((p, i) => { %>
+        <div class="dash-admin-card">
+          <div class="dash-admin-card-head">
+            <span class="dash-admin-pos">
+              <% if (i === 0) { %>🥇<% } else if (i === 1) { %>🥈<% } else if (i === 2) { %>🥉<% } else { %><%= i+1 %>º<% } %>
+            </span>
+            <div class="dash-admin-nome-bloco">
+              <span class="dash-admin-nome"><%= p.nome %></span>
+              <span class="dash-admin-email"><%= p.email %></span>
+            </div>
+            <div class="dash-admin-badges">
+              <% if (p.pago) { %><span class="pontos-badge pontos-3">✅ Pago</span><% } else { %><span class="pontos-badge pontos-0">Pendente</span><% } %>
+              <span class="dash-admin-pontos"><%= p.pontos %> pts</span>
+            </div>
+          </div>
+
+          <div class="dash-admin-stats">
+            <span>⭐ <%= p.exatos %> exatos</span>
+            <span>✅ <%= p.resultados %> resultados</span>
+            <span>📝 <%= p.totalPalpites %> palpites</span>
+            <span class="<%= p.abertosFaltam > 0 ? 'dash-admin-falta' : 'dash-admin-ok' %>">
+              <% if (p.abertosFaltam > 0) { %>⏳ falta palpitar <%= p.abertosFaltam %> de <%= resumo.totalAbertos %> abertos<% } else { %>👍 em dia (palpitou todos os abertos)<% } %>
+            </span>
+            <span>🏆 Campeão: <strong><%= p.campeao || '— não palpitou' %></strong></span>
+          </div>
+
+          <% if (p.palpites.length > 0) { %>
+            <details class="dash-admin-palpites">
+              <summary>Ver os <%= p.palpites.length %> palpites</summary>
+              <table class="tabela-historico">
+                <thead>
+                  <tr><th>Jogo</th><th>Quando</th><th>Palpite</th><th>Pontos</th></tr>
+                </thead>
+                <tbody>
+                  <% p.palpites.forEach(j => { %>
+                    <tr>
+                      <td><%= j.timeCasa %> × <%= j.timeFora %><br><small style="color:var(--texto-terciario)"><%= j.fase %></small></td>
+                      <td><small><%= j.data %></small></td>
+                      <td class="td-palpite"><%= j.gc %> × <%= j.gf %></td>
+                      <td>
+                        <% if (j.pontos === 5) { %><span class="pontos-badge pontos-5">5 ⭐</span>
+                        <% } else if (j.pontos === 3) { %><span class="pontos-badge pontos-3">3</span>
+                        <% } else if (j.pontos === 0) { %><span class="pontos-badge pontos-0">0</span>
+                        <% } else { %><span class="text-muted">—</span><% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </details>
+          <% } else { %>
+            <p class="dash-admin-sempalpite">Ainda não fez nenhum palpite.</p>
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <div class="flex gap-4 mt-4">
+    <a href="/admin" class="btn btn-ghost">← Voltar ao admin</a>
+  </div>
+</div>
+<%- include('../partials/footer') %>

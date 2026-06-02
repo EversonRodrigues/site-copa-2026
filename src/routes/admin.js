@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAdmin } = require('../middleware/auth');
-const { processarBonusCampeao, registrarResultado, removerResultado, getResultadosMap } = require('../controllers/bolaoController');
+const { processarBonusCampeao, registrarResultado, removerResultado, getResultadosMap, limitePalpite } = require('../controllers/bolaoController');
 const { resetarSenhaUsuario } = require('../controllers/authController');
 const { getTodasSelecoes } = require('../services/selecoesData');
 const { bandeiraDe } = require('../services/bandeiras');
@@ -77,6 +77,70 @@ router.post('/admin/reset-senha', requireAdmin, async (req, res) => {
   if (!r) return res.redirect('/admin?msg=pag_erro#pagamentos');
 
   res.redirect(`/admin?msg=senha_resetada&tmp=${encodeURIComponent(r.senha)}&quem=${encodeURIComponent(r.nome)}#pagamentos`);
+});
+
+// Dashboard do admin: visão geral, ranking ao vivo e palpites de cada participante.
+router.get('/admin/dashboard', requireAdmin, (req, res) => {
+  const db = req.app.locals.db;
+  const agora = new Date();
+
+  // Jogos (com confrontos do mata-mata) mapeados por id; "abertos" = ainda dá pra palpitar
+  const todosJogos = aplicarConfrontos(db, getTodosJogosEstaticos());
+  const jogoPorId = {};
+  todosJogos.forEach(j => { jogoPorId[j.id] = j; });
+  const abertosIds = new Set(
+    todosJogos.filter(j => jogoDefinido(j) && limitePalpite(j.inicio) > agora).map(j => String(j.id))
+  );
+  const totalAbertos = abertosIds.size;
+
+  const usuarios = db.prepare('SELECT id, nome, email, pago FROM usuarios').all();
+  const pontosPorUser = {};
+  db.prepare('SELECT usuario_id, total_pontos FROM pontuacao').all().forEach(p => { pontosPorUser[p.usuario_id] = p.total_pontos; });
+  const campeaoPorUser = {};
+  db.prepare('SELECT usuario_id, selecao FROM palpite_campeao').all().forEach(c => { campeaoPorUser[c.usuario_id] = c.selecao; });
+  const palpitesPorUser = {};
+  db.prepare('SELECT usuario_id, jogo_id, gols_casa, gols_fora, pontos FROM palpites').all().forEach(p => {
+    (palpitesPorUser[p.usuario_id] = palpitesPorUser[p.usuario_id] || []).push(p);
+  });
+
+  const participantes = usuarios.map(u => {
+    const ps = palpitesPorUser[u.id] || [];
+    const idsFeitos = new Set(ps.map(p => String(p.jogo_id)));
+    let abertosFeitos = 0;
+    abertosIds.forEach(id => { if (idsFeitos.has(id)) abertosFeitos++; });
+    const palpites = ps.map(p => {
+      const j = jogoPorId[p.jogo_id] || {};
+      return {
+        inicio: j.inicio || '', fase: j.fase || '—', data: j.data || '',
+        timeCasa: j.timeCasa || '?', timeFora: j.timeFora || '?',
+        gc: p.gols_casa, gf: p.gols_fora, pontos: p.pontos
+      };
+    }).sort((a, b) => new Date(a.inicio) - new Date(b.inicio));
+    return {
+      nome: u.nome, email: u.email, pago: !!u.pago,
+      pontos: pontosPorUser[u.id] || 0,
+      exatos: ps.filter(p => p.pontos === 5).length,
+      resultados: ps.filter(p => p.pontos === 3).length,
+      totalPalpites: ps.length,
+      abertosFeitos, abertosFaltam: totalAbertos - abertosFeitos,
+      campeao: campeaoPorUser[u.id] || null,
+      palpites
+    };
+  }).sort((a, b) =>
+    b.pontos - a.pontos || b.exatos - a.exatos || b.resultados - a.resultados ||
+    a.nome.localeCompare(b.nome, 'pt-BR')
+  );
+
+  const resumo = {
+    participantes: usuarios.length,
+    pagos: usuarios.filter(u => u.pago).length,
+    totalPalpites: db.prepare('SELECT COUNT(*) AS n FROM palpites').get().n,
+    jogosComResultado: db.prepare('SELECT COUNT(*) AS n FROM resultados').get().n,
+    totalAbertos,
+    premio: calcularPremio(db)
+  };
+
+  res.render('pages/admin-dashboard', { titulo: 'Dashboard', participantes, resumo });
 });
 
 // Lançamento de resultados (placar final) e contabilização dos pontos.
