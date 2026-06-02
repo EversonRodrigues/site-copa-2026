@@ -33,6 +33,9 @@
       <li><a href="/ranking">Ranking</a></li>
       <% if (usuario) { %>
         <li><a href="/meus-palpites">Palpites</a></li>
+        <% if (isAdmin) { %>
+          <li><a href="/admin">Admin</a></li>
+        <% } %>
         <li><a href="/perfil">Perfil</a></li>
         <li><a href="/logout">Sair</a></li>
       <% } else { %>

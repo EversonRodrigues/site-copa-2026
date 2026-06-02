@@ -34,9 +34,12 @@ app.use(session({
   }
 }));
 
-// Disponibiliza usuário logado em todas as views
+// Disponibiliza usuário logado (e se é admin) em todas as views
 app.use((req, res, next) => {
   res.locals.usuario = req.session.usuario || null;
+  const adminEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
+  const email = (req.session.usuario?.email || '').trim().toLowerCase();
+  res.locals.isAdmin = !!adminEmail && email === adminEmail;
   next();
 });
 
