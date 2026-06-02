@@ -108,37 +108,48 @@ const CALENDARIO_GRUPOS = [
   { grupo: 'L', casa: 1, fora: 2, data: '2026-07-03T20:00:00', rodada: 3, estadio: 'Mercedes-Benz Stadium', cidade: 'Atlanta' },
 ];
 
-// Mata-mata (times a confirmar conforme fase de grupos)
+// Mata-mata (32 jogos — times a confirmar conforme a fase de grupos avança).
+// 48 seleções: 2 de cada grupo + 8 melhores 3os = 32 → 16-avos. Os placeholders
+// descrevem o chaveamento; o admin define os times reais em /admin/mata-mata.
 const MATA_MATA = [
-  // Oitavas de Final (Round of 32) — 4-9 jul
-  { fase: 'Oitavas de Final', casa: '1ºA', fora: '2ºB', data: '2026-07-04T19:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
-  { fase: 'Oitavas de Final', casa: '1ºC', fora: '2ºD', data: '2026-07-04T22:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
-  { fase: 'Oitavas de Final', casa: '1ºE', fora: '2ºF', data: '2026-07-05T19:00:00', estadio: 'SoFi Stadium', cidade: 'Los Angeles' },
-  { fase: 'Oitavas de Final', casa: '1ºG', fora: '2ºH', data: '2026-07-05T22:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
-  { fase: 'Oitavas de Final', casa: '1ºI', fora: '2ºJ', data: '2026-07-06T19:00:00', estadio: 'Gillette Stadium', cidade: 'Boston' },
-  { fase: 'Oitavas de Final', casa: '1ºK', fora: '2ºL', data: '2026-07-06T22:00:00', estadio: 'BC Place', cidade: 'Vancouver' },
-  { fase: 'Oitavas de Final', casa: '1ºB', fora: '2ºA', data: '2026-07-07T19:00:00', estadio: 'Arrowhead Stadium', cidade: 'Kansas City' },
-  { fase: 'Oitavas de Final', casa: '1ºD', fora: '2ºC', data: '2026-07-07T22:00:00', estadio: 'Levi\'s Stadium', cidade: 'San Francisco' },
-  { fase: 'Oitavas de Final', casa: '1ºF', fora: '2ºE', data: '2026-07-08T19:00:00', estadio: 'Lincoln Financial Field', cidade: 'Filadélfia' },
-  { fase: 'Oitavas de Final', casa: '1ºH', fora: '2ºG', data: '2026-07-08T22:00:00', estadio: 'Seattle Seahawks Stadium', cidade: 'Seattle' },
-  { fase: 'Oitavas de Final', casa: '1ºJ', fora: '2ºI', data: '2026-07-09T19:00:00', estadio: 'Mercedes-Benz Stadium', cidade: 'Atlanta' },
-  { fase: 'Oitavas de Final', casa: '1ºL', fora: '2ºK', data: '2026-07-09T22:00:00', estadio: 'Estadio Azteca', cidade: 'Cidade do México' },
-  { fase: 'Oitavas de Final', casa: 'Melhor 3ºA/B/C', fora: 'Melhor 3ºD/E/F', data: '2026-07-10T19:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
-  { fase: 'Oitavas de Final', casa: 'Melhor 3ºG/H/I', fora: 'Melhor 3ºJ/K/L', data: '2026-07-10T22:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
-  { fase: 'Oitavas de Final', casa: 'Melhor 3º(1)', fora: 'Melhor 3º(2)', data: '2026-07-11T19:00:00', estadio: 'SoFi Stadium', cidade: 'Los Angeles' },
-  { fase: 'Oitavas de Final', casa: 'Melhor 3º(3)', fora: 'Melhor 3º(4)', data: '2026-07-11T22:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
-  // Quartas de Final — 14-17 jul
-  { fase: 'Quartas de Final', casa: 'A definir', fora: 'A definir', data: '2026-07-14T19:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
-  { fase: 'Quartas de Final', casa: 'A definir', fora: 'A definir', data: '2026-07-14T22:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
-  { fase: 'Quartas de Final', casa: 'A definir', fora: 'A definir', data: '2026-07-15T19:00:00', estadio: 'SoFi Stadium', cidade: 'Los Angeles' },
-  { fase: 'Quartas de Final', casa: 'A definir', fora: 'A definir', data: '2026-07-15T22:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
-  // Semifinais — 19-22 jul
-  { fase: 'Semifinal', casa: 'A definir', fora: 'A definir', data: '2026-07-19T20:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
-  { fase: 'Semifinal', casa: 'A definir', fora: 'A definir', data: '2026-07-22T20:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
-  // 3º Lugar
-  { fase: '3º Lugar', casa: 'A definir', fora: 'A definir', data: '2026-07-25T17:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
-  // Final
-  { fase: 'Final', casa: 'A definir', fora: 'A definir', data: '2026-07-19T17:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
+  // 16-avos de Final (Round of 32) — 4-11 jul
+  { fase: '16-avos de Final', casa: '1ºA', fora: '2ºB', data: '2026-07-04T19:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
+  { fase: '16-avos de Final', casa: '1ºC', fora: '2ºD', data: '2026-07-04T22:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
+  { fase: '16-avos de Final', casa: '1ºE', fora: '2ºF', data: '2026-07-05T19:00:00', estadio: 'SoFi Stadium', cidade: 'Los Angeles' },
+  { fase: '16-avos de Final', casa: '1ºG', fora: '2ºH', data: '2026-07-05T22:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
+  { fase: '16-avos de Final', casa: '1ºI', fora: '2ºJ', data: '2026-07-06T19:00:00', estadio: 'Gillette Stadium', cidade: 'Boston' },
+  { fase: '16-avos de Final', casa: '1ºK', fora: '2ºL', data: '2026-07-06T22:00:00', estadio: 'BC Place', cidade: 'Vancouver' },
+  { fase: '16-avos de Final', casa: '1ºB', fora: '2ºA', data: '2026-07-07T19:00:00', estadio: 'Arrowhead Stadium', cidade: 'Kansas City' },
+  { fase: '16-avos de Final', casa: '1ºD', fora: '2ºC', data: '2026-07-07T22:00:00', estadio: 'Levi\'s Stadium', cidade: 'San Francisco' },
+  { fase: '16-avos de Final', casa: '1ºF', fora: '2ºE', data: '2026-07-08T19:00:00', estadio: 'Lincoln Financial Field', cidade: 'Filadélfia' },
+  { fase: '16-avos de Final', casa: '1ºH', fora: '2ºG', data: '2026-07-08T22:00:00', estadio: 'Seattle Seahawks Stadium', cidade: 'Seattle' },
+  { fase: '16-avos de Final', casa: '1ºJ', fora: '2ºI', data: '2026-07-09T19:00:00', estadio: 'Mercedes-Benz Stadium', cidade: 'Atlanta' },
+  { fase: '16-avos de Final', casa: '1ºL', fora: '2ºK', data: '2026-07-09T22:00:00', estadio: 'Estadio Azteca', cidade: 'Cidade do México' },
+  { fase: '16-avos de Final', casa: 'Melhor 3ºA/B/C', fora: 'Melhor 3ºD/E/F', data: '2026-07-10T19:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
+  { fase: '16-avos de Final', casa: 'Melhor 3ºG/H/I', fora: 'Melhor 3ºJ/K/L', data: '2026-07-10T22:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
+  { fase: '16-avos de Final', casa: 'Melhor 3º(1)', fora: 'Melhor 3º(2)', data: '2026-07-11T19:00:00', estadio: 'SoFi Stadium', cidade: 'Los Angeles' },
+  { fase: '16-avos de Final', casa: 'Melhor 3º(3)', fora: 'Melhor 3º(4)', data: '2026-07-11T22:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
+  // Oitavas de Final (Round of 16) — 13-16 jul
+  { fase: 'Oitavas de Final', casa: 'Venc. 16-avos 1', fora: 'Venc. 16-avos 2', data: '2026-07-13T16:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
+  { fase: 'Oitavas de Final', casa: 'Venc. 16-avos 3', fora: 'Venc. 16-avos 4', data: '2026-07-13T20:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
+  { fase: 'Oitavas de Final', casa: 'Venc. 16-avos 5', fora: 'Venc. 16-avos 6', data: '2026-07-14T16:00:00', estadio: 'SoFi Stadium', cidade: 'Los Angeles' },
+  { fase: 'Oitavas de Final', casa: 'Venc. 16-avos 7', fora: 'Venc. 16-avos 8', data: '2026-07-14T20:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
+  { fase: 'Oitavas de Final', casa: 'Venc. 16-avos 9', fora: 'Venc. 16-avos 10', data: '2026-07-15T16:00:00', estadio: 'Arrowhead Stadium', cidade: 'Kansas City' },
+  { fase: 'Oitavas de Final', casa: 'Venc. 16-avos 11', fora: 'Venc. 16-avos 12', data: '2026-07-15T20:00:00', estadio: 'Gillette Stadium', cidade: 'Boston' },
+  { fase: 'Oitavas de Final', casa: 'Venc. 16-avos 13', fora: 'Venc. 16-avos 14', data: '2026-07-16T16:00:00', estadio: 'BC Place', cidade: 'Vancouver' },
+  { fase: 'Oitavas de Final', casa: 'Venc. 16-avos 15', fora: 'Venc. 16-avos 16', data: '2026-07-16T20:00:00', estadio: 'Mercedes-Benz Stadium', cidade: 'Atlanta' },
+  // Quartas de Final — 18-19 jul
+  { fase: 'Quartas de Final', casa: 'Venc. Oitavas 1', fora: 'Venc. Oitavas 2', data: '2026-07-18T16:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
+  { fase: 'Quartas de Final', casa: 'Venc. Oitavas 3', fora: 'Venc. Oitavas 4', data: '2026-07-18T20:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
+  { fase: 'Quartas de Final', casa: 'Venc. Oitavas 5', fora: 'Venc. Oitavas 6', data: '2026-07-19T16:00:00', estadio: 'SoFi Stadium', cidade: 'Los Angeles' },
+  { fase: 'Quartas de Final', casa: 'Venc. Oitavas 7', fora: 'Venc. Oitavas 8', data: '2026-07-19T20:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
+  // Semifinais — 22-23 jul
+  { fase: 'Semifinal', casa: 'Venc. Quartas 1', fora: 'Venc. Quartas 2', data: '2026-07-22T20:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
+  { fase: 'Semifinal', casa: 'Venc. Quartas 3', fora: 'Venc. Quartas 4', data: '2026-07-23T20:00:00', estadio: 'AT&T Stadium', cidade: 'Dallas' },
+  // 3º Lugar — 25 jul
+  { fase: '3º Lugar', casa: 'Perd. Semifinal 1', fora: 'Perd. Semifinal 2', data: '2026-07-25T17:00:00', estadio: 'Hard Rock Stadium', cidade: 'Miami' },
+  // Final — 26 jul
+  { fase: 'Final', casa: 'Venc. Semifinal 1', fora: 'Venc. Semifinal 2', data: '2026-07-26T16:00:00', estadio: 'MetLife Stadium', cidade: 'Nova York' },
 ];
 
 // IDs determinísticos e estáveis (não mudam entre chamadas), para o cache
