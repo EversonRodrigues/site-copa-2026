@@ -222,6 +222,31 @@ router.post('/admin/mata-mata', requireAdmin, (req, res) => {
   res.redirect('/admin/mata-mata?msg=ok');
 });
 
+// Exclui um participante e todos os seus dados (palpites, pontuação, palpite de campeão).
+router.post('/admin/usuario/excluir', requireAdmin, (req, res) => {
+  const db = req.app.locals.db;
+  const id = Number(req.body.usuario_id);
+  if (!id) return res.redirect('/admin?msg=pag_erro#pagamentos');
+
+  const alvo = db.prepare('SELECT email FROM usuarios WHERE id = ?').get(id);
+  if (!alvo) return res.redirect('/admin?msg=pag_erro#pagamentos');
+
+  // Proteção: não deixa excluir a própria conta de admin (evita travar o acesso)
+  const adminEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
+  if ((alvo.email || '').trim().toLowerCase() === adminEmail) {
+    return res.redirect('/admin?msg=excl_admin#pagamentos');
+  }
+
+  const tx = db.transaction(() => {
+    db.prepare('DELETE FROM palpites WHERE usuario_id = ?').run(id);
+    db.prepare('DELETE FROM pontuacao WHERE usuario_id = ?').run(id);
+    db.prepare('DELETE FROM palpite_campeao WHERE usuario_id = ?').run(id);
+    db.prepare('DELETE FROM usuarios WHERE id = ?').run(id);
+  });
+  tx();
+  res.redirect('/admin?msg=excl_ok#pagamentos');
+});
+
 // Salva a chave PIX exibida aos participantes que ainda não depositaram.
 router.post('/admin/pix', requireAdmin, (req, res) => {
   const db = req.app.locals.db;

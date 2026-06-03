@@ -25,6 +25,10 @@
     <div class="admin-alert admin-alert-ok">Chave PIX salva.</div>
   <% } else if (msg === 'pag_erro') { %>
     <div class="admin-alert admin-alert-erro">Não foi possível atualizar o depósito.</div>
+  <% } else if (msg === 'excl_ok') { %>
+    <div class="admin-alert admin-alert-ok">Participante excluído.</div>
+  <% } else if (msg === 'excl_admin') { %>
+    <div class="admin-alert admin-alert-erro">Você não pode excluir a sua própria conta de admin.</div>
   <% } else if (msg === 'senha_resetada' && tmpSenha) { %>
     <div class="admin-alert admin-alert-ok">
       Senha de <strong><%= quemSenha %></strong> redefinida. Senha temporária:
@@ -130,6 +134,11 @@
                   onsubmit="return confirm('Gerar uma senha temporária para <%= u.nome %>? A senha atual deixará de funcionar.');">
                   <input type="hidden" name="usuario_id" value="<%= u.id %>">
                   <button type="submit" class="btn btn-small btn-ghost">Resetar senha</button>
+                </form>
+                <form method="POST" action="/admin/usuario/excluir" style="display:inline"
+                  onsubmit="return confirm('EXCLUIR <%= u.nome %> e todos os seus palpites? Esta ação não pode ser desfeita.');">
+                  <input type="hidden" name="usuario_id" value="<%= u.id %>">
+                  <button type="submit" class="btn btn-small btn-perigo">Excluir</button>
                 </form>
               </td>
             </tr>
