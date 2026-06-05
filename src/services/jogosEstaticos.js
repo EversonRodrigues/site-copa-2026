@@ -69,8 +69,8 @@ const CALENDARIO_GRUPOS = [
   { grupo: 'C', casa: 1, fora: 2, data: '2026-06-24T19:00:00-03:00', rodada: 3, cidade: 'Atlanta' },
   // --- GRUPO D ---
   { grupo: 'D', casa: 0, fora: 1, data: '2026-06-12T22:00:00-03:00', rodada: 1, cidade: 'Los Angeles' },
-  { grupo: 'D', casa: 2, fora: 3, data: '2026-06-13T01:00:00-03:00', rodada: 1, cidade: 'Vancouver' },
-  { grupo: 'D', casa: 3, fora: 1, data: '2026-06-19T01:00:00-03:00', rodada: 2, cidade: 'San Francisco' },
+  { grupo: 'D', casa: 2, fora: 3, data: '2026-06-14T01:00:00-03:00', rodada: 1, cidade: 'Vancouver' },
+  { grupo: 'D', casa: 3, fora: 1, data: '2026-06-20T01:00:00-03:00', rodada: 2, cidade: 'San Francisco' },
   { grupo: 'D', casa: 0, fora: 2, data: '2026-06-19T16:00:00-03:00', rodada: 2, cidade: 'Seattle' },
   { grupo: 'D', casa: 3, fora: 0, data: '2026-06-25T23:00:00-03:00', rodada: 3, cidade: 'Los Angeles' },
   { grupo: 'D', casa: 1, fora: 2, data: '2026-06-25T23:00:00-03:00', rodada: 3, cidade: 'San Francisco' },
@@ -84,7 +84,7 @@ const CALENDARIO_GRUPOS = [
   // --- GRUPO F ---
   { grupo: 'F', casa: 0, fora: 1, data: '2026-06-14T17:00:00-03:00', rodada: 1, cidade: 'Dallas' },
   { grupo: 'F', casa: 2, fora: 3, data: '2026-06-14T23:00:00-03:00', rodada: 1, cidade: 'Monterrey' },
-  { grupo: 'F', casa: 3, fora: 1, data: '2026-06-20T01:00:00-03:00', rodada: 2, cidade: 'Monterrey' },
+  { grupo: 'F', casa: 3, fora: 1, data: '2026-06-21T01:00:00-03:00', rodada: 2, cidade: 'Monterrey' },
   { grupo: 'F', casa: 0, fora: 2, data: '2026-06-20T14:00:00-03:00', rodada: 2, cidade: 'Houston' },
   { grupo: 'F', casa: 1, fora: 2, data: '2026-06-25T20:00:00-03:00', rodada: 3, cidade: 'Dallas' },
   { grupo: 'F', casa: 3, fora: 0, data: '2026-06-25T20:00:00-03:00', rodada: 3, cidade: 'Kansas City' },
@@ -110,9 +110,9 @@ const CALENDARIO_GRUPOS = [
   { grupo: 'I', casa: 3, fora: 0, data: '2026-06-26T16:00:00-03:00', rodada: 3, cidade: 'Boston' },
   { grupo: 'I', casa: 1, fora: 2, data: '2026-06-26T16:00:00-03:00', rodada: 3, cidade: 'Toronto' },
   // --- GRUPO J ---
-  { grupo: 'J', casa: 0, fora: 1, data: '2026-06-16T01:00:00-03:00', rodada: 1, cidade: 'San Francisco' },
+  { grupo: 'J', casa: 0, fora: 1, data: '2026-06-17T01:00:00-03:00', rodada: 1, cidade: 'San Francisco' },
   { grupo: 'J', casa: 2, fora: 3, data: '2026-06-16T22:00:00-03:00', rodada: 1, cidade: 'Kansas City' },
-  { grupo: 'J', casa: 1, fora: 3, data: '2026-06-22T00:00:00-03:00', rodada: 2, cidade: 'San Francisco' },
+  { grupo: 'J', casa: 1, fora: 3, data: '2026-06-23T00:00:00-03:00', rodada: 2, cidade: 'San Francisco' },
   { grupo: 'J', casa: 2, fora: 0, data: '2026-06-22T14:00:00-03:00', rodada: 2, cidade: 'Dallas' },
   { grupo: 'J', casa: 3, fora: 0, data: '2026-06-27T23:00:00-03:00', rodada: 3, cidade: 'Kansas City' },
   { grupo: 'J', casa: 1, fora: 2, data: '2026-06-27T23:00:00-03:00', rodada: 3, cidade: 'Dallas' },
