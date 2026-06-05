@@ -92,6 +92,13 @@
     </div>
   </div>
 
+  <p class="jogos-aviso">
+    <strong>ℹ️ Como ler a tabela:</strong> a <strong>fase de grupos</strong> já está 100% definida —
+    times, datas e horários (de Brasília) conforme o sorteio e o calendário oficiais da FIFA.
+    No <strong>mata-mata</strong>, os times só são conhecidos depois que a fase de grupos terminar;
+    até lá mostramos o chaveamento (ex.: <em>“1º do Grupo A”</em> enfrenta <em>“2º do Grupo B”</em>).
+  </p>
+
   <div class="dash-jogos-grid" id="jogos-grid">
     <% jogos.forEach(jogo => { %>
       <article class="dash-match <%= jogo.status === 'ao_vivo' ? 'is-live' : '' %>"
@@ -164,6 +171,14 @@
   }
   .jogos-select:focus { outline: none; border-color: var(--borda-destaque); }
   .jogos-contador { margin-left: auto; font-size: 0.8rem; font-weight: 600; color: var(--texto-secundario); }
+  .jogos-aviso {
+    background: var(--bg-terciario); border: 1px solid var(--borda);
+    border-left: 3px solid var(--cor-ciano); border-radius: var(--raio);
+    padding: var(--espaco-3) var(--espaco-4); margin-bottom: var(--espaco-5);
+    font-size: 0.85rem; line-height: 1.5; color: var(--texto-secundario);
+  }
+  .jogos-aviso strong { color: var(--texto-primario); }
+  .jogos-aviso em { color: var(--cor-ciano); font-style: normal; }
 </style>
 
 <script>
