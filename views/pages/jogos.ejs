@@ -10,12 +10,24 @@
     { id: 'Rodada 1', label: 'Rodada 1' },
     { id: 'Rodada 2', label: 'Rodada 2' },
     { id: 'Rodada 3', label: 'Rodada 3' },
+    { id: '16-avos de Final', label: '16-avos' },
     { id: 'Oitavas de Final', label: 'Oitavas' },
     { id: 'Quartas de Final', label: 'Quartas' },
     { id: 'Semifinal', label: 'Semis' },
     { id: '3º Lugar', label: '3º Lugar' },
     { id: 'Final', label: 'Final' }
   ];
+  // Grupos presentes (A–L), ordenados
+  const grupos = [...new Set(jogos.map(j => j.grupo).filter(Boolean))].sort();
+  // Datas distintas (DD/MM), em ordem cronológica
+  const datas = [];
+  const vistas = new Set();
+  jogos.slice()
+    .sort((a, b) => new Date(a.inicio) - new Date(b.inicio))
+    .forEach(j => {
+      const k = (j.data || '').slice(0, 5);
+      if (k && !vistas.has(k)) { vistas.add(k); datas.push(k); }
+    });
 %>
 
 <div class="container">
@@ -47,68 +59,166 @@
     </div>
   </section>
 
-  <!-- Tabs de fase -->
-  <nav class="dash-tabs" aria-label="Filtrar por fase">
-    <% fases.forEach(f => { %>
-      <a href="<%= f.id ? '/jogos?fase=' + encodeURIComponent(f.id) : '/jogos' %>"
-         class="dash-tab <%= faseSelecionada === f.id ? 'dash-tab-active' : '' %>">
-        <%= f.label %>
-      </a>
-    <% }) %>
-  </nav>
-
-  <% if (jogos.length === 0) { %>
-    <div class="dash-empty">
-      <div class="dash-empty-icon">🔍</div>
-      <p class="dash-empty-text">Nenhum jogo encontrado para esta fase.</p>
-      <a href="/jogos" class="btn btn-outline btn-small">Ver todos</a>
+  <!-- Filtros: Fase + Grupo + Data (combináveis) -->
+  <div class="jogos-filtros">
+    <div class="jogos-filtro-linha">
+      <span class="jogos-filtro-label">Fase</span>
+      <nav class="dash-tabs" id="filtro-fase" aria-label="Filtrar por fase">
+        <% fases.forEach(f => { %>
+          <button type="button" class="dash-tab <%= faseSelecionada === f.id ? 'dash-tab-active' : '' %>" data-fase="<%= f.id %>"><%= f.label %></button>
+        <% }) %>
+      </nav>
     </div>
-  <% } else { %>
-    <div class="dash-jogos-grid">
-      <% jogos.forEach(jogo => { %>
-        <article class="dash-match <%= jogo.status === 'ao_vivo' ? 'is-live' : '' %>">
-          <header class="dash-match-head">
-            <span class="jogo-status <%= jogo.status %>"><%= jogo.statusLabel %></span>
-            <span class="dash-match-fase"><%= jogo.fase %></span>
-          </header>
 
-          <div class="dash-match-body">
-            <div class="dash-match-team">
-              <% if (jogo.bandeirasCasa) { %>
-                <img src="<%= jogo.bandeirasCasa %>" alt="" class="dash-match-flag">
-              <% } else { %>
-                <div class="dash-match-flag dash-match-flag-fallback">⚽</div>
-              <% } %>
-              <span class="dash-match-team-name"><%= jogo.timeCasa %></span>
-            </div>
+    <div class="jogos-filtro-linha">
+      <span class="jogos-filtro-label">Grupo</span>
+      <nav class="dash-tabs" id="filtro-grupo" aria-label="Filtrar por grupo">
+        <button type="button" class="dash-tab dash-tab-active" data-grupo="">Todos</button>
+        <% grupos.forEach(g => { %>
+          <button type="button" class="dash-tab" data-grupo="<%= g %>">Grupo <%= g %></button>
+        <% }) %>
+      </nav>
+    </div>
 
-            <div class="dash-match-score">
-              <% if (jogo.status === 'encerrado' || jogo.status === 'ao_vivo') { %>
-                <span class="dash-match-score-num"><%= jogo.placar %></span>
-              <% } else { %>
-                <span class="dash-match-vs">VS</span>
-              <% } %>
-            </div>
+    <div class="jogos-filtro-linha">
+      <span class="jogos-filtro-label">Data</span>
+      <select id="filtro-data" class="jogos-select" aria-label="Filtrar por data">
+        <option value="">Todas as datas</option>
+        <% datas.forEach(d => { %>
+          <option value="<%= d %>"><%= d %></option>
+        <% }) %>
+      </select>
+      <span class="jogos-contador" id="jogos-contador"></span>
+    </div>
+  </div>
 
-            <div class="dash-match-team dash-match-team-away">
-              <% if (jogo.bandeiraFora) { %>
-                <img src="<%= jogo.bandeiraFora %>" alt="" class="dash-match-flag">
-              <% } else { %>
-                <div class="dash-match-flag dash-match-flag-fallback">⚽</div>
-              <% } %>
-              <span class="dash-match-team-name"><%= jogo.timeFora %></span>
-            </div>
+  <div class="dash-jogos-grid" id="jogos-grid">
+    <% jogos.forEach(jogo => { %>
+      <article class="dash-match <%= jogo.status === 'ao_vivo' ? 'is-live' : '' %>"
+               data-grupo="<%= jogo.grupo || '' %>"
+               data-fase="<%= jogo.fase %>"
+               data-dia="<%= (jogo.data || '').slice(0, 5) %>"
+               data-status="<%= jogo.status %>">
+        <header class="dash-match-head">
+          <span class="jogo-status <%= jogo.status %>"><%= jogo.statusLabel %></span>
+          <span class="dash-match-fase"><%= jogo.fase %></span>
+        </header>
+
+        <div class="dash-match-body">
+          <div class="dash-match-team">
+            <% if (jogo.bandeirasCasa) { %>
+              <img src="<%= jogo.bandeirasCasa %>" alt="" class="dash-match-flag">
+            <% } else { %>
+              <div class="dash-match-flag dash-match-flag-fallback">⚽</div>
+            <% } %>
+            <span class="dash-match-team-name"><%= jogo.timeCasa %></span>
           </div>
 
-          <footer class="dash-match-foot">
-            <span class="dash-match-data">📅 <%= jogo.data %></span>
-            <% if (jogo.cidade) { %>
-              <span class="dash-match-cidade">📍 <%= jogo.cidade %></span>
+          <div class="dash-match-score">
+            <% if (jogo.status === 'encerrado' || jogo.status === 'ao_vivo') { %>
+              <span class="dash-match-score-num"><%= jogo.placar %></span>
+            <% } else { %>
+              <span class="dash-match-vs">VS</span>
             <% } %>
-          </footer>
-        </article>
-      <% }) %>
-    </div>
-  <% } %>
+          </div>
+
+          <div class="dash-match-team dash-match-team-away">
+            <% if (jogo.bandeiraFora) { %>
+              <img src="<%= jogo.bandeiraFora %>" alt="" class="dash-match-flag">
+            <% } else { %>
+              <div class="dash-match-flag dash-match-flag-fallback">⚽</div>
+            <% } %>
+            <span class="dash-match-team-name"><%= jogo.timeFora %></span>
+          </div>
+        </div>
+
+        <footer class="dash-match-foot">
+          <span class="dash-match-data">📅 <%= jogo.data %></span>
+          <% if (jogo.cidade) { %>
+            <span class="dash-match-cidade">📍 <%= jogo.cidade %></span>
+          <% } %>
+        </footer>
+      </article>
+    <% }) %>
+  </div>
+
+  <div class="dash-empty" id="jogos-empty" style="display:none">
+    <div class="dash-empty-icon">🔍</div>
+    <p class="dash-empty-text">Nenhum jogo encontrado para os filtros selecionados.</p>
+    <button type="button" class="btn btn-outline btn-small" id="jogos-reset">Limpar filtros</button>
+  </div>
 </div>
+
+<style>
+  .jogos-filtros { display: flex; flex-direction: column; gap: var(--espaco-3); margin-bottom: var(--espaco-6); }
+  .jogos-filtro-linha { display: flex; align-items: center; gap: var(--espaco-3); flex-wrap: wrap; }
+  .jogos-filtro-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--texto-secundario); min-width: 52px;
+  }
+  .jogos-filtro-linha .dash-tabs { flex: 1; min-width: 0; }
+  .jogos-select {
+    background: var(--bg-card); color: var(--texto-primario);
+    border: 1px solid var(--borda-hover); border-radius: var(--raio);
+    padding: 0.5rem 0.9rem; font-size: 0.85rem; font-family: var(--fonte-corpo); cursor: pointer;
+  }
+  .jogos-select:focus { outline: none; border-color: var(--borda-destaque); }
+  .jogos-contador { margin-left: auto; font-size: 0.8rem; font-weight: 600; color: var(--texto-secundario); }
+</style>
+
+<script>
+(function() {
+  const cards = Array.from(document.querySelectorAll('#jogos-grid .dash-match'));
+  const grid = document.getElementById('jogos-grid');
+  const empty = document.getElementById('jogos-empty');
+  const contador = document.getElementById('jogos-contador');
+  const selData = document.getElementById('filtro-data');
+  const state = { fase: <%- JSON.stringify(faseSelecionada || '') %>, grupo: '', dia: '' };
+
+  function aplicar() {
+    let visiveis = 0;
+    cards.forEach(c => {
+      const okFase  = !state.fase  || (c.dataset.fase || '').includes(state.fase);
+      const okGrupo = !state.grupo || c.dataset.grupo === state.grupo;
+      const okDia   = !state.dia   || c.dataset.dia === state.dia;
+      const mostrar = okFase && okGrupo && okDia;
+      c.style.display = mostrar ? '' : 'none';
+      if (mostrar) visiveis++;
+    });
+    if (contador) contador.textContent = visiveis + (visiveis === 1 ? ' jogo' : ' jogos');
+    if (empty) empty.style.display = visiveis === 0 ? '' : 'none';
+    if (grid) grid.style.display = visiveis === 0 ? 'none' : '';
+  }
+
+  function ligarChips(containerId, attr, chave) {
+    const cont = document.getElementById(containerId);
+    if (!cont) return;
+    cont.addEventListener('click', e => {
+      const btn = e.target.closest('[data-' + attr + ']');
+      if (!btn || !cont.contains(btn)) return;
+      state[chave] = btn.getAttribute('data-' + attr);
+      cont.querySelectorAll('.dash-tab').forEach(b => b.classList.remove('dash-tab-active'));
+      btn.classList.add('dash-tab-active');
+      aplicar();
+    });
+  }
+
+  ligarChips('filtro-fase', 'fase', 'fase');
+  ligarChips('filtro-grupo', 'grupo', 'grupo');
+  if (selData) selData.addEventListener('change', () => { state.dia = selData.value; aplicar(); });
+
+  const reset = document.getElementById('jogos-reset');
+  if (reset) reset.addEventListener('click', () => {
+    state.fase = ''; state.grupo = ''; state.dia = '';
+    document.querySelectorAll('#filtro-fase .dash-tab, #filtro-grupo .dash-tab').forEach(b => b.classList.remove('dash-tab-active'));
+    const f0 = document.querySelector('#filtro-fase [data-fase=""]'); if (f0) f0.classList.add('dash-tab-active');
+    const g0 = document.querySelector('#filtro-grupo [data-grupo=""]'); if (g0) g0.classList.add('dash-tab-active');
+    if (selData) selData.value = '';
+    aplicar();
+  });
+
+  aplicar();
+})();
+</script>
+
 <%- include('../partials/footer') %>

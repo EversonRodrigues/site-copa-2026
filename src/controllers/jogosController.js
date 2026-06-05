@@ -3,10 +3,8 @@ const { fetchJogos, fetchGrupos, fetchSelecoes, fetchSelecao } = require('../ser
 async function listarJogos(req, res) {
   const { fase } = req.query;
   try {
-    const todos = await fetchJogos();
-    const jogos = fase
-      ? todos.filter(j => j.fase && j.fase.includes(fase))
-      : todos;
+    // Devolve todos os jogos; a filtragem (fase, grupo, data) é feita no cliente.
+    const jogos = await fetchJogos();
     res.render('pages/jogos', { titulo: 'Jogos', jogos, faseSelecionada: fase || '' });
   } catch (err) {
     console.error('Erro ao buscar jogos:', err.message);
