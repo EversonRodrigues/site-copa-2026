@@ -1,5 +1,22 @@
 const { fetchJogos } = require('../services/footballApi');
 const { fetchNoticias } = require('../services/rssService');
+const { getTodosJogosEstaticos } = require('../services/jogosEstaticos');
+
+// Jogo de abertura (primeiro do calendário) — alimenta a contagem regressiva
+// da home a partir do próprio calendário, sem horário fixo que possa desalinhar.
+function getAbertura() {
+  const primeiro = getTodosJogosEstaticos()
+    .filter(j => j.inicio)
+    .sort((a, b) => new Date(a.inicio) - new Date(b.inicio))[0];
+  if (!primeiro) return null;
+  const dataBR = new Date(primeiro.inicio)
+    .toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'America/Sao_Paulo' })
+    .replace(/\//g, '.');
+  return {
+    iso: primeiro.inicio,
+    label: `${dataBR} · ${primeiro.timeCasa.toUpperCase()} × ${primeiro.timeFora.toUpperCase()}`,
+  };
+}
 
 async function home(req, res) {
   let proximosJogos = [];
@@ -43,7 +60,8 @@ async function home(req, res) {
     jogosAoVivo,
     proximosJogos,
     noticias,
-    topRanking
+    topRanking,
+    abertura: getAbertura()
   });
 }
 

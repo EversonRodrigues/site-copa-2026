@@ -39,7 +39,7 @@
             <div class="cd-cell"><span class="cd-val" id="cd-min">--</span><span class="cd-unit">min</span></div>
             <div class="cd-cell"><span class="cd-val" id="cd-seg">--</span><span class="cd-unit">seg</span></div>
           </div>
-          <div class="dash-card-footer">11.06.2026 · MÉXICO × ÁFRICA DO SUL</div>
+          <div class="dash-card-footer"><%= typeof abertura !== 'undefined' && abertura ? abertura.label : '11.06.2026 · MÉXICO × ÁFRICA DO SUL' %></div>
         </div>
       </aside>
     </div>
@@ -239,7 +239,7 @@
 
 <script>
 (function() {
-  const alvo = new Date('2026-06-11T22:00:00Z');
+  const alvo = new Date('<%= typeof abertura !== "undefined" && abertura ? abertura.iso : "2026-06-11T19:00:00Z" %>');
   function pad(n) { return String(n).padStart(2, '0'); }
   function atualizar() {
     const diff = alvo - new Date();
