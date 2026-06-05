@@ -12,15 +12,6 @@ const SELECOES = {
     curiosidades: 'O México é o único país a sediar a Copa do Mundo três vezes (1970, 1986 e agora 2026). O "Grito do Elmo" é uma das torcidas mais barulhentas do mundo.',
     ranking_fifa: 16
   },
-  'Jamaica': {
-    grupo: 'A', continente: 'CONCACAF', cor: '#000000',
-    estilo: 'Defesa organizada e contra-ataques rápidos. Aproveita a velocidade dos atacantes.',
-    treinador: 'Steve McClaren',
-    provaveisJogadores: ['Andre Blake (goleiro)', 'Damion Lowe (zagueiro)', 'Kasey Palmer (meia)', 'Bobby Decordova-Reid (atacante)', 'Michail Antonio (atacante)'],
-    conquistas: 'Primeira classificação para a Copa em 1998. Histórico retorno em 2026.',
-    curiosidades: 'A Jamaica tem forte influência caribenha no futebol. Vários jogadores atuam na Premier League inglesa.',
-    ranking_fifa: 43
-  },
   'África do Sul': {
     grupo: 'A', continente: 'CAF', cor: '#007A4D',
     estilo: 'Físico e intenso, com boa marcação. Valoriza a disciplina tática.',
@@ -31,7 +22,7 @@ const SELECOES = {
     ranking_fifa: 58
   },
   'Uzbequistão': {
-    grupo: 'A', continente: 'AFC', cor: '#1EB53A',
+    grupo: 'K', continente: 'AFC', cor: '#1EB53A',
     estilo: 'Organizado taticamente, com foco na solidez defensiva. Estreante na Copa.',
     treinador: 'Timur Kapadze',
     provaveisJogadores: ['Otabek Shukurov (goleiro)', 'Sanjar Tursunov (zagueiro)', 'Jaloliddin Masharipov (meia)', 'Eldor Shomurodov (atacante)', 'Dostonbek Khamdamov (meia)'],
@@ -69,7 +60,7 @@ const SELECOES = {
     ranking_fifa: 40
   },
   'Panamá': {
-    grupo: 'B', continente: 'CONCACAF', cor: '#005293',
+    grupo: 'L', continente: 'CONCACAF', cor: '#005293',
     estilo: 'Compacto e disciplinado, difícil de ser batido. Forte no duelo físico.',
     treinador: 'Thomas Christiansen',
     provaveisJogadores: ['Luis Mejía (goleiro)', 'Fidel Escobar (zagueiro)', 'Aníbal Godoy (volante)', 'Alberto Quintero (meia)', 'Rolando Blackburn (atacante)'],
@@ -144,15 +135,6 @@ const SELECOES = {
     curiosidades: 'A Austrália compete na AFC desde 2006. Sam Kerr é lenda do futebol feminino, mas o masculino também cresce.',
     ranking_fifa: 23
   },
-  'Nigéria': {
-    grupo: 'D', continente: 'CAF', cor: '#008751',
-    estilo: 'Veloz e atlético, com grande talento individual. As "Super Águias" são temidas.',
-    treinador: 'Eric Chelle',
-    provaveisJogadores: ['Francis Uzoho (goleiro)', 'Semi Ajayi (zagueiro)', 'Wilfred Ndidi (volante)', 'Alex Iwobi (meia)', 'Victor Osimhen (atacante)', 'Samuel Chukwueze (ponta)'],
-    conquistas: 'Tricampeão africano. Oitavas de final em 1994 e 1998.',
-    curiosidades: 'Victor Osimhen foi artilheiro da Serie A italiana em 2022/23. Nigéria é a nação mais populosa da África.',
-    ranking_fifa: 30
-  },
 
   // GRUPO E
   'Alemanha': {
@@ -212,22 +194,13 @@ const SELECOES = {
     ranking_fifa: 18
   },
   'Colômbia': {
-    grupo: 'F', continente: 'CONMEBOL', cor: '#FCD116',
+    grupo: 'K', continente: 'CONMEBOL', cor: '#FCD116',
     estilo: 'Técnico e ofensivo, com grande qualidade individual. Sempre produz talentos de nível mundial.',
     treinador: 'Néstor Lorenzo',
     provaveisJogadores: ['David Ospina (goleiro)', 'Dávinson Sánchez (zagueiro)', 'Wilmar Barrios (volante)', 'James Rodríguez (meia)', 'Luis Díaz (ponta)', 'Jhon Córdoba (atacante)'],
     conquistas: 'Quartas de final em 2014. Finalista da Copa América 2024.',
     curiosidades: 'James Rodríguez foi o artilheiro da Copa 2014 com 6 gols. Luis Díaz é um dos extremos mais em forma do mundo.',
     ranking_fifa: 9
-  },
-  'Camarões': {
-    grupo: 'F', continente: 'CAF', cor: '#007A5E',
-    estilo: 'Atlético e físico, com grande talento individual. Os "Leões Indomáveis" são a maior seleção da África Central.',
-    treinador: 'Marc Brys',
-    provaveisJogadores: ['André Onana (goleiro)', 'Michael Ngadeu (zagueiro)', 'André-Frank Zambo Anguissa (volante)', 'Martin Hongla (meia)', 'Vincent Aboubakar (atacante)', 'Bryan Mbeumo (ponta)'],
-    conquistas: '5x campeão africano. Quartas de final em 1990.',
-    curiosidades: 'André Onana é goleiro do Manchester United. Roger Milla, que jogou com 38 anos em 1994, é lenda mundial.',
-    ranking_fifa: 46
   },
 
   // GRUPO G
@@ -325,24 +298,6 @@ const SELECOES = {
     curiosidades: 'Sadio Mané é o maior ídolo da história. Senegal eliminou o Brasil em 2002 nas oitavas de final.',
     ranking_fifa: 20
   },
-  'Honduras': {
-    grupo: 'I', continente: 'CONCACAF', cor: '#0073CF',
-    estilo: 'Físico e combativo, com defesa sólida.',
-    treinador: 'Reinaldo Rueda',
-    provaveisJogadores: ['Luis López (goleiro)', 'Maynor Figueroa (zagueiro)', 'Andy Najar (lateral)', 'Alberth Elis (ponta)', 'Romell Quioto (ponta)'],
-    conquistas: 'Participou de Copas em 1982, 2010 e 2014.',
-    curiosidades: 'Honduras nunca venceu uma partida em Copas do Mundo. Alberth Elis é a principal estrela da geração atual.',
-    ranking_fifa: 77
-  },
-  'Venezuela': {
-    grupo: 'I', continente: 'CONMEBOL', cor: '#CF142B',
-    estilo: 'Técnico e organizado. A "Vinotinto" vive sua melhor geração histórica.',
-    treinador: 'Fernando Batista',
-    provaveisJogadores: ['Wuilker Faríñez (goleiro)', 'Jhon Chancellor (zagueiro)', 'Tomás Rincón (volante)', 'Yangel Herrera (meia)', 'Salomón Rondón (atacante)'],
-    conquistas: 'Primeira Copa do Mundo da história. Semifinalista da Copa América 2024.',
-    curiosidades: 'Venezuela foi a última seleção sul-americana a se classificar para uma Copa. Yangel Herrera joga no Girona.',
-    ranking_fifa: 42
-  },
 
   // GRUPO J
   'Argentina': {
@@ -384,7 +339,7 @@ const SELECOES = {
 
   // GRUPO K
   'Croácia': {
-    grupo: 'K', continente: 'UEFA', cor: '#FF0000',
+    grupo: 'L', continente: 'UEFA', cor: '#FF0000',
     estilo: 'Posse de bola e controle do meio-campo. Geração talentosa que valoriza a técnica e a inteligência tática.',
     treinador: 'Zlatko Dalić',
     provaveisJogadores: ['Dominik Livaković (goleiro)', 'Joško Gvardiol (zagueiro)', 'Mateo Kovačić (volante)', 'Luka Modrić (meia)', 'Andrej Kramarić (atacante)', 'Ante Budimir (atacante)'],
@@ -393,7 +348,7 @@ const SELECOES = {
     ranking_fifa: 10
   },
   'Coreia do Sul': {
-    grupo: 'K', continente: 'AFC', cor: '#003478',
+    grupo: 'A', continente: 'AFC', cor: '#003478',
     estilo: 'Técnico, intenso e bem organizado. Forte na pressão coletiva.',
     treinador: 'Hong Myung-bo',
     provaveisJogadores: ['Jo Hyeon-woo (goleiro)', 'Kim Min-jae (zagueiro)', 'Jung Woo-young (volante)', 'Lee Jae-sung (meia)', 'Son Heung-min (atacante)', 'Hwang Hee-chan (ponta)'],
@@ -402,7 +357,7 @@ const SELECOES = {
     ranking_fifa: 23
   },
   'Inglaterra': {
-    grupo: 'K', continente: 'UEFA', cor: '#FFFFFF',
+    grupo: 'L', continente: 'UEFA', cor: '#FFFFFF',
     estilo: 'Físico, técnico e cada vez mais moderno. A nova geração trouxe futebol atraente.',
     treinador: 'Thomas Tuchel',
     provaveisJogadores: ['Jordan Pickford (goleiro)', 'Kyle Walker (lateral)', 'Harry Maguire (zagueiro)', 'Declan Rice (volante)', 'Jude Bellingham (meia)', 'Harry Kane (atacante)', 'Phil Foden (meia)'],
@@ -411,7 +366,7 @@ const SELECOES = {
     ranking_fifa: 5
   },
   'Tunísia': {
-    grupo: 'K', continente: 'CAF', cor: '#E70013',
+    grupo: 'F', continente: 'CAF', cor: '#E70013',
     estilo: 'Organizado e difícil de ser batido. Defesa sólida como marca registrada.',
     treinador: 'Jalel Kadri',
     provaveisJogadores: ['Aymen Dahmen (goleiro)', 'Dylan Bronn (zagueiro)', 'Ellyes Skhiri (volante)', 'Youssef Msakni (meia)', 'Wahbi Khazri (atacante)'],
@@ -422,7 +377,7 @@ const SELECOES = {
 
   // GRUPO L
   'Portugal': {
-    grupo: 'L', continente: 'UEFA', cor: '#006600',
+    grupo: 'K', continente: 'UEFA', cor: '#006600',
     estilo: 'Técnico e ofensivo, equilibrando estrelas individuais com coletividade.',
     treinador: 'Roberto Martínez',
     provaveisJogadores: ['Diogo Costa (goleiro)', 'João Cancelo (lateral)', 'Rúben Dias (zagueiro)', 'João Palhinha (volante)', 'Bruno Fernandes (meia)', 'Bernardo Silva (meia)', 'Cristiano Ronaldo (atacante)', 'Rafael Leão (ponta)'],
@@ -430,32 +385,79 @@ const SELECOES = {
     curiosidades: 'Cristiano Ronaldo é o maior artilheiro da história das seleções com mais de 130 gols. Bernardo Silva é eleito constantemente como um dos melhores do mundo.',
     ranking_fifa: 6
   },
-  'Sérvia': {
-    grupo: 'L', continente: 'UEFA', cor: '#C6363C',
-    estilo: 'Físico, técnico e com grande talento individual no meio-campo.',
-    treinador: 'Dragan Stojković',
-    provaveisJogadores: ['Predrag Rajković (goleiro)', 'Strahinja Pavlović (zagueiro)', 'Nemanja Maksimović (volante)', 'Sergej Milinković-Savić (meia)', 'Dušan Tadic (meia)', 'Dušan Vlahović (atacante)', 'Luka Jović (atacante)'],
-    conquistas: 'Semifinalista como Iugoslávia em 1930 e 1962.',
-    curiosidades: 'Dušan Vlahović é um dos centroavantes mais promissores da Europa. Sergej Milinković-Savić dominou a Serie A por anos.',
-    ranking_fifa: 33
-  },
-  'El Salvador': {
-    grupo: 'L', continente: 'CONCACAF', cor: '#0F47AF',
-    estilo: 'Compacto e trabalhador. Melhora constante com jogadores do exterior.',
-    treinador: 'Hugo Pérez',
-    provaveisJogadores: ['Mario González (goleiro)', 'Roberto Domínguez (zagueiro)', 'Alexander Larin (meia)', 'Nelson Bonilla (atacante)', 'Eriq Zavaleta (zagueiro)'],
-    conquistas: 'Participou de Copas em 1970 e 1982.',
-    curiosidades: 'El Salvador marcou o recorde de derrotas consecutivas em uma Copa (9-0 para a Hungria em 1982).',
-    ranking_fifa: 73
-  },
   'Iraque': {
-    grupo: 'L', continente: 'AFC', cor: '#007A3D',
+    grupo: 'I', continente: 'AFC', cor: '#007A3D',
     estilo: 'Organizado e crescendo no futebol asiático.',
     treinador: 'Jesús Casas',
     provaveisJogadores: ['Mohammed Hamid (goleiro)', 'Ali Adnan (lateral)', 'Ibrahim Bayesh (zagueiro)', 'Amjed Attwan (volante)', 'Aymen Hussein (atacante)'],
     conquistas: 'Campeão asiático em 2007. Primeira Copa desde 1986.',
     curiosidades: 'O Iraque ganhou a Copa da Ásia de 2007 de forma surpreendente. O país tem a maior liga árabe por número de torcedores.',
     ranking_fifa: 66
+  },
+
+  // Seleções confirmadas no sorteio oficial de dez/2025
+  'República Tcheca': {
+    grupo: 'A', continente: 'UEFA', cor: '#11457E',
+    estilo: 'Organizada e aplicada taticamente, com meio-campo combativo e bolas paradas perigosas.',
+    treinador: 'Miroslav Koubek',
+    provaveisJogadores: ['Jindřich Staněk (goleiro)', 'Ladislav Krejčí (zagueiro)', 'Tomáš Souček (volante)', 'Antonín Barák (meia)', 'Patrik Schick (atacante)', 'Adam Hložek (atacante)'],
+    conquistas: 'Campeã da Eurocopa de 1976 (como Tchecoslováquia) e vice em 1996. Semifinal da Euro 2004.',
+    curiosidades: 'Pavel Nedvěd venceu a Bola de Ouro em 2003. Patrik Schick marcou um golaço de meio-campo na Euro 2020.',
+    ranking_fifa: 43
+  },
+  'Bósnia-Herzegovina': {
+    grupo: 'B', continente: 'UEFA', cor: '#002F6C',
+    estilo: 'Time físico e técnico, apoiado num meio-campo de qualidade e no faro de gol do camisa 11.',
+    treinador: 'Sergej Barbarez',
+    provaveisJogadores: ['Ibrahim Šehić (goleiro)', 'Sead Kolašinac (lateral)', 'Amir Hadžiahmetović (volante)', 'Miralem Pjanić (meia)', 'Edin Džeko (atacante)', 'Ermedin Demirović (atacante)'],
+    conquistas: 'Disputou sua primeira Copa do Mundo em 2014. Esta é a segunda participação.',
+    curiosidades: 'Edin Džeko é o maior artilheiro da história da seleção. O país estreou em Copas marcando contra a Argentina no Maracanã em 2014.',
+    ranking_fifa: 74
+  },
+  'Turquia': {
+    grupo: 'D', continente: 'UEFA', cor: '#E30A17',
+    estilo: 'Intensa e ofensiva, com uma nova geração talentosa no meio-campo e muita energia.',
+    treinador: 'Vincenzo Montella',
+    provaveisJogadores: ['Uğurcan Çakır (goleiro)', 'Merih Demiral (zagueiro)', 'Hakan Çalhanoğlu (meia)', 'Arda Güler (meia)', 'Kenan Yıldız (atacante)', 'Kerem Aktürkoğlu (ponta)'],
+    conquistas: 'Terceiro lugar na Copa do Mundo de 2002, sua melhor campanha.',
+    curiosidades: 'É a primeira Copa da Turquia desde 2002. Arda Güler joga no Real Madrid e é uma das joias da nova geração.',
+    ranking_fifa: 26
+  },
+  'Suécia': {
+    grupo: 'F', continente: 'UEFA', cor: '#FECC00',
+    estilo: 'Sólida defensivamente e mortal no ataque, com uma das melhores duplas de centroavantes do mundo.',
+    treinador: 'Graham Potter',
+    provaveisJogadores: ['Robin Olsen (goleiro)', 'Victor Lindelöf (zagueiro)', 'Emil Forsberg (meia)', 'Dejan Kulusevski (meia)', 'Alexander Isak (atacante)', 'Viktor Gyökeres (atacante)'],
+    conquistas: 'Vice-campeã da Copa de 1958 (em casa), 3º lugar em 1950 e 1994.',
+    curiosidades: 'Zlatan Ibrahimović é o maior ídolo histórico. Isak e Gyökeres formam um dos ataques mais cobiçados da Europa.',
+    ranking_fifa: 41
+  },
+  'Noruega': {
+    grupo: 'I', continente: 'UEFA', cor: '#BA0C2F',
+    estilo: 'Verticalidade e poder físico, explorando a força de Haaland e a criação de Ødegaard.',
+    treinador: 'Ståle Solbakken',
+    provaveisJogadores: ['Ørjan Nyland (goleiro)', 'Kristoffer Ajer (zagueiro)', 'Martin Ødegaard (meia)', 'Antonio Nusa (ponta)', 'Erling Haaland (atacante)', 'Alexander Sørloth (atacante)'],
+    conquistas: 'Oitavas de final em 1998, sua melhor campanha em Copas.',
+    curiosidades: 'É a primeira Copa da Noruega desde 1998. Haaland é um dos maiores artilheiros do mundo e Ødegaard é o capitão do Arsenal.',
+    ranking_fifa: 28
+  },
+  'Congo (RD)': {
+    grupo: 'K', continente: 'CAF', cor: '#007FFF',
+    estilo: 'Atlética e veloz, com forte presença física e atacantes acostumados às ligas europeias.',
+    treinador: 'Sébastien Desabre',
+    provaveisJogadores: ['Lionel Mpasi (goleiro)', 'Chancel Mbemba (zagueiro)', 'Samuel Moutoussamy (volante)', 'Silas Katompa (ponta)', 'Cédric Bakambu (atacante)', 'Yoane Wissa (atacante)'],
+    conquistas: 'Bicampeã africana em 1968 e 1974 (como Zaire).',
+    curiosidades: 'É a primeira Copa do país desde 1974, quando disputou como Zaire. Chancel Mbemba é o líder da defesa.',
+    ranking_fifa: 56
+  },
+  'Gana': {
+    grupo: 'L', continente: 'CAF', cor: '#006B3F',
+    estilo: 'Físico e veloz, com meio-campo de qualidade e talento individual nas pontas.',
+    treinador: 'Carlos Queiroz',
+    provaveisJogadores: ['Lawrence Ati-Zigi (goleiro)', 'Mohammed Salisu (zagueiro)', 'Thomas Partey (volante)', 'Mohammed Kudus (meia)', 'Iñaki Williams (atacante)', 'Jordan Ayew (atacante)'],
+    conquistas: '4x campeã africana. Chegou às quartas de final em 2010, a uma cobrança de pênalti da semifinal.',
+    curiosidades: 'Asamoah Gyan é o maior artilheiro africano da história das Copas. Mohammed Kudus é a estrela da nova geração.',
+    ranking_fifa: 73
   },
 };
 

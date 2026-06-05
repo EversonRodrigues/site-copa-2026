@@ -115,6 +115,11 @@ function initDb() {
     db.exec('ALTER TABLE usuarios ADD COLUMN pago_em DATETIME');
   }
 
+  // Migração única: grade ajustada ao sorteio/calendário oficial (dez/2025).
+  // Zera apostas de confrontos que mudaram de time, inverte placares de jogos
+  // com mando trocado e remove palpite de campeão de seleções que saíram.
+  require('./migracaoGradeOficial').aplicarMigracaoGradeOficial(db);
+
   return db;
 }
 

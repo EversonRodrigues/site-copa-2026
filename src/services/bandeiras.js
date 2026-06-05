@@ -50,7 +50,15 @@ const ISO = {
   'Portugal': 'pt',
   'Sérvia': 'rs',
   'El Salvador': 'sv',
-  'Iraque': 'iq'
+  'Iraque': 'iq',
+  // Seleções confirmadas no sorteio oficial de dez/2025
+  'República Tcheca': 'cz',
+  'Bósnia-Herzegovina': 'ba',
+  'Turquia': 'tr',
+  'Suécia': 'se',
+  'Noruega': 'no',
+  'Congo (RD)': 'cd',
+  'Gana': 'gh'
 };
 
 function bandeiraDe(nomeSelecao, tamanho = 'w80') {
