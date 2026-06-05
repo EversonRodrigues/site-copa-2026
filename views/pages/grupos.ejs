@@ -29,6 +29,13 @@
     </div>
   </section>
 
+  <p class="grupos-legenda">
+    <span class="grupos-legenda-chip"><span class="grupos-legenda-cor"></span> Top 2 de cada grupo se classificam</span>
+    <span class="grupos-legenda-sep">·</span>
+    <strong>Desempate:</strong> pontos → saldo de gols → gols marcados → confronto direto.
+    <% if (grupoTemPlacar) { %><span class="grupos-legenda-sep">·</span><span class="grupos-legenda-live"><span class="pulse-dot"></span> atualiza automaticamente</span><% } %>
+  </p>
+
   <% if (grupos.length === 0) { %>
     <div class="dash-empty">
       <div class="dash-empty-icon">📋</div>
@@ -50,6 +57,7 @@
           </header>
 
           <% if (temPlacar) { %>
+            <div class="dash-grupo-table-wrap">
             <table class="dash-grupo-table">
               <thead>
                 <tr>
@@ -57,9 +65,12 @@
                   <th>Seleção</th>
                   <th title="Pontos">Pts</th>
                   <th title="Jogos">PJ</th>
-                  <th>V</th>
-                  <th>E</th>
-                  <th>D</th>
+                  <th title="Vitórias">V</th>
+                  <th title="Empates">E</th>
+                  <th title="Derrotas">D</th>
+                  <th title="Gols marcados">GP</th>
+                  <th title="Gols sofridos">GC</th>
+                  <th title="Saldo de gols">SG</th>
                 </tr>
               </thead>
               <tbody>
@@ -83,10 +94,14 @@
                     <td><%= t.vitorias %></td>
                     <td><%= t.empates %></td>
                     <td><%= t.derrotas %></td>
+                    <td><%= t.gp %></td>
+                    <td><%= t.gc %></td>
+                    <td class="dash-grupo-sg"><%= t.sg > 0 ? '+' + t.sg : t.sg %></td>
                   </tr>
                 <% }) %>
               </tbody>
             </table>
+            </div>
           <% } else { %>
             <ol class="dash-grupo-lista">
               <% grupo.times.forEach((t, i) => { %>
@@ -112,4 +127,35 @@
     </div>
   <% } %>
 </div>
+
+<style>
+  .grupos-legenda {
+    background: var(--bg-terciario); border: 1px solid var(--borda);
+    border-left: 3px solid var(--cor-sucesso); border-radius: var(--raio);
+    padding: var(--espaco-3) var(--espaco-4); margin-bottom: var(--espaco-5);
+    font-size: 0.82rem; line-height: 1.5; color: var(--texto-secundario);
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .grupos-legenda strong { color: var(--texto-primario); }
+  .grupos-legenda-chip { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .grupos-legenda-cor { width: 12px; height: 12px; border-radius: 3px; background: var(--cor-sucesso); display: inline-block; }
+  .grupos-legenda-sep { opacity: 0.4; }
+  .grupos-legenda-live { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--cor-ciano); font-weight: 600; }
+  .dash-grupo-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .dash-grupo-sg { font-variant-numeric: tabular-nums; }
+</style>
+
+<% if (typeof grupoTemPlacar !== 'undefined' && grupoTemPlacar) { %>
+<script>
+  // Classificação ao vivo: recarrega periodicamente enquanto a Copa está em andamento.
+  (function() {
+    let segundos = 0;
+    setInterval(() => {
+      segundos += 1;
+      // Recarrega a cada 60s, mas só com a aba visível (evita refresh em segundo plano)
+      if (segundos >= 60 && document.visibilityState === 'visible') location.reload();
+    }, 1000);
+  })();
+</script>
+<% } %>
 <%- include('../partials/footer') %>

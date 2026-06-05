@@ -43,8 +43,21 @@ router.post('/api/palpites', requireAuth, requirePago, (req, res) => {
   }
 
   const inicio = new Date(jogo.inicio);
-  if (isNaN(inicio) || new Date() >= limitePalpite(inicio)) {
-    return res.status(400).json({ erro: 'Prazo encerrado: o palpite fecha 5 minutos antes do jogo.' });
+  if (isNaN(inicio)) {
+    return res.status(400).json({ erro: 'Não foi possível verificar o horário deste jogo. Tente novamente.' });
+  }
+  const agora = new Date();
+  // Anti-trapaça: jogo que já começou (ou terminou) não pode mais ser palpitado/alterado.
+  if (agora >= inicio) {
+    return res.status(403).json({
+      erro: 'Pôxa! 😊 Este jogo já começou (ou já terminou), então o palpite não pode mais ser alterado — é pra manter o bolão justo e sem trapaça pra todo mundo. 💛 Fica de olho que os próximos jogos ainda estão abertos!'
+    });
+  }
+  // Margem de segurança do regulamento: aposta fecha 5 minutos antes do apito inicial.
+  if (agora >= limitePalpite(inicio)) {
+    return res.status(403).json({
+      erro: 'Quase! 🙂 As apostas deste jogo fecham 5 minutos antes do apito inicial e o prazo já encerrou. Mas calma: ainda dá tempo de palpitar nos próximos!'
+    });
   }
 
   try {

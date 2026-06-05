@@ -13,11 +13,15 @@ async function listarJogos(req, res) {
 }
 
 async function listarGrupos(req, res) {
+  const { getClassificacao } = require('../services/classificacao');
   try {
-    const grupos = await fetchGrupos();
+    // Atualiza os resultados (TheSportsDB grava na tabela `resultados`) e
+    // recalcula a classificação na hora — sempre dinâmica.
+    try { await fetchJogos(); } catch { /* segue com o que já houver no banco */ }
+    const grupos = getClassificacao(req.app.locals.db);
     res.render('pages/grupos', { titulo: 'Grupos', grupos });
   } catch (err) {
-    console.error('Erro ao buscar grupos:', err.message);
+    console.error('Erro ao montar grupos:', err.message);
     res.render('pages/grupos', { titulo: 'Grupos', grupos: [] });
   }
 }
